@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue</title>
+</head>
+<body>
+	<div id="app">
+		<p>{{ message }}</p>
+		<p><input type="text" v-model.trim="message"></p>
+		<p><textarea v-model="message"></textarea></p>
+
+		<p :class="{active: seen, hover: false}"  :style="style">v-bind:class ==> :class　||　v-on:click ==> @onclick</p>
+
+		<p v-if="seen">v-if="显示"</p>
+		<p v-else>v-if="隐藏"</p>
+
+		<ol>
+			<li v-for="x in items">{{ x.text }}</li>
+		</ol>
+
+		<a href="#" v-on:click.stop.prevent.once.ctrl="reverseMess">@click ==> {{ info }}</a>
+
+		<ul>
+			<tag v-for="y in items" v-bind:todo='y' key="y.id"></tag>
+		</ul>
+
+
+	
+		<p>
+			<input type="checkbox" id="checkbox" v-model="checked">
+			<label for="checkbox">{{checked}}</label>
+		</p>
+		<p>
+			<input type="checkbox" id="jack" value="jack" v-model="checkedNames"><label for="jack">jack</label>
+			<input type="checkbox" id="john" value="john" v-model="checkedNames"><label for="john">john</label>
+			<input type="checkbox" id="mike" value="mike" v-model="checkedNames"><label for="mike">mike</label><<br />
+			<span>Checked name: {{ checkedNames }}</span>
+		</p>
+		<p>
+			<input type="radio" id="one" value="one" v-model="picked"><label for="one">one</label>
+			<input type="radio" id="two" value="two" v-model="picked"><label for="two">two</label><br>
+			<span>Picked: {{picked}}</span>
+		</p>
+		<p>
+			<select v-model="selected">
+				<option v-for="x in option" :value="x.val">{{ x.text }}</option>
+			</select><br />
+			<span>Selected: {{selected}}</span>
+		</p>
+		<p>修饰符：.lazy / .number(转为数字型) / .trim(去掉表单里的前后空格)</p>
+
+
+		<p>
+			<com></com>
+			<com></com>
+			<com></com>
+		</p>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		Vue.component('tag', {
+			props: ['todo'],
+			template:'<li>{{ todo.text }}</li>'
+		});
+
+		var acount ;
+		Vue.component('com', {
+			template: '<button @click="count+=1">{{ count }}</button>',
+			data: function(){
+				return {count: 0}
+			}
+		});
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: '{{ message }} || v-html="message" || v-model="message"',
+				info: '@:click.stop.prevent.once.ctrl="reverseMess"  //ctrl+左键 阻止冒泡默认事件 只执行一次',
+				seen: true,
+				style: {
+					fontSize: '20px',
+					color: 'blue',
+					display: ['flex', '-webkit-flex', '-moz-flex'],
+					appearance: 'none'
+				},
+				items: [
+					{id: 0, text: "Vue循环"},
+					{id: 8, text: "<li v-for='x in items'>{{ x.text }}</li>"},
+					{id: 2, text: "app.items.push({text: '添加数组集'})"}
+				],
+				children: {
+					name: '小强',
+					age: 20,
+					sex: '男'
+				},
+				//表单
+				checkedNames: [],
+				checked: true,
+				picked: '',
+				selected: '',
+				option: [
+					{ text: 'one', val: 'A'},
+					{ text: 'two', val: 'B'},
+					{ text: 'three', val: 'C'}
+				],
+			},
+			methods: {
+				reverseMess: function(){
+					this.info = this.info.split('').reverse().join('')
+				}
+			},
+			computed: {   //计算属性: 使用this里的数字相加减乘除
+				totalPrice:function(){  
+                     return '5' - '2';  
+                }  
+			},
+			created: function(){
+				console.log('items is: ' + this.items)
+			},
+			mounted: function(ev){
+				console.log('mounted: '+ev);
+			},
+			updated: function(ev){    //监听全部data里面
+				//console.log('updated: ' + ev)
+			},
+			destroyed: function(ev){
+				console.log('destroyed: '+ ev)
+			},
+			watch: {   //只监听 message 是否发生变化
+				checkedNames: function(val, old){
+					console.log(val)
+					console.log(old)
+				}
+			},
+		});
+
+		
+	</script>
+</body>
+</html>

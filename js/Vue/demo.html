@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<tag></tag>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+	var child = {
+		template: '<a>I am child</a>'
+	}
+	var tag = {
+		template: '<p>component {{ child }}</p>',
+		components: {
+			'child': child
+		}
+	};
+	var vm = new Vue({
+		el: '#app',
+		// template: '<div>{{ text }}</div>',
+		data: {
+			text: 'welcome'
+		},
+		components: {
+			'tag': tag
+		}
+	})
+	</script>
+</body>
+</html>

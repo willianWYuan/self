@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ZYUI</title>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/ZYUI.js" async></script>
+</head>
+<body>
+    <div class="Page">
+        <ul class="page-alert-list">
+            <li onclick="UI.alert(0, '自动关闭提示语')">自动关闭提示语</li>
+            <li onclick="UI.alert(1)">只有文案的alert</li>
+            <li onclick="UI.alert(2)">带文案标题的alert</li>
+            <li onclick="UI.alert(3)">confirm</li>
+            <li onclick="UI.alert(4)">带表单提交</li>
+            <li onclick="UI.alert(5)">由下往上展现</li>
+        </ul>
+        
+
+        <div class="page-alert-mask" onclick="UI.alert()"></div>
+
+        
+        <!-- alert-0 -->
+        <div class="page-alert alert-0">
+            弹窗提示语
+        </div>
+        <!-- alert-1 -->
+        <div class="page-alert alert-1">
+            <div class="alert-text">this is a tip1!</div>
+            <a class="alert-ok"  onclick="UI.alert(a1)">确定</a>
+        </div>
+        <script>
+            function a1(){alert('关闭弹窗时，回调这个函数')}
+        </script>
+        <!-- alert-2 -->
+        <div class="page-alert alert-2">
+            <div class="alert-text">
+                <h3>自定义标题</h3>
+                <p>消息内容带你飞SOP地方经济老年法SAP发看到你放声大哭你干啥可怕的发送到皮肤男士皮带</p>
+            </div>
+            <a class="alert-ok"  onclick="UI.alert()">确定</a>
+        </div>
+        <!-- alert-3 -->
+        <div class="page-alert alert-3">
+            <div class="alert-text">你确定吗？</div>
+            <div class="alert-done">
+                <a class="alert-cancel"  onclick="UI.alert()">取消</a>
+                <a class="alert-sure"  onclick="UI.alert(a1)">确定</a>
+            </div>
+        </div>
+        <!-- alert-4 -->
+        <div class="page-alert alert-4">
+            <div class="alert-form">
+                <h5>自定义标题</h5>
+                <ul class="formList">
+                    <li class="form-row">
+                        <div class="form-title">Name</div>
+                        <div class="form-input">
+                            <input type="text" placeholder="Your name">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="form-title">Tel</div>
+                        <div class="form-input">
+                            <input type="Number" placeholder="Your Tel">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="form-title">E-mail</div>
+                        <div class="form-input">
+                            <input type="email" placeholder="E-mail">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="form-title">Password</div>
+                        <div class="form-input">
+                            <input type="password" placeholder="Password">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="form-title">Gender</div>
+                        <div class="form-input">
+                            <select>
+                                <option>Man</option>
+                                <option>Woman</option>
+                            </select>
+                        </div>
+                    </li>
+                    <!-- Date -->
+                    <li class="form-row">
+                        <div class="form-title">Birth date</div>
+                        <div class="form-input">
+                            <input type="date" placeholder="Birth day" value="2014-04-30">
+                        </div>
+                    </li>
+                    <!-- Switch (Checkbox) -->
+                    <li class="form-row">
+                        <div class="form-title">Switch</div>
+                        <div class="form-input">
+                            <input type="checkbox" id="s1">
+                            <label for="s1" class="form-checkbox"></label>
+                        </div>
+                    </li>
+                    <li class="form-row textadd">
+                        <div class="form-title">Textarea</div>
+                        <div class="form-input">
+                            <textarea></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="alert-done">
+                <a class="alert-cancel"  onclick="UI.alert()">取消</a>
+                <a class="alert-sure"  onclick="UI.alert(a1)">确定</a>
+            </div>
+        </div>
+
+        <!-- alert-5 -->
+        <div class="page-alert alert-5">
+            <div class="alert-5-inner">
+                <div class="alert-smalltitle">请选择</div>
+                <div class="alert-doing">
+                    <a>卖出</a>
+                    <a>卖入</a>
+                </div>
+            </div>
+            <div class="alert-doing-btn"><a  onclick="UI.alert()">取消</a></div>
+        </div>
+    </div>
+</body>
+</html>

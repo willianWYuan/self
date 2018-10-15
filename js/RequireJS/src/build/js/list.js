@@ -1,0 +1,1 @@
+define({username:"silvae",name:"zjos",email:"nfoa@qq.com",sex:"man",say:function(e){alert(e)}});

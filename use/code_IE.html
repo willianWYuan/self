@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+    *{
+        margin:0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .code{
+        width: 400px;
+        margin:0 auto;
+    }
+    #input-code{
+        width: 295px;
+        background: #ffffff;
+        height: 2.8rem;
+        padding: 0 2%;
+        border-radius: 5px;
+        border: 1px solid rgba(0,0,0,.2);
+        font-size: 1.0625rem;
+    }
+    #canvas{
+        float: right;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        box-sizing: border-box;
+        width: 102px;
+        height: 45px;
+        line-height: 43px;
+        text-align: center;
+        letter-spacing: 3px;
+        font-size: 20px;
+    }
+    #btn{
+        width: 100px;
+        height: 40px;
+        background: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 20px auto 0;
+        display: block;
+        font-size: 1.2rem;
+        color: #e22e1c;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <div class="code">
+        <input type="text" value="" placeholder="请输入验证码（不区分大小写）" id="input-code" />
+        <div id="canvas" onclick="draw()"></div>
+        <button id="btn">提交</button>
+    </div>
+</body>
+<script>
+
+    var canvas = document.getElementById('canvas');
+    var inputcode = document.getElementById('input-code')
+    var btn = document.getElementById('btn')
+
+
+    var show_num = [];
+    function draw() {
+        show_num  = [];
+        var sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+        var aCode = sCode.split(",");
+        var aLength = aCode.length; //获取到数组的长度
+
+        var canstr = '' 
+        for (var i = 0; i <= 3; i++) {
+            var j = Math.floor(Math.random() * aLength);
+            show_num.push(aCode[j]);
+            canstr += '<span'+randomColor()+'>' + aCode[j] + '</span>';
+        }
+        canvas.innerHTML = canstr;
+    }
+
+    function randomColor() { //得到随机的颜色值
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        return ' style="color: rgb(' + r + ',' + g + ',' + b + ')"';
+    }
+
+    
+    draw();
+
+    btn.onclick = function(){
+        var val = inputcode.value.toLowerCase();
+        var num = show_num.join("").toLowerCase();
+        console.log(val, num)
+        if (val == '') {
+            alert('请输入验证码！');
+        } else if (val == num) {
+            alert('提交成功！');
+            inputcode.value = '';
+            draw(show_num);
+        } else {
+            alert('验证码错误！请重新输入！');
+            inputcode.value = '';
+            draw(show_num);
+        }
+    }
+
+</script>
+</html>

@@ -1,0 +1,14 @@
+WeixinJSBridge.invoke('sendAppMessage', {}, function(res){
+  alert(JSON.stringify(res));
+  //WeixinJSBridge.invoke('closeWindow') //暴力关闭微信浏览器
+});
+
+
+
+
+
+//离开当前页面之前 执行
+window.onbeforeunload = function() {
+  sessionStorage.a = '只能在session里查看是否操作了没';
+  return;
+}

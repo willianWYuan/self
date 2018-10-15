@@ -1,0 +1,44 @@
+/*重置浏览器默认样式*/
+::-webkit-scrollbar{width:14px;height:14px;}
+::-webkit-scrollbar-button:vertical{display:none}
+::-webkit-scrollbar-corner,::-webkit-scrollbar-track{background-color:#e2e2e2;}
+::-webkit-scrollbar-thumb{border-radius:0;background-color:rgba(0,0,0,.2);}
+::-webkit-scrollbar-thumb:vertical:hover,::-webkit-scrollbar-thumb:vertical:active{background-color:rgba(0,0,0,.4);}
+::-moz-placeholder{color:#ccc;}
+::-ms-input-placeholder{color:#ccc;}
+::-webkit-input-placeholder{color:#ccc;}
+::-ms-check{color:#34538b;background:#a0b3d6;padding:.5em;}
+::-ms-clear{display:none;}
+::-ms-reveal{display:none;}
+::-ms-expand{display:none;}
+::-webkit-search-results-button{display:none;}
+::-webkit-search-cancel-button{display:none;}
+::-webkit-inner-spin-button{visibility:hidden;}
+::-webkit-clear-button{-webkit-appearance:none;}
+::-webkit-inner-spin-button{-webkit-appearance:none;}
+::-webkit-textfield-decoration-container{background-color:#f0f3f9;}
+::-ms-browse{padding:.4em;line-height:24px;border:1px solid #a0b3d6;background:#f0f3f9;color:#34538b;}
+::-webkit-file-upload-button{padding:.4em;line-height:30px;border:1px solid #a0b3d6;background:#f0f3f9;color:#34538b;}
+.clearfix{zoom:1}
+.clearfix:after{clear:both;display:block;visibility:hidden;content:"";height:0;}
+.ellipsis{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+[hidden]{display:none!important;}
+
+/*整改layui的部分样式*/
+.layui-layout-admin .layui-header .layui-nav,.layui-layout-admin .layui-footer,.totalAlert,.subTotalAlert{display:none;}
+.layui-layout-admin .layui-body{bottom:0;}
+.layui-body{top:60px;}
+.layui-nav-tree .layui-nav-child a{filter:alpha(opacity=70);}
+.layui-nav-tree .layui-nav-child,.layui-nav-tree .layui-nav-child a:hover{filter:alpha(opacity=100);}
+.layui-nav-itemed>.layui-nav-child{background-color:rgb(35,38,46)!important;background-color:rgba(0,0,0,.3)!important}
+.layui-table,.layui-table-view{margin:0}
+.layui-table-cell{height:auto;}
+.layui-btn[lay-event="del"]{background-color:#FF5722;}
+.layui-nav-tree .layui-nav-child a{padding-left: 40px}
+/*操作头部*/
+.page{padding:15px}
+.page-done{margin-bottom:10px;}
+.page-done > .layui-btn{background-color:#FF5722;float:left;}
+.page-done .layui-form{float:right;}
+.page-done .layui-form .layui-input{width:200px;float:left;margin-right:6px;}
+.page-done .layui-form .layui-btn{float:left;}

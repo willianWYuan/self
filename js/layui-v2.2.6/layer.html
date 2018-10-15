@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <link rel="stylesheet" href="layui/css/layui.css"> 
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+	<button id="addbtn">add</button>
+	<div class="add"></div>
+
+
+	<script>
+		layui.use(['layer'], function(layer) {
+			var $ = layui.jquery;
+			// layer.alert('Are you sure?', function(){
+			//  layer.msg('welcome to layui')
+			// })
+
+			layer.closeAll(); //疯狂模式，关闭所有层
+			layer.closeAll('dialog'); //关闭信息框
+			layer.closeAll('page'); //关闭所有页面层
+			layer.closeAll('iframe'); //关闭所有的iframe层
+			layer.closeAll('loading'); //关闭加载层
+			layer.closeAll('tips'); //关闭所有的tips层
+
+			//eg1
+			// layer.alert('酷毙了', {icon: 1});
+			//eg2
+			// layer.msg('不开心。。', {icon: 5});
+			//eg3
+			// layer.load(2); //风格1的加载
+			$('#addbtn').on('click', function() {
+				layer.open({
+					type: 1,
+					skin: 'demo-class', //添加样式
+					area: ['400px', '200px'], //整个弹框的 宽高
+					title: '添加',
+					content: $('.add'),
+					success: function(layero, index) {
+						console.log('点击调用');
+					},
+					end: function() {
+						console.log('关闭 销毁 调用')
+					},
+
+
+					btn: ['按钮一', '按钮二', '按钮三'], //可以无限个按钮
+					yes: function() {
+						console.log('相当于btn1 调用')
+					},
+					btn3: function(index, layero) {
+						console.log('下边按钮 调用')
+						return false;
+					},
+					cancel: function(res) {
+						console.log('关闭按钮 调用');
+						return false; //取消 关闭按钮 关闭弹窗
+					},
+					shade: 0.3, //遮罩 透明度
+					shadeClose: true, //是否点击遮罩关闭
+
+
+					time: 42000,
+					anim: Math.ceil(Math.random() * 6),
+					fixed: false, //position ->  true: fixed   false: absolute
+					resize: false, //禁用拉伸   默认true
+					resizing: function(layero) { //监听 拉伸
+						console.log(layero);
+					},
+
+
+					//move: false,   //默认 指定 '.layui-layer-title' 
+					moveEnd: function() {
+
+					}
+				})
+			})
+		})
+	</script>
+</body>
+</html>

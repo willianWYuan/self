@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Native.js</title>
+    </head>
+    <body>
+    	<div id="root">
+	        <input type="tel" />
+	        <input type="tel" />
+	        <input type="tel" />
+	        <input type="tel" />
+	        <input type="tel" />
+	        <input type="tel" />
+        </div>
+    </body>
+    <script>
+    ;(function(selector){
+    	var ipt = document.querySelector(selector).getElementsByTagName('input'),
+    		len = ipt.length, i = -1, code = '';
+    	for (var k=0; k<len; k++){
+    		ipt[k].setAttribute('disabled', true);
+    		ipt[k].setAttribute('maxlength', 1);
+    	};
+
+    	var disIpt = function(curr){
+    		for (var j = 0; j < len; j++){
+    			ipt[j].setAttribute('disabled', true);
+    			if (j < curr) continue;
+    			ipt[j].value = '';
+    		}
+			code = code.substring(0, curr - 1);
+    	};
+    	var tryIpt = function (ev) {
+			ev.which != 8 ? i++ : i = i <= 0 ? 0 : i-1;
+			disIpt(i);
+
+			if (i >= len) {
+				code += ipt[i-1].value;
+				pwd(code);
+				return;
+			}
+
+			ipt[i].removeAttribute('disabled');
+			ipt[i].focus();
+
+			document.onkeyup = tryIpt;
+			document.onclick = null;
+
+			if (i > 0) code += ipt[i-1].value;
+		};
+		
+    	document.onclick = tryIpt;
+    })('#root');
+
+
+    var pwd = function(res){
+    	alert(res)
+    }
+
+    </script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="/js/vue.js"></script>
+	<script src="/js/vue-resource.min.js"></script>
+</head>
+<body>
+	<div id="app" v-cloak>
+		<ul class="more-item" v-if='currmoreimages.length' style='border-bottom: none;'>
+			<li v-for='(elem, index) in currmoreimages'>
+				<div class="imgInfo">
+					<span class="imgInfo-name" v-if='elem.itemName'>{{ elem.itemName }}</span>
+					<span class="imgInfo-time">{{ elem.itemTime }}</span>
+					<span class="imgInfo-del" @click='currmoreimages.splice(index, 1)'>删除</span>
+				</div>
+				<img :src="elem.images">
+			</li>
+		</ul>
+		<form class="enclosure-upfile" id="form" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="type" value="1">
+			<input type="file" name="file" id="upfile" @change='uploadimg' accept="image/*;" capture="camera">
+			<label id="showphoto" for="upfile" ></label>
+		</form>
+	</div>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				currmoreimages: [],  //多张图片
+			},
+			methods: {
+				uploadimg() {
+					var form = document.querySelector('#form'),
+						formdata = new FormData(form);
+					this.$http.post('/api/upload/file.json', formdata).then(res => {
+						console.log(res.data.data)
+						this.isloading = false;
+						this.dealImage(res.data.data, base => {
+							// console.log("压缩后：" + base.length / 1024 + " " + base);　
+						 	var obj = {};
+						 	obj.itemTime = new Date().getTime(); 
+						 	obj.images = base; 
+							this.currmoreimages.push(obj)
+							console.log(base)
+						})
+					})
+				},
+				dealImage(path, callback) {
+					var img = new Image();
+					img.crossOrigin = "anonymous";
+					img.src = path;
+					img.onload = function() {
+						//默认按比例压缩  
+						var w = this.width,
+							h = this.height;
+						var quality = 0.95; // 默认图片质量为0.7  
+
+						//生成canvas  
+						var canvas = document.createElement('canvas');
+						var ctx = canvas.getContext('2d');
+
+						// 创建属性节点  
+						canvas.setAttribute("width", w);
+						canvas.setAttribute("height", h);
+
+						ctx.drawImage(this, 0, 0, w, h);
+						// quality值越小，所绘制出的图像越模糊  
+						var base64 = canvas.toDataURL('image/jpeg', quality);
+						// 回调函数返回base64的值  
+						callback(base64);
+					};
+				}
+			}
+		})
+	</script>
+
+	<script>
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+@charset "utf-8"
+
+
+
+>cls    //清屏
+
+
+
+>mkdir(md) <folderName>    //创建一个文件夹名
+>rm <folderName>   // 删除文件夹
+>cd.>a.html   // 创建一个a.html文件
+>del a.html   // 删除a.html
+>del *.html   // 删除所有html文件
+
+
+>dir    //查看当前目录有什么子文件（夹）
+
+
+>start <folderName>   //在window中打开某个文件夹
+><file>    //输入文件名，直接打开该文件
+
+
+
+
+
+
+
+
+
+
+

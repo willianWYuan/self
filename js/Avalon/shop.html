@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>avalon</title>
+	<style>
+		td{border:1px solid #ccc; padding: 4px 10px}
+	</style>
+</head>
+<body>
+	<div ms-controller='test'>
+		<select ms-duplex='title'>
+			<option ms-repeat='option'>{{ el }}</option>
+		</select>
+		<select ms-duplex='orderby'>
+			<option value="1">up</option>
+			<option value="-1">down</option>
+		</select>
+		<table>
+			<tr ms-repeat='data'>
+				<td ms-repeat='el'>
+					{{ $index }}. {{ $key }}={{ $val }}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script src="lib/avalon.min.js"></script>
+	<script>
+		var vm = avalon.define({
+			$id: 'test',
+			title: 'name',
+			orderby: 1,
+			option: ['name', 'size', 'date'],
+			data: [
+				{name: 'aa', size: 213, date: Date.now() + 20},
+				{name: 'bb', size: 63, date: Date.now() + 1},
+				{name: 'cc', size: 151, date: Date.now() - 14},
+				{name: 'dd', size: 16, date: Date.now() - 6},
+				{name: 'ee', size: 88, date: Date.now() + 5}
+			]
+		});
+		vm.$watch('title', function (v) {
+			var t = parseFloat(vm.orderby);
+			vm.data.sort(function(a, b){
+				var reset = a[v] > b[v] ? 1 : -1;
+				return t * reset;
+			})
+		});
+		vm.$watch('orderby', function(t){
+			var v = vm.title, t = parseFloat(t);
+			vm.data.sort(function(a, b){
+				var reset = a[v] > b[v] ? 1 : -1;
+				return t * reset;
+			})
+		})
+	</script>
+</body>
+</html>

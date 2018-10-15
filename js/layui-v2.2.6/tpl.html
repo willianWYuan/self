@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>tpl</title>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+    <a href="/flow.html">flow</a>
+    <script id="demo" type="text/html">
+      {{! 调用方法不需要 # !}}
+      <h3>{{ d.title }}</h3>
+      <ul>
+      {{#  layui.each(d.list, function(index, item){ }}
+        <li>
+          <span>{{ item.modname }}</span>
+          <span>{{ item.alias }}：</span>
+          <span>{{ item.site || '' }}</span>
+        </li>
+      {{#  }); }}
+      {{#  if(d.list.length === 0){ }}
+        无数据
+      {{# }  }} 
+      </ul>
+    </script>
+     
+    <div id="view"></div>
+     
+    <script>
+        var data;
+        layui.use('laytpl', function(laytpl){
+            // laytpl.config({
+            //   open: '<%',
+            //   close: '%>'
+            // });
+
+
+            data = { //数据
+                "title": "<span>Layui常用模块</span>",
+                "list": [
+                    {"modname":"弹层","alias":"layer","site":"layer.layui.com"},
+                    {"modname":"表单","alias":"form"}
+                ]
+            }
+
+            // function updatedata(renderdata){
+                laytpl(document.getElementById('demo').innerHTML)
+
+                .render(data, function(html) {
+                    document.getElementById('view').innerHTML = html;
+                });
+            // };
+            // updatedata(data);
+
+            // var i = 0;
+            // document.onclick = function(){
+            //     i++;
+            //     if (i*i % 5 != 0) data.list.push({"modname":"模板"+i,"alias":"tpl"+i});
+            //     else data.list.pop();
+            //     updatedata(data)
+            // }
+        })
+    </script>
+</body>
+</html>

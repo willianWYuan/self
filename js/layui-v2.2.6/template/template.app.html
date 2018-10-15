@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <link rel="prefetch" href="images/Spinner-1s-141px.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <title>template</title>
+    <link rel="stylesheet" href="css/mobile.css">
+    <script src="js/app.common.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div class="page" id="app" v-cloak>
+        <div class="page-cxt">
+            <span @click='isDelAlert=true'>弹窗</span>
+
+            <div @click='tip="aa"'>aa</div>
+            <div @click='tip="bb"'>bb</div>
+        </div>
+        <transition name="fade">  
+            <div class="tip" v-show='tip'><span>{{ tip }}</span></div>
+        </transition>
+        <div class="mask" v-show='isDelAlert'></div>
+        <transition name="downtoup">  
+            <div class="alert alert-sure" v-show='isDelAlert'>
+                <div class="alert-text">确定要删除？</div>
+                <div class="alert-done">
+                    <a @click='alertSure'>确定</a>
+                    <a @click='isDelAlert=false'>取消</a>
+                </div>
+            </div>
+        </transition>
+        <div class="loading" v-show='loading'><img src="images/Spinner-1s-141px.svg"></div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                timer: null,
+                tip: '',
+                isDelAlert: false
+            },
+            computed: {
+                params() {
+                    return cuturl();
+                }
+            },
+            methods: {
+                init() {
+                    this.loading = false;
+                },
+                alertSure() {
+                    this.tip = '删除成功';
+                    this.isDelAlert = false;
+                }
+            },
+            mounted() {
+                this.$nextTick(()=>{
+                    this.init()
+                    console.log(this)
+                })
+            },
+            watch: {
+                tip(val) {
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(()=>{
+                        if (val) this.tip = ''
+                    }, 4000);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

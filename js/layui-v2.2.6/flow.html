@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>flow</title>
+	<link rel="stylesheet" href="layui/css/layui.css"> 
+	<script src="layui/layui.js"></script>
+
+</head>
+<body>
+	<ul id="demo"></ul>
+
+	<div class="site-demo-flow" id="demo2">
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/701696736/TB2PNl5ahQa61Bjy0FhXXaalFXa_!!701696736.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/162734861/TB2V5rsX_gc61BjSZFkXXcTkFXa_!!162734861.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i4/69476562/TB2htq4XTka61BjSszfXXXN8pXa_!!69476562.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i1/180558071/TB2sy6jXMQc61BjSZFGXXa1DFXa_!!180558071.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/701696736/TB2PNl5ahQa61Bjy0FhXXaalFXa_!!701696736.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i3/285892163/TB2qu2HX9Zb61BjSZPfXXaU.pXa_!!285892163.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/704998060/TB2S.gAXTgc61BjSZFkXXcTkFXa_!!704998060.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i3/117202952/TB25lckX_AX61Bjy0FcXXaSlFXa_!!117202952.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/162734861/TB2qijoX9Zb61BjSZPfXXaU.pXa_!!162734861.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i8/TB1jSSFNFXXXXcoXFXXYXGcGpXX_M2.SS2_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/162734861/TB2ylbsX37c61BjSZFKXXb6hFXa_!!162734861.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i2/117202952/TB2FdyZajUd61BjSZPcXXc6hXXa_!!117202952.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i4/777105914/TB2t.qbXZwb61Bjy0FfXXXvlpXa_!!777105914.jpg_400x400q90.jpg?t=1525660207695"></a>
+		<a><img lay-src="https://gw.alicdn.com/bao/uploaded/i4/TB1XzupNFXXXXcpXXXXXXXXXXXX_!!0-item_pic.jpg_400x400q90.jpg?t=1525660207695"></a>
+	</div>
+	<script>
+		layui.use(['jquery', 'flow'], function($, flow) {
+			flow.load({
+				elem: '#demo', //流加载容器
+				// scrollElem: '#LAY_demo1', //滚动条所在元素，一般不用填，此处只是演示需要。
+				done: function(page, next) { //执行下一页的回调
+
+					//模拟数据插入
+					// setTimeout(function() {
+						var lis = [];
+						for (var i = 0; i < 8; i++) {
+							lis.push('<li>' + ((page - 1) * 8 + i + 1) + '</li>')
+						}
+
+						//执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+						//pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+						next(lis.join(''), page < 10); //假设总页数为 10
+					// }, 500);
+				},
+
+				// isAuto: true,
+				// end: '没有更多了',
+				// isLazyimg: true,			//里面的的图片是否懒加载
+				// mb: 50          //到底  哪个位置 你触发done
+			});
+
+
+			flow.lazyimg({
+				elem: '#demo2 img',
+				// scrollElem: '#LAY_demo3' //滚动区域
+			});
+		});
+	</script>
+</body>
+</html>
+
+<style>
+	.site-demo-flow{overflow: hidden;}
+	.site-demo-flow a{
+		display: block;
+		width: 200px;
+		height: 200px;
+		float: left;
+	}
+	.site-demo-flow a img{width: 100%}
+
+</style>
+

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!-- 
+manifest="demo.appcache" 
+主要有：[CACHE MANIFEST] 直接下载该文件，无论是否有网络都可访问
+		[NETWORK] 不会被缓存
+		[FALLBACK]
+     demo.appcache文件内容如下：
+     	CACHE MANIFEST
+     		/theme.css
+     		/logo.gif
+     		/main.js
+     	NETWORK:
+			login.php
+     	意思是：上面3个文件下载缓存，login.php不缓存
+-->
+<html lang="zh-cn" manifest="demo.appcache">
+<head>
+	<meta charset="UTF-8">
+	<!-- 强制以谷歌内核打开显示;兼容IE低版本使用css3 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- 手机端数字不能成为电话链接 -->
+	<meta name="format-detection" content="telephone=no">
+	<!-- 不缓存本文件 -->
+<!-- 	<meta http-equiv="pragma" content="no-cache"> -->
+	<!-- 设置页面过期时间 -->
+<!-- 	<meta http-equiv="expires" content="Fri,12 Jan 2020 0:0:0 GMT">  -->   
+	<!-- 	进入该页面后1s跳转url地址 -->
+<!-- 	<meta http-equiv="refresh" content="1; "> -->
+	<meta name="keywords" content="keyword1,keyword2,keyword3">
+	<meta name="description" content="This is my page">
+	<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+
+	<title>H5</title>
+<!--[if lt IE9]> 
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script src="http://cdn.static.runoob.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+<![endif]-->
+	
+	<!-- 指定title前面的图标 前提1.gif要存在-->
+	<link rel="icon" href="1.gif" type="images/gif">
+	<!-- 推迟加载文件 ，先下载再-->
+	<script dafer></script>
+	<!-- 异步加载 ，下载同时读取下面代码-->
+	<script async></script>
+</head>
+<body>
+	<!-- 画布 -->
+	<h3><a media="tv" href="http://www.w3school.com.cn/tags/html_ref_canvas.asp">canvas</a>--></h3>
+	<canvas id="myCanvas" width="200" height="200"></canvas>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle='red';
+		ctx.fillRect(0,0,80,100);
+		
+		ctx.beginPath();
+		ctx.moveTo(0,0);
+		ctx.lineTo(200,100);
+		ctx.stroke();
+
+		ctx.beginPath();
+		//arc(x, y, r, start, stop)
+		ctx.arc(50,50,40,0,2*Math.PI);
+		ctx.stroke();
+	</script>
+
+    <!-- 
+    加在<audio>||<video>中
+    [autoplay自动播放] 
+    [controls控制按钮] 
+    [loop循环播放] 
+    [muted静音] 
+    [preload="auto/metadata/none"是否||如何被加载]
+	src
+	width
+	height
+    -->
+    <h3>音频视频</h3>
+	<audio>
+		<source src="" type="audio/mpeg"></source>
+	</audio>
+	<video>
+		<source src="" type="video/mp4"></source>
+	</video>
+	
+	<h3>input与form</h3>
+	datalist--><input list="browers" name="select">
+	<datalist id="browers">
+		<option value="Firefox"></option>
+		<option value="Chrome"></option>
+		<option value="Opera"></option>
+		<option value="Internet Explorer">&gt;IE9</option>
+		<option value="Safair">不支持</option>
+	</datalist><br />
+
+	<!-- keygen--> -->
+
+
+	<form action="">
+	color--><input type="color"><br />
+	date--><input type="date"><br />
+	datetime--><input type="datetime"><br />
+	email--><input type="email"><br />
+	number--><input type="number"><br />
+	month--><input type="month"><br />
+	tel--><input type="tel"><br />
+	time--><input type="time"><br />
+	url--><input type="url"><br />
+	week--><input type="week"><br />
+	search--><input type="search"><br />
+	submit--><input type="submit">
+	</form>
+
+
+	<div>
+		<h3>cookie的用法和缺陷</h3>
+		<ul>
+			<li>http请求头上会带着</li>
+			<li>4K的大小限制</li>
+			<li>主Domain污染：每次访问网络都会带上；安全隐患</li>
+		</ul>
+		<h3><a href="http://www.runoob.com/html/html5-webstorage.html">本地存储（localStorage和sessionStorage）API介绍</a></h3>
+		<ul>
+			<li>setItem(key, value)</li>
+			<li>getItem(key)</li>
+			<li>removeItem(key)</li>
+			<li>key(index)</li>
+			<li>clear(全部)</li>
+		</ul>
+	</div>
+	<h3>新特性</h3>
+	<!-- 有序列表 从36开始，倒序 -->
+	<ol start="6" reversed>
+		<li>初始化&lt;!doument html&gt;</li>
+		<li>""与''都可以使用</li>
+		<li>布尔值 &lt;input type="checkbox" checked&gt;</li>
+		<li>语法</li>
+		<li>新增标签：结构标签(布局)、表单标签、其它功能标签</li>
+		<li>新增属性：表单属性、链接属性、其它功能属性</li>
+		<li>标签语义化</li>
+	</ol>
+	<h3>全局属性</h3>
+	<ul>
+		<li>data-属性 ==> &lt;input data-type=""&gt; //定义type属性</li>
+		<li>hidden ==> &lt;label hidden&gt; //隐藏label标签</li>
+		<li>spellcheck ==> &lt;spellcheck="true"&gt; //语法出错时提示语</li>
+		<li>tabindex ==> &lt;tabindex="num"&gt; //根据num大小值，按tab键(按num顺序)切换表单</li>
+		<li>contentEditable ==> &lt;table contenteditable="true"&gt; //使&lt;table&gt;可以修改html()内容</li>
+	</ul>
+</body>
+</html>

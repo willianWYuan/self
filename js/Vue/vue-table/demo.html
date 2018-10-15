@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div class="page">
+            <span class="p6" @click='changePageFn(1)'>首页</span>
+            <span class="p6" @click='changePageFn(curr==1 ? 1 : curr-1)'>上一页</span>
+            <span 
+                v-for='(nums, index) in btnNums' 
+                :class='{on: index==half}'
+                @click='changePageFn(curr-half+index)'
+                >{{ curr-half+index }}</span>
+            <span class="p6" @click='changePageFn(curr==total ? total : curr+1)'>下一页</span>
+            <span class="p6" @click='changePageFn(total)'>尾页</span>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                btnNums: 7,
+                curr: 1,
+                total: 23,
+            },
+            computed: {
+                half() {
+                    var n = Math.floor(this.btnNums/2);
+                    if (this.curr <= n) n = this.curr - 1;
+
+                    if (this.curr > this.total - 3) n = this.btnNums - (this.total - this.curr + 1);
+                    return n;
+                }
+            },
+            methods: {
+                init() {
+                    if (this.btnNums > this.total) this.btnNums = this.total;
+                },
+                changePageFn(pageNums) {
+                    console.log(pageNums, this.half)
+                    //pageNums 就是点击的页码
+                    this.curr = pageNums   // 调取接口成功后  执行
+                }
+            },
+            mounted() {
+                this.$nextTick(()=>{
+                    this.init();
+                })
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    span {
+        display: inline-block;
+        border: 1px solid #ccc;
+        min-width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 28px;
+        box-sizing: border-box;
+        margin: 0 2px;
+        user-select: none;
+        cursor: pointer;
+    }
+    span.p6{padding: 0 6px;}
+    span.on{background-color: #ccc; color: white;}
+</style>

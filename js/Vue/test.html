@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for='(item, $index) in productList'>
+				<div :class='{"checked": true}'>{{ item | format('元') }}</div>
+				<input type="text" v-model='num'>
+				<img :src='item.images'>
+				<span @click='plus'>+</span><b>{{ count }}</b><span @click='reduce'></span>
+			</li>
+		</ul>
+	</div>
+	<script src="dist/vue.js"></script>
+	<script src="dist/vue-resource.min.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				productList: [],
+				totalmoney: 0,
+				num: 0,
+				count: 0,
+				checkAll: false
+			},
+			filters: {
+				format: function(val, type){
+					return '$' + val.toFixed(2) + type;
+				}
+			},
+			mounted: function(){
+				this.$nextTick(function(){
+					this.init();
+				})
+			},
+			methods: {
+				init: function(){
+					var _this = this;
+					this.$http.get('data.json', {openid: 001}).then(res => {
+						_this.productList = res;
+					})
+				},
+				plus: function(){
+					if (count <= 1) return;
+					this.count--;
+				},
+				reduce: function(){
+					this.count++;
+				},
+				checked: function(item){
+					if (typeof item.checked = "undefined"){
+						//Vue.set(item, 'checked', true);  全局注册
+						this.$set(item, 'checked', true);
+					}else{
+						item.checked = !item.checked
+					}
+				},
+				totalCheck: function(flag){   //是否全选
+					this.checkAll = flag;
+					this.productList.forEach(val => {
+						if (typeof item.checked == 'undefined') {
+							this.$set(item, 'checked', this.checkAll);
+						}else{
+							item.checked = this.checkAll;
+						}
+					})
+				}
+			}
+		});
+
+		Vue.filter('change', function(val, state){})  //全局过滤器
+	</script>
+</body>
+</html>

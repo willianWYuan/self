@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>panel</title>
+	<meta charset="utf-8">
+	<script src="jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="ScrollBar.js"></script>
+	<style>
+		html, body{height: 100%; margin: 0;}
+		#demo{ width: 100%; height: 100%; overflow: hidden; }
+		.inner{width: 100%}
+		.zUIpanelScrollBox,.zUIpanelScrollBar{ width:4px; top:4px; right:2px; border-radius:5px;}
+		.zUIpanelScrollBox{ background:black;opacity:0.1; filter:alpha(opacity=10);}
+		.zUIpanelScrollBar{ background:#fff;opacity:0.8; filter:alpha(opacity=80);}
+	</style>
+</head>
+<body>
+	<div id="demo">
+		<div class="inner">
+			<div class="box" style="background:#546B8B; height:300px;">滚动条在这里</div>
+			<div class="box" style="background:#5ACDE5; height:300px;">2</div>
+			<div class="box" style="background:#483362; height:300px;">3</div>
+			<div class="box" style="background:#723E4B; height:300px;">4</div>
+			<div class="box" style="background:#546B8B; height:300px;">5</div>
+		</div>
+	</div>
+	<script>	
+		$("#demo").panel({iWheelStep: 50});
+	</script>
+</body>
+</html>

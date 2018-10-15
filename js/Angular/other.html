@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>angularJS</title>
+	<!-- <link rel="stylesheet" href="../../CSS/reset.css"> -->
+	<style>
+		em{color: blue; font-style: normal;}
+		.red{color: red}
+		.orange{color: #f90}
+		input.ng-invalid{background: blue; color: white}
+	</style>
+</head>
+<body>
+<div ng-app="app" ng-controller="myctrl" ng-init="count=0">
+	<form action="">
+		firstName: <input type="text" ng-model="user.fn"><br>
+		lastName: <input type="text" ng-model="user.ln"><br>
+		form = {{user}}<br>
+		master = {{ master}}<br>
+		<a ng-click="kk()">reset</a>
+	</form>
+
+	<p ng-show="true">{{4 + 5 | currency: "￥"}}</p>
+	<p ng-class="{true: 'red', false: 'orange'}[false]">飒爽的</p>
+	<button ng-click="fn()">{{count}}</button>
+	<p>{{'获取当前页面地址：'+url}}</p>
+	<p>{{time}}</p>
+
+	<form action="" name="f1">
+		<p><input type="email" ng-model="name" name="email" required></p>
+		<p>
+			{{f1.email.$invalid}}
+			<em>$invalid: 不合法true; 合法false</em>
+		</p>
+		<p>
+			{{f1.email.$dirty}}
+			<em>$dirty: 发生变化为true；默认false</em>
+		</p>
+		<p>
+			{{f1.email.$touched}}
+			<em>$touched: 触碰过为true；默认false</em>
+		</p>
+		<p>
+			{{f1.email.$error}}
+			<em>$error: 错误为true；默认false</em>
+		</p>
+	</form>
+
+	<div><p ng-repeat="x in like | orderBy:'a'" ng-if="$index%2" ng-show="$index%2">{{$index + "、" + x }}</p></div>
+	<div class="directive">
+		<one></one>
+		<p class="two"></p>
+		<!-- directive: three -->
+		<p four></p>
+	</div>
+
+	<div class="while">
+		<select ng-model="siteSelect">
+			<option value="{{x.url}}" ng-repeat="x in sites">{{x.site}}</option>
+		</select>
+		<h4>你选择的是:{{siteSelect}}</h4>
+		<select ng-model="siteSE" ng-options="y.site for (x, y) in sites"></select>
+	</div>
+
+	<div ng-controller="CalcController">
+		<p>{{greet}}</p>
+		<p>{{result}}</p>
+		<!-- <p>{{square()}}</p> -->
+	</div>
+	
+	<div class="use" ng-controller="useCtrl">
+		<textarea name="" id="" cols="30" rows="10" ng
+		-model="message"></textarea>
+		<button ng-click="save()">save</button>
+		<button ng-click="clear()">clear</button>
+		<p>Number of characters left: <span ng-bind="left()"></span></p>
+	</div>
+</div>
+<!-- <script src="../jQuery/jquery-1.11.3.min.js"></script> -->
+<script src="dist/angular.js"></script>
+<script src="dist/angular-route.js"></script>
+<script>
+var app = angular.module('app',[]);
+app.controller('useCtrl', function($scope){
+	$scope.message = '';
+	$scope.left = function(){
+		return 100 - $scope.message.length;
+	};
+	$scope.clear = function(){
+		$scope.message = '';
+	}
+	$scope.save = function(){
+		alert($scope.message + " has Saved!");
+	}
+})
+
+
+//依赖注入
+app.provider('greeting', function(){
+	this.$get = function(){
+		return 9
+	}
+})
+app.value("defaultInput", 5);
+ 
+app.factory('MathService', function() {
+    var factory = {};
+ 
+    factory.multiply = function(a, b) {
+        return a * b;
+    }
+    return factory;
+});
+ 
+app.service('CalcService', function(MathService){
+    this.square = function(a) {
+        return MathService.multiply(a,a);
+    }
+});
+ 
+app.controller('CalcController', function($scope, CalcService, defaultInput, greeting) {
+    $scope.number = defaultInput;
+    $scope.result = CalcService.square(greeting);
+    console.log($scope.result);
+    $scope.square = function() {
+        $scope.result = CalcService.square(8);
+    }
+});
+
+
+
+
+
+app.controller('myctrl', function($scope, $rootScope, $location, $http, $timeout, $interval){
+	$scope.sites = [
+		{site: 'google', url: 'www.google.com'},
+		{site: 'runoob', url: 'www.runoob.com'},
+		{site: 'taobao', url: 'www.taobao.com'}
+	]
+	$scope.name = 'willian@139.com';
+	$scope.url = $location.absUrl();
+	$scope.fn = function(){
+		return $scope.name + '' + $scope.like;
+	};
+	$scope.html = '<h1>' + $scope.name + '</h>'
+	$http.get('welcome.json').then(function(res){
+		$timeout(function(){$scope.like = res.data;},2000);
+	});
+	// $interval(function(){
+	// 	$scope.time = new Date().toLocaleString()
+	// },1000);
+	$scope.master = {fn: "john", ln: "Doe"};
+	$scope.kk = function(){
+		$scope.user = angular.copy($scope.master);
+	};
+	$scope.kk();
+});
+
+// 自定义指令
+app.directive("one", function(){
+	return {
+		restrict: 'E',  // E C M A
+		template: "give"
+	};
+}).directive("two", function(){
+	return {
+		restrict: 'C',  // E C M A
+		template: '<h2>自定义指令</h2>'
+	};
+}).directive("three", function(){
+	return {
+		restrict: 'M',  // E C M A
+		replace: true,
+		template: '<h3>自定义指令</h3>'
+	};
+}).directive("four", function(){
+	return {
+		restrict: 'A',  // E C M A
+		template: '<h4>自定义指令</h4>'
+	};
+});
+
+var aa = function (){
+	return function(name){
+		console.info(name)
+	}
+}
+aa()('angular')
+</script>
+</body>
+</html>

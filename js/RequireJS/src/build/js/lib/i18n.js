@@ -1,0 +1,6 @@
+/**
+* @license i18n 2.0.6 Copyright jQuery Foundation and other contributors.
+* Released under MIT license, http://github.com/requirejs/i18n/LICENSE
+*/
+
+!function(){function o(o,n,a,e,r,t){n[o]&&(a.push(o),!0!==n[o]&&1!==n[o]||e.push(r+o+"/"+t))}function n(o,n,a,e,r){var t=e+n+"/"+r;require._fileExists(o.toUrl(t+".js"))&&a.push(t)}function a(o,n,e){var r;for(r in n)!n.hasOwnProperty(r)||o.hasOwnProperty(r)&&!e?"object"==typeof n[r]&&(!o[r]&&n[r]&&(o[r]={}),a(o[r],n[r],e)):o[r]=n[r]}var e=/(^.*(^|\/)nls(\/|$))([^\/]*)\/?([^\/]*)/;define(["module"],function(r){var t=r.config?r.config():{};return{version:"2.0.6",load:function(r,i,l,u){u=u||{},u.locale&&(t.locale=u.locale);var f,s,c,g=e.exec(r),v=g[1],p=g[4],h=g[5],d=p.split("-"),y=[],w={},j="";if(g[5]?(v=g[1],f=v+h):(f=r,h=g[4],p=t.locale,p||(p=t.locale="undefined"==typeof navigator?"root":(navigator.languages&&navigator.languages[0]||navigator.language||navigator.userLanguage||"root").toLowerCase()),d=p.split("-")),u.isBuild){for(y.push(f),n(i,"root",y,v,h),s=0;s<d.length;s++)c=d[s],j+=(j?"-":"")+c,n(i,j,y,v,h);i(y,function(){l()})}else i([f],function(n){var e,r=[];for(o("root",n,r,y,v,h),s=0;s<d.length;s++)e=d[s],j+=(j?"-":"")+e,o(j,n,r,y,v,h);i(y,function(){var o,e,t;for(o=r.length-1;o>-1&&r[o];o--)t=r[o],e=n[t],!0!==e&&1!==e||(e=i(v+t+"/"+h)),a(w,e);l(w)})})}}})}();

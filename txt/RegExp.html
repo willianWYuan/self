@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>RegExp</title>
+	<style>span{color: red;}</style>
+</head>
+<body>
+<input type="tel">
+	<ol id="used">
+		<!-- <li>/(^\s+)|(\s+$)/g</li> -->
+	</ol>
+	<ul id="root">
+		<li>字符类<br>
+			范围类【[a-zA-Z] [0-9]】<br>
+			预定义类【\d \D \s \S \w \W .】<br>
+			边界【^ $ \b \B】<br>
+			量词【? + * {n} {n,m} {n,}】<br>
+			非/贪婪模式【{n,m}?】<br>
+			分组<span>'2017-09-12'.replace(/(\d{4})-(\d{2})-(\d{2})/g, '$2-$3-$1')</span> $1代表引用第一个括号(表达式外)<br>
+			分组<span>'2017-09-12'.replace(/\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g)</span> \1代表第一个括号所引用的字符(表达式内)，这里是“-”<br>
+		</li>
+	</ul>
+	<script>
+	var str = '2017-09-12';
+	var ref1 = str.replace(/(\d{4})-(\d{2})-(\d{2})/g, '$2-$3-$1');
+	var ref2 = str.replace(/(\d){4}-(\d){2}-(\d){2}/g, '$2-$3-$1');
+	var ref4 = str.replace(/\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g, '*');
+	console.log(ref1,ref2,ref4);
+
+	var str2 = '    fs  ge   '
+	var ref3 = str2.replace(/(^\s+)|(\s+$)/g, '');
+	console.log(ref3);
+	
+
+	var data = [
+		{str: 'ab2c3d4', reg: /a?/g},
+		{str: 'ab2c3d4', reg: /ab?/g},
+		{str: 'a1b2c3d4', reg: /[a-z]/g},
+		{str: 'a1b2c3d4', reg: /[^a-z]/g},
+		{str: '[贪婪模式] 12346578', reg: /\d{3,6}/g},
+		{str: '[非贪婪模式] 2346578', reg: /\d{3,6}?/g},
+		{str: '[前瞻] a23b52v8', reg: /\w(?=\d)/g},
+		{str: '[前瞻] a23b52v8', reg: /\w(?!\d)/g},
+	]
+
+	for (var i = 0; i < data.length; i++){
+		var ospan = document.createElement('span');
+		ospan.innerHTML = data[i].str.replace(data[i].reg, '*').toString();
+		var text = data[i].str + '　' + data[i].reg + '　=> ';
+		var oli = document.createElement('li');
+		oli.innerHTML = text;
+		oli.appendChild(ospan);
+		root.appendChild(oli);
+	}
+
+	var useful = [
+		{str: '去掉前后所有空格', reg: /(^\s+)|(\s+$)/g}
+	]
+	for (var i = 0; i < useful.length; i++){
+		var ospan = document.createElement('span');
+		ospan.innerHTML = useful[i].reg.toString();
+		var text = useful[i].str + '　';
+		var oli = document.createElement('li');
+		oli.innerHTML = text;
+		oli.appendChild(ospan);
+		used.appendChild(oli);
+	}
+
+
+	String.prototype.hideTel = function () {
+		return this.replace(/(\d{3})(\d{4})(\d{4})/g, '$1****$3')
+	}
+	String.prototype.trim = function () {
+		return this.replace(/(^\s+)|(\s+$)/g, '')
+	}
+
+	
+	</script>
+</body>
+</html>

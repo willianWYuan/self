@@ -1,0 +1,94 @@
+﻿﻿> git init  //初始化
+
+> git add
+> git commit -m "备注语言"
+
+> git diff //查看此次修改和上次修改的区别
+> git status
+  -- (use "git add <file>..." to update what will be committed)
+  -- (use "git checkout -- <file>..." to discard changes in working directory)
+  -- change to be committed
+  -- nothing to commit, working tree clean 
+  -- (use "git push" to publish your local commits)
+  -- (use "git reset HEAD <file>..." to unstage)
+
+
+> git show <file>
+> git log
+> git log --stat <commitId> -p <file>  //查看文件更改的地方
+> git reflog                           //用来记录你的每一次本地操作命令
+
+
+> git reset --hard HEAD~1         // 【强制退回】  退回到前1版本
+> git reset --hard <commites id>  // 【强制退回】  退回某个id版本，  "版本号没必要写全，前几位就可以了，Git会自动去找。"
+
+> git reset HEAD <file>           // 【add~commit之间】  退回add之前
+> git checkout -- <file>          // 【add之前】         恢复最近更新的代码（命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令）
+
+
+
+
+> cat <file>   // 查看文件内容
+> git clone <address>
+> git push origin master
+
+
+
+
+
+
+
+
+> git checkout -b dev     //创建并切换dev，下面两个合起来操作
+	git branch dev	  //创建新分支dev
+	git checkout dev  //切换分支dev
+> git branch              //查看当前分支 	 
+> git merge dev           //先切换回到master分支，将分支dev合并到master
+> git branch -d dev       //删除分支dev
+> git push origin :dev    //删除远程分支dev
+
+
+
+
+
+
+
+
+
+
+
+$ git config --global user.name "lian" // you name
+$ git config --global user.email "lian@foxmail.com" //you email
+$ git config --global  --list // 查看当前用户(global)配置
+$ cd ~/.ssh                   // 检查是否存在ssh key
+$ ssh-keygen -t rsa -C "lian@foxmail.com"    // 生成密钥
+$ cat ~/.ssh/id_rsa.pub       // 查看公钥
+
+
+$ echo "# s" >> README.md
+$ git init
+$ git add -A
+$ git commit -m "first"
+$ git remote add origin git@github.com:willianWYuan/s.git
+$ git push -u origin master
+
+
+
+
+
+
+
+
+
+
+
+
+
+> git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+
+
+
+
+
+

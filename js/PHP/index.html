@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>php</title>
+    <style>
+        b{color: red; font-weight: normal;}
+        small{color: #093;}
+    </style>
+</head>
+<body></body>
+<script>
+    var $arr = [
+        {
+            title: '输出', 
+            cxt: [
+                {name: 'echo $var', zs: '可以输出多个str或int'},
+                {name: 'print()', zs: '只能输出一个str或int'},
+                {name: 'print_r()', zs: '输出复杂obj/arr'},
+                {name: 'var_dump()', zs: '输出变量类型'}
+            ]
+        },{
+            title: '变量/常量', 
+            cxt: [
+                {name: '$var'},
+                {name: 'global $var', zs: '将$x拉进局部(function)'},
+                {name: '$GLOBALS["var"]'},
+                {name: 'static $var=0;', zs: '直接在function里定义，不影响变量提升'},
+                {name: 'define("name", "常量定义与使用")', zs: '第3个参数为Boolean,不分大小写!'},
+                {name: '__LINE__', zs: '代码第几行'},
+                {name: '__FILE__', zs: '文件路径带文件名'},
+                {name: '__DIR__', zs: '文件路径'},
+                {name: '$_SERVER["PHP_SELF"]', zs: '输出路径文件名'},
+                {name: '$_SERVER["SERVER_NAME"]', zs: '输出域名'},
+                {name: '$_SERVER["HTTP_HOST"]', zs: '输出域名'},
+                {name: '$_SERVER["SERVER_SOFTWARE"]', zs: '服务器信息'},
+                {name: '$_SERVER["QUERY_STRING"]', zs: '?参数'},
+                {name: '$_REQUEST["fname"]', zs: '表单（点击submit）提交name="fname"的值'},
+                {name: '$_POST["fname"]', zs: '表单（点击submit）提交name="fname"的值'},
+                {name: '$_GET["fname"]', zs: '表单（点击submit）提交name="fname"的值'},
+                {name: 'foreach($_FILES["file"] as $x=>$item)', zs: '$_FILES["file"]（点击submit）提交name="file"的文件信息'},
+                {name: 'setcookie("user", "runoob", time()+3600); <br>$_COOKIE["user"]', zs: '位于&lt;html&gt;之前设置cookis值'},
+                {name: 'session_start(); <br>$_SESSION["views"] = 1; <br>unset($_SESSION["views"])', zs: '位于&lt;html&gt;之前启动,'},
+            ]
+        },{
+            title: 'String', 
+            cxt: [
+                {name: '&lt;&lt;&lt;EOF', zs: 'EOF首尾必须各占一行、前后不能有空格'},
+                {name: 'strlen(str)', zs: 'str.length'},
+                {name: 'stripos(str, "i", 0)', zs: '字符串中第一次出现的位置（大小写不敏感），从0位置开始查找'},
+                {name: 'strpos(str, "i", 0)', zs: '字符串中第一次出现的位置（大小写敏感），从0位置开始查找'},
+                {name: 'strripos(str, "i", 0)', zs: '字符串中最后一次出现的位置（大小写不敏感），从0位置开始查找'},
+                {name: 'strrpos(str, "i", 0)', zs: '字符串中最后一次出现的位置（大小写敏感），从0位置开始查找'},
+                {name: 'strrchr("Hello world!","world")', zs: 'str.match()；找到则返回world，否返回false'},
+                {name: 'substr(str, 0, 2)', zs: '返回截取str（从0开始的2个字符）<br><br>'},
+                
+                {name: 'join(" ",$arr)', zs: 'arr.join(" ")'},
+                {name: 'explode(".",$str)', zs: 'str.split(".")'},
+                // {name: 'str_split("Hello",1);', zs: '拆分成1字符为一个数组元素'},
+                {name: 'str_replace("world","Peter","Hello world!");<br><br>'},
+                
+                {name: 'strtolower(str)', zs: 'str.toLowerCase()'},
+                {name: 'strtoupper(str)', zs: 'str.toUpperCase()'},
+                {name: 'bin2hex($str)', zs: '把ASCII 字符 转换为 十六进制值'},
+                {name: 'hex2bin($str)', zs: '把十六进制值 转换为 ASCII 字符'},
+                // {name: 'convert_uuencode($str)', zs: '字符串编码'},
+                // {name: 'convert_uudecode($str)', zs: '解码'},
+                {name: 'htmlspecialchars($str)', zs: '"<"转译成"& lt;"，不编译标签'},
+                {name: 'htmlspecialchars_decode($str)', zs: '"& lt;"转译成"<"，能编译标签'},
+                {name: 'md5($str)<br><br>'},
+                
+                {name: 'ltrim("bbbHello","b")', zs: '去掉左边的b'},
+                // {name: 'parse_str("name=Peter&age=43", $arr)', zs: '没$arr: $name=Peter ..； 有$arr: 转为关联数组'},
+                // {name: 'str_pad($str,25,".")', zs: '将字符串长度（以.）加到长度为25'},
+                {name: 'str_repeat("6a",13)', zs: '将"6a"重复13次'},
+                {name: 'str_word_count($str, 0);', zs: '拆分单词； 0: 返回单词数量；1: 返回一个数组'},
+                {name: 'strrev($str);', zs: '反转字符串'},
+                {name: 'substr_count($str, "yes", 0, 5);', zs: '从0开始的5个字符，有多少个"yes"'},
+            ]
+        },{
+            title: '运算符',
+            cxt: [
+                {name: '+ - * / %', zs: '算数运算符'},
+                {name: '= += -= *= /= %= .=(拼接)', zs: '赋值运算符'},
+                {name: '++i i++ --i i--', zs: '递加减运算符'},
+                {name: 'x==y x===y x!=y x<>y x!==y x>y x<y x>=y x<=y', zs: '比较运算符'},
+                {name: 'x and y  x or y  x&&y  x||y  !x', zs: '逻辑运算符'},
+                {name: 'arr1+arr2(集合) arr1==arr2(具有相同key/val的数组) arr1===arr2(且顺序一样) arr1!=arr2 arr1<>arr2', zs: '数组运算符'},
+            ]
+        },{
+            title: 'Array', 
+            cxt: [
+                {name: 'strlen(str)', zs: 'str.length'},
+                {name: 'strpos(str, "i")', zs: 'str.search("i")'},
+                {name: '$arr=["a", 12, null]'},
+                {name: '$arr=array(4,55,11)'},
+                {name: '<b>$arr[]=67</b>', zs: 'arr.push(67)'},
+                {name: '$arr=array("joe"=>34, "bill"=>40)', zs: '关联数组'},
+                {name: '<b>foreach($arr as $x=>$val){}</b>', zs: '遍历关联数组'},
+                {name: 'is_array($arr)', zs: '判断是否为数组'},
+                {name: '<b>count</b>(arr)<br><br>'},
+                {name: '<b>sort</b>($arr)    ', zs: '对数组进行升序排列'},
+                {name: 'rsort($arr)   ', zs: '对数组进行降序排列'},
+                {name: 'asort($arr)   ', zs: '根据关联数组的值，对数组进行升序排列'},
+                {name: 'ksort($arr)   ', zs: '根据关联数组的键，对数组进行升序排列'},
+                {name: 'arsort($arr)  ', zs: '根据关联数组的值，对数组进行降序排列'},
+                {name: 'krsort($arr)  ', zs: '根据关联数组的键，对数组进行降序排列'},
+                {name: 'current($arr) ', zs: '返回数组中的当前元素的值'},
+                {name: 'next($arr)    ', zs: '将内部指针指向数组中的下一个元素，并输出'},
+                {name: 'prev($arr)    ', zs: '将内部指针指向数组中的上一个元素，并输出'},
+                {name: '<b>reset</b>($arr)   ', zs: '将内部指针指向数组中的第一个元素，并输出'},
+                {name: '<b>end</b>($arr)   ', zs: '将内部指针指向数组中的最后一个元素，并输出<br><br>'},
+                // {name: 'each($arr)    ', zs: '返回当前元素的键名和键值，并将内部指针向前移动<br><br>'},
+
+                // {name: 'array_change_key_case($age,(CASE_LOWER/CASE_UPPER))', zs: '将数组键转为小写/大写'},
+                {name: 'array_chunk($cars,4)', zs: '切割$cars,4个为一组的二维数组'},
+                {name: 'array_column($cars, column_key, index_key)', zs: '二维数组中，根据键，组成一个新数组; column_key(新值); index_key(新键)'},
+                {name: 'array_combine($arr1, $arr2)', zs: '（两个数组的长度一样时）以arr1为键，arr2为值的新数组'},
+                {name: 'array_count_values($arr)', zs: '统计（数组内每个）值出现次数'},
+                {name: 'array_diff($arr1,$arr2)', zs: '比较数组值，返回差值（去掉具有相同的值）'},
+                {name: 'array_diff_key($arr1,$arr2)', zs: '比较数组键，返回差值（去掉具有相同的键）'},
+                {name: 'array_diff_assoc($arr1,$arr2)', zs: '比较数组键和值，返回差值（去掉具有相同的键和值）<br><br>'},
+                {name: '<b>array_key_exists</b>(key, $arr)', zs: '数组是否存在键名，返回boolean'},
+                {name: '<b>array_keys</b>(key, $arr)', zs: '返回新数组，以键名为值'},
+                {name: '<b>array_merge</b>($arr1,$arr2)', zs: 'js:  arr.concat($a1,$a2)；最后覆盖前面一样的键名'},
+                {name: '<b>array_merge_recursive</b>($arr1,$arr2)', zs: 'js:  arr.concat($a1,$a2)；一样的键名，生成二维数组'},
+                {name: '<b>array_multisort</b>($arr1,SORT_ASC,$arr2,SORT_DESC)', zs: '排序（升降），同时处理多个数组'},
+                {name: '<b>array_pop</b>($arr)', zs: '删除最后一个'},
+                {name: '<b>array_shift</b>($arr)', zs: '删除第一个'},
+                {name: '<b>array_unshift</b>($arr,"blue","yellow")', zs: '头部插入'},
+                {name: '<b>array_push</b>($arr,"blue","yellow")', zs: '末尾插入'},
+                {name: '<b>array_search</b>("red",$arr)', zs: '找值，返回键名'},
+                {name: '<b>array_splice</b>($arr,0,2,$arr2)', zs: '从0开始删除2个元素; 前面插进入arr2（键名不要）'},
+                {name: '<b>in_array</b>("Runoob", $sites)', zs: '找值，返回boolean'},
+                {name: 'array_pad($arr, 4, "str")', zs: 'str插入数组，数组有4个元素'},
+                {name: 'array_slice($arr, 2, 4)', zs: '选取从2开始的4个元素'},
+                {name: 'array_product($arr)', zs: '计算数组的乘积'},
+                {name: 'array_rand($arr,3)', zs: '在arr中，随机生成只有3个元素的新数组'},
+                {name: 'array_replace($a1,$a2)', zs: 'a2覆盖a1对应个数的元素'},
+                {name: 'array_replace_recursive($a1,$a2)', zs: 'a2覆盖a1对应个数的元素，针对二维数组'},
+                {name: 'array_reverse($arr)', zs: '反转元素'},
+                {name: 'array_unique($arr)', zs: '生成新数组，去掉后面重复（值）元素'},
+                {name: 'array_values($arr)', zs: '生成新数组，键名改为索引'},
+                {name: 'array_walk($a, function($value,$key){ });', zs: '遍历数组，并进行操作'},
+                {name: 'array_walk_recursive($a, function($value,$key){ });', zs: '遍历数组，并进行操作，针对二维数组'},
+            ]
+        },{
+            title: '语法',
+            cxt: [
+                {name: 'if (boolean) {} else if (boolean) {} else {}'},
+                {name: 'switch($n) case'},
+                {name: 'while(boolean) do..while(boolean)'},
+                {name: 'for($i=0;$&lt;count($arr);$i++){}'},
+                {name: 'foreach($arr as $x=>$val){}'}
+            ]
+        },{
+            title: '对象',
+            cxt: [
+                {name: 'class Site{ 成员变量/函数 '},
+                {name: '&nbsp;&nbsp; var $url;', zs: '成员变量'},
+                {name: '&nbsp;&nbsp; function getUrl($str) { <b>$this->$url</b> = $str };', zs: '成员函数， "->"相当于js对象查找子属性'},
+                {name: '}; $obj = new Site'},
+                {name: 'class Site{ function <b>__construct</b>(参数){ $this->$url = 参数 } }; $obj = new Site<b>(参数)</b>', zs: '构造函数，不需要再定义成员变量'},
+                {name: 'class subSite extends Site{ function <b>__construct</b>(参数){ parent::__construct(); } };', zs: '子对象引入父对象的构造函数里的方法'},
+                {name: 'class Site{ function <b>__destruct</b>(){ }; ', zs: '析构函数，生命周期结束时执行'},
+                {name: 'class Child extends Site { 继承/替代Site成员 }', zs: '对象继承'},
+                {name: 'public(fn) protected(var) private', zs: '对象 成员访问限制'}
+            ]
+        },{
+            title: 'API',
+            cxt: [
+                {name: 'isset($x)', zs: '判断$x是否被定义，返回Boolean'},
+                {name: 'file_exists("upload/logo.png")', zs: '检测目录或文件是否存在'},
+                {name: 'move_uploaded_file($_FILES["file"]["tmp_name"], "upload/" . $_FILES["file"]["name"]);', zs: '将上传的文件保存在其它路径'},
+                {name: 'json_encode($arr)', zs: 'php转为json'},
+                {name: 'json_decode($json, true)', zs: 'json转为php, true返回数组/false返回对象'},
+            ]
+        },{
+            title: 'Math',
+            cxt: [
+                {name: 'abs($num)'},
+                {name: 'round($num)'},
+                {name: 'ceil($num)'},
+                {name: 'floor($num)'},
+                {name: 'rand()'},
+                {name: 'max()'},
+                {name: 'min()'},
+                {name: 'pi()'},
+                {name: 'pow(x,y)', zs: '返回 x 的 y 次方'},
+                {name: 'is_finite($num)', zs: '判断是否为有限值'},
+                {name: 'is_infinite($num)', zs: '判断是否为无限值'},
+                {name: 'is_nan($num)', zs: '判断是否为非数值'},
+            ]
+        }
+    ];
+
+    var body = document.getElementsByTagName('body')[0];
+    body.innerHTML = '';
+
+
+    $arr.forEach(item => {
+        var $div = document.createElement('div'),
+            $ul = document.createElement('ul'),
+            $h3 = document.createElement('h3');
+        $h3.innerHTML = item.title;
+        item.cxt.forEach(el => {
+            var $li = document.createElement('li'),
+                $span = document.createElement('span'),
+                $small = document.createElement('small');
+            //span
+            $span.innerHTML = el.name;
+            $li.appendChild($span);
+            //small
+            if (el.zs !== void 0) {
+                $small.innerHTML = '// ' + el.zs;
+                $small.style.marginLeft = 30 + 'px';
+                $li.appendChild($small);
+            };
+            //ul
+            $ul.appendChild($li);
+        });
+        $div.className = 'list';
+        $div.appendChild($h3);
+        $div.appendChild($ul);
+        body.appendChild($div);
+    });
+
+
+
+
+    (function(num) {
+        try {
+            aaalert('');
+            var x = num;
+            if (x == "") throw "empty";
+            if (x > 10) throw "too high";
+            if (x < 5) throw "too low";
+            if (isNaN(x)) throw "not a number";
+        } catch (err) {
+            console.log("Error: " + err + ".");
+        }
+    })('4a2');
+</script>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <title>信医健康</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+</head>
+<body class="bodywd">
+    <div class="page hasfooter" id="app" v-cloak>
+        <div class="page-cxt person">
+
+            <!-- top -->
+            <div class="person-top">
+                <a class="iconfont setup">&#xe640;</a>
+                <div class="images"><img id="userphoto" :src='userImages'></div>
+                <div class="user">
+                    <div class="name">点击登录</div>
+                    <div class="agent">普通会员</div>
+                </div>
+                <a class="iconfont qrcode">&#xe642;</a>
+            </div>
+
+
+            <!-- orderDetail -->
+            <div class="person-order">
+                <div class="person-order-item">      
+                    <div class="person-order-title">
+                        产品订单
+                        <span class="more">全部订单<i class="iconfont">&#xe652;</i></span>
+                    </div>
+                    <div class="person-order-list">
+                        <a><i class="iconfont green">&#xe645;</i>待付款</a>
+                        <a><i class="iconfont green">&#xe64d;</i>待收货</a>
+                        <a><i class="iconfont green">&#xe643;</i>待评价</a>
+                        <a><i class="iconfont green">&#xe64c;</i>已完成</a>
+                        <a><i class="iconfont green" style="font-size: 1.7rem">&#xe648;</i>退款/售后</a>
+                    </div>
+                </div>
+                <div class="person-order-item">      
+                    <div class="person-order-title">
+                        服务订单
+                        <span class="more">全部订单<i class="iconfont">&#xe652;</i></span>
+                    </div>
+                    <div class="person-order-list">
+                        <a><i class="iconfont red">&#xe649;</i>已预约</a>
+                        <a><i class="iconfont red">&#xe644;</i>待完成</a>
+                        <a><i class="iconfont red">&#xe643;</i>待评价</a>
+                        <a><i class="iconfont red">&#xe64c;</i>已完成</a>
+                        <a><i class="iconfont red" style="font-size: 1.7rem">&#xe648;</i>退款/售后</a>
+                    </div>
+                </div>
+                <div class="person-order-item">      
+                    <div class="person-order-list four">
+                        <a><i class="iconfont red" style="font-size: 1.8rem">&#xe653;</i>我的积分</a>
+                        <a><i class="iconfont green">&#xe63f;</i>好友分享</a>
+                        <a><i class="iconfont blue">&#xe64b;</i>我的收藏</a>
+                        <a><i class="iconfont cyan" style="font-size: 1.65rem">&#xe63e;</i>我的消息</a>
+                        <a><i class="iconfont lightgreen" style="font-size: 1.7rem">&#xe64a;</i>我的客服</a>
+                        <a><i class="iconfont violet">&#xe647;</i>地址管理</a>
+                        <a><i class="iconfont orange" style="font-size: 1.65rem">&#xe64e;</i>我的分润</a>
+                        <a><i class="iconfont deepred">&#xe646;</i>下级分润</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+
+        <!-- common -->
+        <transition name="fade">  
+            <div class="tip" v-show='tip'><span>{{ tip }}</span></div>
+        </transition>
+        <div class="loading" v-show='loading'><img src="../images/Spinner-1s-141px.svg"></div>
+
+
+
+    </div>
+    <script src="../js/app.common.js" async></script>
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                timer: null,
+                tip: '',
+
+                userImages: ''
+            },
+            computed: {
+
+            },
+            methods: {
+                init() {
+                            
+                    this.userImages = '../images/01.png';
+
+                    var imagesload = new Image();
+                    var imagesTagWidth = document.querySelector('.images').clientWidth;
+                    var userphoto = document.querySelector('#userphoto');
+                    imagesload.src = this.userImages;
+                    imagesload.onload = function(){
+                        if (this.width > this.height) {
+                            userphoto.style.width = this.width / this.height * imagesTagWidth + 'px';
+                            userphoto.style.height = imagesTagWidth + 'px';
+                        }
+                    }
+                    this.loading = false
+                }
+            },
+            mounted() {
+                this.$nextTick(()=>{
+                    this.init()
+                })
+            },
+            watch: {
+                tip(val) {
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(()=>{
+                        if (val) this.tip = ''
+                    }, 4000);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

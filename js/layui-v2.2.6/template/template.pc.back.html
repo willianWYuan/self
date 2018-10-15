@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <link rel="prefetch" href="js/layui/font/iconfont.woff?v=226_rc2">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <meta name="keywords" content="信医健康后台管理"> 
+    <meta name="description" content="信医健康后台管理">
+    <title>信医健康后台管理</title>
+    <link rel="stylesheet" href="js/layui/css/layui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="js/layui/images/face/0.gif">
+    <script src="js/layui/layui.js"></script>
+    <script src="js/back.common.js"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">信医健康后台管理</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a>控制台</a></li>
+                <li class="layui-nav-item"><a>商品管理</a></li>
+                <li class="layui-nav-item"><a>用户</a></li>
+                <li class="layui-nav-item">
+                    <a>其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>邮件管理</a></dd>
+                        <dd><a>消息管理</a></dd>
+                        <dd><a>授权管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a>
+                        <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
+                        贤心
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a>基本资料</a></dd>
+                        <dd><a>安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a>退了</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="aside">
+                    <li class="layui-nav-item"><a>用户管理</a></li>
+                    <li class="layui-nav-item"><a>代理管理</a></li>
+                    <li class="layui-nav-item"><a>供应商管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>供应商贷款管理</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item layui-nav-itemed"><a>产品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>品牌管理</a></dd>
+                        <dd><a>产品分类</a></dd>
+                        <dd><a>产品</a></dd>
+                        <dd><a>产品款式</a></dd>
+                        <dd><a>款式属性名</a></dd>
+                        <dd><a>款式属性值</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>服务管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>服务分类</a></dd>
+                        <dd><a>服务</a></dd>
+                        <dd><a>服务款式</a></dd>
+                        <dd><a>服务属性名</a></dd>
+                        <dd><a>服务属性值</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>财务管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>产品订单统计</a></dd>
+                        <dd><a>产品支付统计</a></dd>
+                        <dd><a>产品分润统计</a></dd>
+                        <dd><a>服务订单统计</a></dd>
+                        <dd><a>服务支付统计</a></dd>
+                        <dd><a>服务分润统计</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>统计管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>客单量统计</a></dd>
+                        <dd><a>访问量统计</a></dd>
+                        <dd><a>订单量统计</a></dd>
+                        <dd><a>收藏统计</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>搜索管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>产品关键字</a></dd>
+                        <dd><a>服务关键字</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>评论管理</a></li>
+                    <li class="layui-nav-item"><a>运营管理</a></li>
+                    <li class="layui-nav-item"><a>消息管理</a></li>
+                    <li class="layui-nav-item"><a>咨询管理</a></li>
+                    <li class="layui-nav-item"><a>系统管理</a></li>
+                    <li class="layui-nav-item"><a>系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a>后台用户管理</a></dd>
+                        <dd><a>操作日志</a></dd>
+                    </dl></li>
+                    <li class="layui-nav-item"><a>官网</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 控制全部弹出层 -->
+    <div class="totalAlert"></div>
+    <div class="subTotalAlert"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="page">
+            <div class="page-done clearfix">
+                <a class="layui-btn layui-btn-danger addbtn">添加</a>
+                <div class="layui-form">
+                    <input type="text" class="layui-input searchinputcxt" placeholder="请输入查询名称">
+                    <a class="layui-btn searchbtn">查询</a>
+                </div>
+            </div>
+            <div class="page-table-data">
+                <table id="tabledemo" lay-filter="tabledemo"></table>
+                <script type="text/html" id="barDemo">
+                   <a class="layui-btn layui-btn-sm" lay-event="edit">修改</a>
+                   <a class="layui-btn layui-btn-sm" lay-event="del">删除</a>
+                </script>
+            </div>
+        </div>
+
+        
+        <script type="text/html" id="addtext">
+            <!-- 里面不能出现id不然会 有id冲突 -->
+            <div class="eee">二级弹窗</div>
+        </script>
+        <script type="text/html" id="edittext"><div class="aaa">关闭</div></script>
+    </div>
+
+
+    <script>
+        layui.use(['jquery','layer','table'], function($, layer, table){
+            var Init =  function(json){
+                var ajaxdata = [
+                    {"id": 10000, "username": "user-0", "sex": "女", "city": "城市-0", "sign": "签名-0", "experience": 255, "logins": 24, "wealth": 82830700, "classify": "作家", "score": 57, "isShow": 1, "LAY_CHECKED": true }, 
+                    {"id": 10001, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10002, "username": "user-2", "sex": "男", "city": "城市-2", "sign": "签名-2", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 1, "LAY_CHECKED": true }, 
+                    {"id": 10002, "username": "user-2", "sex": "男", "city": "城市-2", "sign": "签名-2", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 1, "LAY_CHECKED": true }, 
+                    {"id": 10002, "username": "user-2", "sex": "男", "city": "城市-2", "sign": "签名-2", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 1, "LAY_CHECKED": true }, 
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10004, "username": "user-1", "sex": "男", "city": "城市-1", "sign": "签名-1", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 0 },
+                    {"id": 10005, "username": "user-2", "sex": "男", "city": "城市-2", "sign": "签名-2", "experience": 884, "logins": 58, "wealth": 64928690, "classify": "词人", "score": 27, "isShow": 1, "LAY_CHECKED": true } 
+                ];
+                table.render({
+                    elem: '#tabledemo',
+                    height: ajaxdata.length > 10 ? 'full-140' : 'auto',
+                    page: { curr: 1 }, 
+                    limit: 20, //每页默认显示的数量
+                    data: ajaxdata,
+                    cols: [[ //表头
+                        {field: 'username',   title: '用户名', width:80},
+                        {field: 'sex',        title: '性别',   width:80},
+                        {field: 'city',       title: '城市',   width:320},
+                        {field: 'sign',       title: '签名',   width:177},
+                        {field: 'experience', title: '积分',   width:80 },
+                        {field: 'score',      title: '评分',   width:80 },
+                        {field: 'classify',   title: '职业',   width:80},
+                        {field: 'wealth',     title: '财富',   width:135},
+                        {toolbar: '#barDemo', width: 160, title: '操作', align: 'center',}
+                    ]],
+                    done: function(arr){
+                        console.log(arr)
+                    }
+                });
+            };
+            Init({});
+
+
+
+
+
+
+            $('.addbtn').on('click', function(){
+                layeropen({
+                    domhtml: '#addtext'
+                })
+            })
+            var closeIndex;
+            $(document).on('click', '.eee', function(){
+                layeropen({
+                    domhtml: '#edittext',
+                    width: 400,
+                    height: 200,
+                    isSub: true,  //二级弹窗指令
+                    success: function(self, index){
+                        closeIndex = index
+                    }
+                })
+            })
+            $(document).on('click', '.aaa', function(){
+                layer.close(closeIndex)
+            })
+        });
+    </script>
+</body>
+</html>

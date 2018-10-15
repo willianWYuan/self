@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>quo.js</title>
+	<style>
+		*{margin: 0;padding: 0; user-select: none;}
+	</style>
+</head>
+<body>
+	<div id="box" style="width: 100vw; height: 100vh"></div>
+	<script src="quo.js"></script>
+	<!-- <script src="https://cdn.bootcss.com/quo.js/2.3.6/quo.js"></script> -->
+	<script>
+		// tap   hold   singleTap   doubleTap
+		// swipe  swiping  swipeLeft   swipeRight  swipeUp swipeDown    // 支持手机 pc
+		// pinch  pinching  pinchIn   pinchOut     // 手机缩放
+		// rotate  rotating  rotateLeft   rotateRight     // 手机旋转
+
+		$$('#box').swiping(function(touch){
+			console.log(touch)
+			var type = touch.type;
+			var str = '';
+
+			if (type.match(/pinch|rotat/)) {
+				for(var x in touch.currentTouch) {
+					if (!touch.currentTouch.hasOwnProperty(x)) continue;
+					var item = touch.currentTouch[x];
+					str += '<span>'+ item.x + ', ' + item.y +'</span><br>'
+				}
+			} else {
+				var item = touch.currentTouch
+				str += '<span>'+ item.x + ', ' + item.y +'</span><br>'
+			}
+			box.innerHTML = JSON.stringify(str)
+		})
+
+	</script>
+</body>
+</html>

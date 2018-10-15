@@ -1,0 +1,14 @@
+
+全局： npm install -g vue-cli
+
+
+工作区： 
+vue init webpack     在某目录创建项目 
+npm install 
+
+
+搭建成功后运行
+npm run dev 或 直接localhost:8080
+
+
+

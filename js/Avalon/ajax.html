@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>avalon</title>
+</head>
+<body>
+	<div ms-controller='test' id="app">
+		<ul>
+			<li ms-repeat='data'>{{$index}} -- {{ el.name }} -- {{ el.now }}</li>
+		</ul>
+	</div>
+	<script src="lib/jquery-1.11.3.min.js"></script>
+	<script src="lib/avalon.js"></script>
+	<script>
+		var vm = avalon.define({
+			$id: 'test',
+			data: []
+		});
+
+
+		$.ajax({
+			url: 'data.json',
+			type: 'get',
+			success: function(res){
+				console.log(res);
+				vm.data = res;
+			}
+		})
+	</script>
+</body>
+</html>

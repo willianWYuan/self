@@ -1,0 +1,14 @@
+{
+	"ok": true,
+	"message": "查询成功",
+	"data": [
+		{"cid": 1, "name": "推荐分类", "parentId": 0},
+		{"cid": 2, "name": "京东超市", "parentId": 0},
+		{"cid": 3, "name": "国际品牌", "parentId": 0},
+		{"cid": 4, "name": "奢侈品", "parentId": 0},
+		{"cid": 5, "name": "全球购", "parentId": 0},
+		{"cid": 6, "name": "唯品会", "parentId": 0},
+		{"cid": 7, "name": "男装", "parentId": 0},
+		{"cid": 8, "name": "女装", "parentId": 0}
+	]
+}

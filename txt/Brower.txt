@@ -1,0 +1,23 @@
+
+@charset="UTF-8"
+
+ctrl+shift+del   //清除缓存
+ctrl+shift+R   //清理缓存并刷新页面
+
+ctrl+T   //在浏览器创建新标签页
+ctrl+shift+T    //打开历史页面
+ctrl+w    //关闭当前页面
+
+ctrl+0         //100%显示页面
+ctrl+1...9     //对应切换页面
+ctrl+tab     //切换下一个页面
+
+【F11】  //全屏
+【F12】  //开发者界面
+
+alt+【left】   //后退一步页面
+alt+【right】   //前进一步页面
+
+ctrl+J   //打开下载页面
+ctrl+H   //打开历史记录界面
+ctrl+shift+B    //弹出书签栏

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <link rel="stylesheet" href="layui/css/layui.css"> 
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+	<input type="text" class="layui-input" id="date">
+	<script>
+		layui.use('laydate', function(laydate){
+            laydate.getEndDate('month', 'year');  //获取 year month月  的最后一天
+            laydate.render({
+                elem: '#date',  //指定元素
+                type: 'date',    //year month date time datetime 
+                //range: '~',     //选取时间范围
+                format: 'yyyy/MM/dd',    // y M d H m s
+                value: new Date(),  //初始值
+                calendar: true,
+
+                min: -7,
+                max: 7,
+                position: 'absolute',
+                change: function(value, date, endDate){ //监听日期被切换
+                    console.log(value, date, endDate)
+                },
+                showBottom: false,
+                theme: '#393D49',
+
+                mark: {
+                    '0-10-14': '生日'
+                    ,'0-12-31': '跨年' //每年12月31日
+                    ,'0-0-10': '工资' //每个月10号
+                    ,'2018-8-15': '' //具体日期
+                    ,'2018-4-26': '预发' //如果为空字符，则默认显示数字+徽章
+                    ,'2018-8-21': '发布'
+                },
+
+                ready: function(date){ console.log(date) },
+                done: function(value, date, endDate){
+                    console.log(value, date, endDate)
+                }
+            });
+        })
+	</script>
+</body>
+</html>

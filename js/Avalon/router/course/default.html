@@ -1,0 +1,40 @@
+<h1>首页</h1>
+<div ms-controller='model'>
+	<ul>
+		<li ms-repeat='data' data-repeat-rendered='F_ok'>{{ el }}</li>
+	</ul>
+	<img src="/QinZi/images/videoInit.png" alt="">
+	<h4>{{ url }}</h4>
+	<p>{{ isOk }}</p>
+</div>
+
+
+<script>
+	// avalon.config({
+	// 	interpolate:["$(",")"]
+	// });
+	avalon.ready(function(){
+		var vm = avalon.define({
+			$id: 'model',
+			data: ['a','b','c','d','e'],
+
+			isOk: '等待循环',
+			F_ok: function () {
+				//alert(1);
+				vm.isOk = '循环完成';
+			},
+			url: ''
+		});
+
+
+		vm.url = model.path;
+
+		if (model.path.indexOf('?') == -1) location.href = location.href + '?uid=001';
+		console.log(model.path)
+		if (model.path.indexOf('001') == -1) location.href = location.href.split('?')[0] + '?uid=001'
+
+
+		avalon.scan();
+	})
+</script>
+

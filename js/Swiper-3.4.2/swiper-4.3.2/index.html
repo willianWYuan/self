@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>swiper-4.3.2</title>
+    <link rel="stylesheet" href="css/swiper.css">
+    <script src="js/swiper.js"></script>
+    <style>
+        .swiper-slide img{width: 100%}
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg01.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg02.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg03.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg04.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg05.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg06.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg07.jpg"><div class="swiper-lazy-preloader"></div></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg08.jpg"></div>
+            <div class="swiper-slide"><img class="swiper-lazy" data-src="images/timg09.jpg"></div>
+        </div>
+        <div class="swiper-pagination1"></div>
+        <div class="swiper-pagination2"></div>
+    </div>
+    <script>
+    var mySwiper = new Swiper('.swiper-container', {
+        init: false,   //禁止一开始就执行     // 通过 mySwiper.init();  执行
+        loop : true,
+        speed: 1000,
+        autoplay: {
+            delay: 5000,   //静止时 呆2秒
+        },
+        pagination: {
+            el: '.swiper-pagination1, .swiper-pagination2'
+        },
+        observer:true,     //有DOM节点变化   自动初始化swiper
+        lazy: {
+            loadPrevNext: true,
+            // loadPrevNextAmount: 2,
+            loadOnTransitionStart: true,
+        },
+    })
+
+
+
+    var otherOption = {
+        //基本
+        width: 400, //你的slide宽度
+        height: 400, //你的slide宽度
+        autoplay: true,//可选选项，自动滑动
+        initialSlide :2,   //初始位置 为3
+        direction : 'vertical',   //horizontal 横向滚动  vertical 竖向滚动
+        speed:2300,   //active时间
+        preloadImages:false,  //默认为true，Swiper会强制加载所有图片。
+
+        // autoplay
+        autoplay: {
+            stopOnLastSlide: true,   //如果设置为true，当切换到最后一个slide时停止自动切换。（loop模式下无效）。
+            disableOnInteraction: true,   //用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+            reverseDirection: false,  //不开启反向自动轮播。
+        },
+        
+        // 布局
+        slidesPerView : 'auto',   //  'auto'  number    可视有多少个
+        slidesPerGroup : 3,       //设slidesPerView后   一次滑动3个
+        spaceBetween : 20,        //间距
+        slidesPerColumn: 2,       //显示2行
+        slidesPerColumnFill: 'column',       //  2列时，row第一行 123 第二行456       column第一行 135 第二行246
+        slidesOffsetBefore: 100,    //左偏移100个像素    
+        slidesOffsetAfter: 100,     //右偏移100个像素    
+
+        // free
+        freeMode : true,    //开启随意滑动
+        freeModeMomentum : false,    //卡顿滑动
+        freeModeMomentumRatio : 5,   //动量  值越大滑动越快   可为小数      这是秒数
+        freeModeMomentumVelocityRatio : 5,   //动量  值越大滑动越快         这是位移
+        freeModeSticky: true,     //  true贴合wrapper    false 不贴合
+
+        //loop
+        loop : true,  //能从最后一个  回到  第一个
+
+        //touch 触发条件
+        simulateTouch : false,   //禁止鼠标模拟    移动端还是可以触摸滑动
+        allowTouchMove: false,    //PC 移动  都不能触摸滑动
+        touchMoveStopPropagation : true,   //默认 阻止冒泡
+
+        //是否禁止切换
+        noSwiping : true,
+        noSwipingClass : 'stop-swiping',     //noSwiping : true时  .top-swiping禁止拖动
+        noSwipingSelector: 'input',          //noSwiping : true时  元素input禁止拖动
+        allowSlideNext : false,    //禁止向左滑动
+        allowSlidePrev : false,    //禁止向右滑动
+
+        //callback
+        on: {
+            init() { console.log('Swiper初始化了') },
+            touchStart(ev) {},
+            touchMove(ev) {},
+            touchEnd(ev) {},
+            slideChangeTransitionStart() {console.log(this.activeIndex, this.realIndex);},  //切换时  打印切换后的index
+            slideChangeTransitionEnd() {console.log('切换后，贴合wraper时触发');},
+            imagesReady() {console.log('所有图片加载完 执行');},
+            tap() {},   //点击时  触发
+            progress(progress){},    //拖动进度
+            reachBeginning(){},    //从第一个  回到  最后一个
+            reachEnd(){},    //从最后一个  回到  第一个
+            resize(){},    //窗口变化
+            slideNextTransitionStart(){}, //向左滑动时 触发
+            slidePrevTransitionStart(){}, //向右滑动时 触发
+            fromEdge(){},   //从边缘切换过来的
+            slideChange(){},
+            keyPress(){},   //键盘触发
+            lazyImageLoad: function(slide, image){
+                alert('延迟加载图片');
+                console.log(slide);//哪个slide里面的图片在加载
+                console.log(image);//哪个图片在加载
+            },
+            lazyImageReady: function(slide, image){
+                alert('图片延迟加载了');
+                console.log(slide);//哪个slide里面的图片加载了
+                console.log(image);//哪个图片加载了
+            }
+        },
+
+        // effect
+        effect: 'slide',   //slide 滑动       fade 淡出     cube 3D方块     coverflow 3D流    flip 3D翻转
+
+        // pagination
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',    //bullets 点点   fraction 页码   progressbar 进度条
+            hideOnClick :true,  //点击切换  显示隐藏
+            clickable :true,    //点击点点  切换页码
+            renderBullet: function (index, className) {   //自定义 bullets点点
+                return '<span class="' + className + '">' + (index + 1) + '</span>';
+            },
+            renderFraction: function (currentClass, totalClass) {  //自定义 fraction页码
+                return '<span class="' + currentClass + '"></span>' +
+                     ' of ' +
+                     '<span class="' + totalClass + '"></span>';
+            },
+        },
+
+        // navigation
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            hideOnClick: true,  //点击切换  显示隐藏
+            disabledClass: 'my-button-disabled',
+            hiddenClass:   'my-button-hidden',
+        },
+
+        // keyboard
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,  // 当swiper离开可视区域则无法切换。
+        },
+
+        // lazy
+        lazy: {
+            loadPrevNext: true,  //设置为true允许将延迟加载应用到最接近的slide的图片（前一个和后一个slide）。
+            loadPrevNextAmount: 2,  //设置在延迟加载图片时提前多少个slide。个数不可少于slidesPerView的数量。
+            loadOnTransitionStart: false,    //true: 过渡一开始就加载
+            elementClass: 'swiper-lazy',
+            loadingClass: 'swiper-lazy-loading',   //加载中的样式
+            loadedClass: 'swiper-lazy-loaded',  //加载完的样式
+            preloaderClass: 'swiper-lazy-preloader', //加载前的样式
+        },
+
+
+        //zoom
+        zoom : {
+            maxRatio: 5,
+            minRatio: 2,
+            toggle: false,   //是否允许双击 缩放
+        }
+    };
+
+
+
+
+    mySwiper.on('slideChangeTransitionEnd', function () {
+        if (mySwiper.autoplay.running) {} else {}    //判断是否正在滑动
+        console.log(this.activeIndex, this.realIndex)  //打印mySwiper 实例
+        // this.slidePrev()
+        // this.slideNext()
+        // this.slideTo(index, speed, runCallbacks)
+        // 
+        // mySwiper.detachEvents(); //移除所有slide监听事件
+        // mySwiper.attachEvents();//重新绑定所有监听事件。
+        // mySwiper.appendSlide('<div class="swiper-slide">Slide 10</div>')
+        // mySwiper.appendSlide([ '<div class="swiper-slide">Slide 10</div>', '<div class="swiper-slide">Slide 11</div>' ]);
+        // mySwiper.prependSlide('<div class="swiper-slide">Slide 0</div>')
+        // mySwiper.prependSlide([ '<div class="swiper-slide">Slide 1</div>', '<div class="swiper-slide">Slide 2</div>' ]);
+        // mySwiper.addSlide(1, '<div class="swiper-slide">Slide 10"</div>')  //指定位置添加
+        // mySwiper.addSlide(1, [ '<div class="swiper-slide">Slide 10"</div>', '<div class="swiper-slide">Slide 11"</div>' ]);
+        // mySwiper.removeSlide(0); //移除第一个
+        // mySwiper.removeSlide([0, 1]); //移除第一个和第二个
+        // mySwiper.removeAllSlides()    //移除所有
+        // mySwiper.pagination.render()   //分页器 重渲染
+        // mySwiper.pagination.update()
+        // 
+        // mySwiper.zoom.enabled  //判断是否开启zoom
+        // mySwiper.zoom.enable();   //开启缩放
+        // mySwiper.zoom.disable()   //禁止缩放
+        // mySwiper.zoom.in();   放大
+        // mySwiper.zoom.out()   缩小
+    });
+
+    mySwiper.init();   //现在才初始化
+    </script>
+        
+</body>
+</html>

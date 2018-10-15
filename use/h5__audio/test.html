@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Document</title>
+	<style>
+	body{padding: 30px;}
+		#Audio{display: none}
+		#progress{height: 2px; background: #ccc; width: 200px; margin: 100px 0;}
+		#progress i{
+			display: block;
+			background: #f90;
+			height: 100%;
+			width: 0px;
+			/*transition: width .5s linear;*/
+			position: relative;
+		}
+		#progress i b{
+			position: absolute;
+			top: -25px;
+			left: 0;
+			width: 50px;
+			height: 50px;
+			border-radius: 50px;
+			/*transition: left .5s linear;*/
+		}
+		#progress i b:after{
+			content: "";
+			position: absolute;
+			top: 20px;
+			left: 0;
+			width: 12px;
+			height: 12px;
+			border-radius: 10px;
+			background: #f90;
+		}
+		.btn{overflow: hidden; margin-top: 10px;}
+		a{
+			background: #f90;
+			color: white;
+			padding: 6px 10px;
+			margin-right: 6px; 
+			border-radius: 4px; 
+			cursor: pointer; 
+			display: block;
+			text-align: center;
+			margin-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+	<audio controls id="Audio" controls="false">
+		<source src="pt.mp3" />
+	</audio>
+
+	<div id="progress">
+		<i><b></b></i>
+	</div>
+
+	<div class="btn">
+		<a onclick="PS_Audio();">playing / stopped</a>
+		<a onclick="Play_Audio();">playing</a>
+		<a onclick="Stop_Audio();">stopped</a>
+		<a onclick="End_Audio();">Ending</a>
+	</div>
+
+	<p id="hh"></p>
+
+	<script src="https://cdnjscn.b0.upaiyun.com/libs/jquery/1.8.3/jquery.min.js"></script>		
+	<script src="audio.js" defer></script>
+</body>
+</html>

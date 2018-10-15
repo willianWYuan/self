@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ZYUI</title>
+	<meta name="viewport" content="initial-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../js/ZYUI.js"></script>
+</head>
+<body>
+	<div class="Page">
+		<div class="page-alert-mask"></div>
+		<div class="page-alert alert-1">
+            <div class="alert-text">this is a tip1!</div>
+            <a class="alert-ok"  onclick="UI.alert()">确定</a>
+        </div>
+		<ul class="NavList">
+			<li class="default">
+				<a><b>列表</b><span>4</span></a>
+				<a><b>标签页</b><span class="bg">14</span></a>
+				<a><b>卡片</b><span></span></a>
+			</li>
+			<li class="divlistshow">
+				<div class="divitem">
+					<a><b>列表</b><span>4</span></a>
+					<div class="iteminner">
+
+					</div>
+				</div>
+				<div class="divitem">
+					<a><b>标签页</b><span class="bg">14</span></a>
+					<div class="iteminner">
+	
+					</div>
+				</div>
+
+
+				<script>
+					var aitem = UI.getEle('.divlistshow').getElementsByTagName('a')
+					for (var i = 0; i < aitem.length; i++) {
+						aitem[i].onclick = function(){
+							this.nextElementSibling.setAttribute('iteminnerhide','');
+							var itemflog = this.nextElementSibling.getAttribute('iteminnershow')
+							if (itemflog == null) this.nextElementSibling.setAttribute('iteminnershow','');
+							else this.nextElementSibling.removeAttribute('iteminnershow');
+						}
+					}
+				</script>
+			</li>
+
+			<li class="messanim">
+				<div class="msg-item"><b></b>
+					<div class="msg-item-info">
+						<div class="msg-info-title">106962649439</div>
+						<p class="msg-info-txt">尊敬的1824918251898客户，截止日期03月21日</p>
+					</div>
+					<div class="msg-item-done">
+						<a class="delinfo" onclick="UI.alert(1)">删除</a>
+						<a class="editinfo">隐藏<br>提醒</a>
+					</div>
+				</div>
+				<div class="msg-item"><b></b>
+					<div class="msg-item-info">
+						<div class="msg-info-title">10086</div>
+						<p class="msg-info-txt">尊敬的1824918251898客户，截止日期03月21日</p>
+					</div>
+					<div class="msg-item-done">
+						<a class="delinfo">删除</a>
+						<a class="editinfo">隐藏<br>提醒</a>
+					</div>
+				</div>
+				<div class="msg-item"><b></b>
+					<div class="msg-item-info">
+						<div class="msg-info-title">106900073601119</div>
+						<p class="msg-info-txt">尊敬的1824918251898客户，截止日期03月21日尊敬的1824918251898客户，截止日期03月21日</p>
+					</div>
+					<div class="msg-item-done">
+						<a class="delinfo">删除</a>
+						<a class="editinfo">隐藏<br>提醒</a>
+					</div>
+				</div>
+				<script>
+					(function(w) {
+						'use strict';
+						var fs = parseFloat(UI.getStyle(document.getElementsByTagName('html')[0], 'font-size'));
+						var msgitem = document.querySelectorAll('.msg-item');
+						var recordx = {
+							ex: 0,
+							mx: 0
+						};
+						for (var i = 0; i < msgitem.length; i++) {
+							UI.touch(msgitem[i], {
+								touchevent: 'down',
+								done: function(ts) {
+									this.style.transition = this.querySelector('.editinfo').style.transition = this.querySelector('.delinfo').style.transition = 'none';
+
+									recordx.ex = this.getAttribute('style') == null ? 0 : parseFloat(this.getAttribute('style').replace(/[^\d|\.]/g, ''));
+								}
+							}, {
+								touchevent: 'move',
+								done: function(tm) {
+									if (Math.abs(tm.move_x - tm.start_x) / 2 > Math.abs(tm.move_y - tm.start_y)) {
+
+										recordx.mx = (tm.start_x - tm.move_x) / fs / 2 + recordx.ex;
+										if (recordx.mx >= 3.6) recordx.mx = 3.6;
+										if (recordx.mx <= 0) recordx.mx = 0;
+
+										this.querySelector('.editinfo').style.width = this.querySelector('.delinfo').style.width = recordx.mx + 'rem';
+										this.style.transform = 'translateX(' + (-2 * recordx.mx) + 'rem)';
+									}
+								}
+							}, {
+								touchevent: 'up',
+								done: function(te) {
+									if (Math.abs(te.move_x - te.start_x) / 2 < Math.abs(te.move_y - te.start_y)) recordx.mx = 0;
+									else recordx.mx = te.end_x < te.start_x ? 3.6 : 0;
+
+									this.style.transition = this.querySelector('.editinfo').style.transition = this.querySelector('.delinfo').style.transition = 'all .2s ease-in-out';
+
+									this.querySelector('.editinfo').style.width = this.querySelector('.delinfo').style.width = recordx.mx + 'rem';
+									this.style.transform = 'translateX(' + (-2 * recordx.mx) + 'rem)';
+								}
+							}, {
+								touchevent: 'stop',   //禁止冒泡  元素
+								el: msgitem[i].getElementsByTagName('a')
+							});
+						}
+					})(this);
+				</script>
+			</li>
+
+			<li class="product" id="productList" jdtAction>
+				<div class="product-list">
+					<i class="photo"><img src="../img/02.jpg"></i>
+					<div class="nav-options">
+						<h3>标题</h3>
+						<p>大是大非泥石流等复活你就拉水泥房间爱疯啥商品房哈珀看是否就拉水泥房间爱疯非泥石流等复活你就</p>
+						<div class="nav-options-price">
+							<span class="xj">4499</span>
+							<span class="yj">4800</span>
+						</div>
+						<div class="nav-options-done">
+							<span class="nav-btn">去抢购</span>
+							<span class="status">
+								<b>60%</b>
+								<i class="jdt"><i></i></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="product-list">
+					<i class="photo"><img src="../img/02.jpg"></i>
+					<div class="nav-options">
+						<h3>标题</h3>
+						<p>大是大非泥石流等复活你就拉水泥房间爱疯啥商品房哈珀看是否就拉水泥房间爱疯非泥石流等复活你就</p>
+						<div class="nav-options-price">
+							<span class="xj">4499</span>
+							<span class="yj">4800</span>
+						</div>
+						<div class="nav-options-done">
+							<span class="nav-btn">去抢购</span>
+							<span class="status">
+								<b>89%</b>
+								<i class="jdt"><i></i></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				<script>
+					setTimeout(function() {
+						var isAct = UI.getEle('#productList');
+						if (isAct != null && isAct.getAttribute('jdtAction') != null) {
+							UI.getEle('.jdt').forEach(function(item) {
+								var ju = item.previousElementSibling.innerHTML;
+								item.children[0].style.width = ju;
+							})
+						}
+					}, 200);
+				</script>
+			</li>
+
+			<li class="nav-radios" onclick="UI.radio(event, this);">
+				<div class="nav-radios-list on">
+					<label class="radios-icon"></label>
+					<div class="radios-options">
+						单选1
+					</div>
+				</div>
+				<div class="nav-radios-list">
+					<label class="radios-icon"></label>
+					<div class="radios-options">
+						单选2
+					</div>
+				</div>
+			</li>
+
+			<li class="nav-radios" onclick="UI.checkbox(event, this);">
+				<div class="nav-radios-list on">
+					<label class="radios-icon"></label>
+					<div class="radios-options">
+						多选1
+					</div>
+				</div>
+				<div class="nav-radios-list">
+					<label class="radios-icon"></label>
+					<div class="radios-options">
+						多选2
+					</div>
+				</div>
+			</li>
+
+
+			<li class="card-wx">
+				<div class="card-wx-list">
+					<div class="card-wx-left">
+						<img src="../img/01.jpg">
+					</div>
+					<div class="card-wx-cxt">
+						<div class="info-options">
+							<b class="name">william_join站位于安宁</b>
+							<p class="cxt">
+								发送到发送到不是个粉色广东省都是公司的各色的身份果绿色都不是是的是的干涉松岛枫色擦擦擦
+							</p>
+						</div>
+						<ul class="card-wx-img">
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+						</ul>
+						<div class="card-wx-done">
+							<span class="wx-addr">中国</span>
+						</div>
+						<div class="card-wx-done">
+							<span class="wx-time">2018/03/28 10:20</span>
+							<div class="ClickReply">评论</div>
+						</div>
+						<ul class="card-wx-reply">
+							<li>
+								<span class="reply-name">奥舒服哈</span>
+								<p class="reply-cxt">还不错</p>
+							</li>
+							<li>
+								<span class="reply-name">退给你</span>
+								<p class="reply-cxt">嗯</p>
+							</li>
+							<li>
+								<span class="reply-name">退给你</span>
+								<p class="reply-cxt">嗯</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-wx-list">
+					<div class="card-wx-left">
+						<img src="../img/01.jpg">
+					</div>
+					<div class="card-wx-cxt">
+						<div class="info-options">
+							<b class="name">william_join站位于安宁</b>
+							<p class="cxt">
+								发送到发送到不是个粉色广东省都是公司的各色的身份果绿色都不是是的是的干涉松岛枫色擦擦擦
+							</p>
+						</div>
+						<ul class="card-wx-img" hidden>
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+							<li><img src="../img/03.jpg"></li>
+						</ul>
+						<div class="card-wx-done">
+							<span class="wx-addr">中国</span>
+						</div>
+						<div class="card-wx-done">
+							<span class="wx-time">2018/03/28 10:20</span>
+							<div class="ClickReply">评论</div>
+						</div>
+						<ul class="card-wx-reply" hidden>
+							<li>
+								<span class="reply-name">奥舒服哈</span>
+								<p class="reply-cxt">还不错</p>
+							</li>
+							<li>
+								<span class="reply-name">退给你</span>
+								<p class="reply-cxt">嗯</p>
+							</li>
+							<li>
+								<span class="reply-name">退给你</span>
+								<p class="reply-cxt">嗯</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</li>
+
+
+			<li class="card-qq">
+				<div class="card-qq-list">
+				    <div class="card-qq-title">
+				        <div class="info-qq">
+				            <img src="../img/01.jpg">
+				        </div>
+				        <div class="info-options">
+				            <b class="name">william_join站位于安宁</b>
+				            <span class="time">2018/03/28 10:20</span>
+				        </div>
+				    </div>
+				    <div class="card-qq-cxt">
+				    	<p class="qq-text">的不少地方很方便发货的那地方发的好地方很多方法东方红豆腐干豆腐三四个是</p>
+				        <ul class="imgList">
+				        	<li><img src="../img/03.jpg"></li>
+				        	<li><img src="../img/03.jpg"></li>
+				        	<li><img src="../img/03.jpg"></li>
+				        </ul>
+				    </div>
+				    <div class="card-qq-done">
+				    	<span class="qq-looknum">浏览129次</span>
+				    	<div class="ClickReply">
+				    		<span>赞</span>
+				    		<span>评论</span>
+				    		<span>分享</span>
+				    	</div>
+				    </div>
+				    <ul class="card-qq-zan">
+				    	<li><span>的故事的故事</span></li>
+				    	<li><span>有空给你 </span></li>
+				    	<li><span>皮问他们的可能是 </span></li>
+				    	<li><span>皮问他 </span></li>
+				    	<li><span>of商品房怕 </span></li>
+				    	<li><span>的可能 </span></li>
+				    	<li><span>的故 </span></li>
+				    </ul>
+				    <ul class="card-qq-reply">
+				    	<li>
+				    		<span class="reply-name">奥舒服哈</span>
+				    		<p class="reply-cxt">还不错</p>
+				    	</li>
+				    	<li>
+				    		<span class="reply-name">退给你</span>
+				    		<p class="reply-cxt">嗯</p>
+				    	</li>
+				    	<li>
+				    		<span class="reply-name">退给你</span>
+				    		<p class="reply-cxt">嗯</p>
+				    	</li>
+				    </ul>
+				    <div class="card-qq-discuss">
+				    	<input type="text" placeholder="评论">
+				    </div>
+			    </div>
+			    <div class="card-qq-list">
+				    <div class="card-qq-title">
+				        <div class="info-qq">
+				            <img src="../img/01.jpg">
+				        </div>
+				        <div class="info-options">
+				            <b class="name">william_join站位于安宁</b>
+				            <span class="time">2018/03/28 10:20</span>
+				        </div>
+				    </div>
+				    <div class="card-qq-cxt">
+				    	<p class="qq-text">的不少地方很方便发货的那地方发的好地方很多方法东方红豆腐干豆腐三四个是</p>
+				        <ul class="imgList">
+				        	<li><img src="../img/03.jpg"></li>
+				        	<li><img src="../img/03.jpg"></li>
+				        	<li><img src="../img/03.jpg"></li>
+				        </ul>
+				    </div>
+				    <div class="card-qq-done">
+				    	<span class="qq-looknum">浏览129次</span>
+				    	<div class="ClickReply">
+				    		<span>赞</span>
+				    		<span>评论</span>
+				    		<span>分享</span>
+				    	</div>
+				    </div>
+				    <ul class="card-qq-zan">
+				    	<li><span>的故事的故事</span></li>
+				    	<li><span>有空给你 </span></li>
+				    	<li><span>皮问他们的可能是 </span></li>
+				    	<li><span>皮问他 </span></li>
+				    	<li><span>of商品房怕 </span></li>
+				    	<li><span>的可能 </span></li>
+				    	<li><span>的故 </span></li>
+				    </ul>
+				    <ul class="card-qq-reply">
+				    	<li>
+				    		<span class="reply-name">奥舒服哈</span>
+				    		<p class="reply-cxt">还不错</p>
+				    	</li>
+				    	<li>
+				    		<span class="reply-name">退给你</span>
+				    		<p class="reply-cxt">嗯</p>
+				    	</li>
+				    	<li>
+				    		<span class="reply-name">退给你</span>
+				    		<p class="reply-cxt">嗯</p>
+				    	</li>
+				    </ul>
+				    <div class="card-qq-discuss">
+				    	<input type="text" placeholder="评论">
+				    </div>
+			    </div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

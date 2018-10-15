@@ -1,0 +1,478 @@
+[{
+	"en": "ShangHaiPuDongGuoJi",
+	"name": "上海浦东国际机场"
+}, {
+	"en": "ShenChouBaoAnGuoJi",
+	"name": "深圳宝安国际机场"
+}, {
+	"en": "ShenYangTaoXianGuoJi",
+	"name": "沈阳桃仙国际机场"
+}, {
+	"en": "ShiJiaZhuangZhengDingGuoJi",
+	"name": "石家庄正定国际机场"
+}, {
+	"en": "SuNanShuoFangGuoJi",
+	"name": "苏南硕放国际机场"
+}, {
+	"en": "TaCheng",
+	"name": "塔城机场"
+}, {
+	"en": "TaiYuanWuSuGuoJi",
+	"name": "太原武宿国际机场"
+}, {
+	"en": "TaiZhouLuQiao-HuangYanJiChang",
+	"name": "台州路桥机场"
+}, {
+	"en": "TangShanSanNvHe",
+	"name": "唐山三女河机场"
+}, {
+	"en": "TengChongTuoFeng",
+	"name": "腾冲驼峰机场"
+}, {
+	"en": "TianJinBHaiGuoJi",
+	"name": "天津滨海国际机场"
+}, {
+	"en": "TongLiao",
+	"name": "通辽机场"
+}, {
+	"en": "TongRenFengHuang",
+	"name": "铜仁凤凰机场"
+}, {
+	"en": "WanZhouWuQiao",
+	"name": "万州五桥机场"
+}, {
+	"en": "WeiFang",
+	"name": "潍坊机场"
+}, {
+	"en": "WeiHaiDaShuiBo",
+	"name": "威海大水泊机场"
+}, {
+	"en": "WenShanPuZheHei",
+	"name": "文山普者黑机场"
+}, {
+	"en": "WenZhouYongQiangGuoJi",
+	"name": "温州永强国际机场"
+}, {
+	"en": "WuHai",
+	"name": "乌海机场"
+}, {
+	"en": "AKeSu",
+	"name": "阿克苏机场"
+}, {
+	"en": "ALaShanKou",
+	"name": "阿拉山口机场"
+}, {
+	"en": "ALeTai",
+	"name": "阿勒泰机场"
+}, {
+	"en": "ALiKunSha",
+	"name": "阿里昆莎机场"
+}, {
+	"en": "AnQingTianZhuShan",
+	"name": "安庆天柱山机场"
+}, {
+	"en": "AoMenGuoJi",
+	"name": "澳门国际机场"
+}, {
+	"en": "BaoShan",
+	"name": "保山机场"
+}, {
+	"en": "BaoTou",
+	"name": "包头机场"
+}, {
+	"en": "BeiHaiFuCheng",
+	"name": "北海福成机场"
+}, {
+	"en": "BeiJingNanYuan",
+	"name": "北京南苑机场"
+}, {
+	"en": "BeiJingShouDuGuoJi",
+	"name": "北京首都国际机场"
+}, {
+	"en": "ChangBaiShan",
+	"name": "长白山机场"
+}, {
+	"en": "ChangChunLongJiaGuoJi",
+	"name": "长春龙嘉国际机场"
+}, {
+	"en": "ChangDeTaoHuaYuan",
+	"name": "常德桃花源机场"
+}, {
+	"en": "ChangDuBangDa",
+	"name": "昌都邦达机场"
+}, {
+	"en": "ChangShaHuangHuaGuoJi",
+	"name": "长沙黄花国际机场"
+}, {
+	"en": "ChangZhiWangCun",
+	"name": "长治王村机场"
+}, {
+	"en": "DanDongLangTou",
+	"name": "丹东浪头机场"
+}, {
+	"en": "DeHongMangShi",
+	"name": "德宏芒市机场"
+}, {
+	"en": "DiQingXiangGeLiLa",
+	"name": "迪庆香格里拉机场"
+}, {
+	"en": "DongYing",
+	"name": "东营机场"
+}, {
+	"en": "DunHuang",
+	"name": "敦煌机场"
+}, {
+	"en": "EErDuoSi",
+	"name": "鄂尔多斯机场"
+}, {
+	"en": "EnShiXuJiaPing",
+	"name": "恩施许家坪机场"
+}, {
+	"en": "ErLianHaoTeSaiWuSuGuoJi",
+	"name": "二连浩特赛乌苏国际机场"
+}, {
+	"en": "FuYangXiGuan",
+	"name": "阜阳西关机场"
+}, {
+	"en": "FuZhouChangLeGuoJi",
+	"name": "福州长乐国际机场"
+}, {
+	"en": "GanZhouHuangJin",
+	"name": "赣州黄金机场"
+}, {
+	"en": "GeErMu",
+	"name": "格尔木机场"
+}, {
+	"en": "GuYuanLiuPanShan",
+	"name": "固原六盘山机场"
+}, {
+	"en": "GuangYuanPanLong",
+	"name": "广元盘龙机场"
+}, {
+	"en": "GuangZhouBaiYunGuoJi",
+	"name": "广州白云国际机场"
+}, {
+	"en": "GuiLinLiangJiangGuoJi",
+	"name": "桂林两江国际机场"
+}, {
+	"en": "GuiYangLongDongBaoGuoJi",
+	"name": "贵阳龙洞堡国际机场"
+}, {
+	"en": "HaErBinTaiPingGuoJi",
+	"name": "哈尔滨太平国际机场"
+}, {
+	"en": "HaMi",
+	"name": "哈密机场"
+}, {
+	"en": "HaiKouMeiLanGuoJi",
+	"name": "海口美兰国际机场"
+}, {
+	"en": "HaiLaErDongShanGuoJi",
+	"name": "海拉尔东山国际机场"
+}, {
+	"en": "HanDan",
+	"name": "邯郸机场"
+}, {
+	"en": "HanZhong",
+	"name": "汉中机场"
+}, {
+	"en": "HangZhouXiaoShanGuoJi",
+	"name": "杭州萧山国际机场"
+}, {
+	"en": "HeFeiLuoGangGuoJi",
+	"name": "合肥骆岗国际机场"
+}, {
+	"en": "HeTian",
+	"name": "和田机场"
+}, {
+	"en": "HeiHe",
+	"name": "黑河机场"
+}, {
+	"en": "HuHeHaoTeBaiTaGuoJi",
+	"name": "呼和浩特白塔国际机场"
+}, {
+	"en": "HuaiAnLianShui",
+	"name": "淮安涟水机场"
+}, {
+	"en": "HuangShanTunXiGuoJi",
+	"name": "黄山屯溪国际机场"
+}, {
+	"en": "JiNanYaoQiangGuoJi",
+	"name": "济南遥墙国际机场"
+}, {
+	"en": "JiNingQuFu",
+	"name": "济宁曲阜机场"
+}, {
+	"en": "JiXiXingKaiHu",
+	"name": "鸡西兴凯湖机场"
+}, {
+	"en": "JiaMuSiDongJiao",
+	"name": "佳木斯东郊机场"
+}, {
+	"en": "JiaYuGuan",
+	"name": "嘉峪关机场"
+}, {
+	"en": "JinZhouXiaoLingZi",
+	"name": "锦州小岭子机场"
+}, {
+	"en": "JingDeZhen",
+	"name": "景德镇机场"
+}, {
+	"en": "JingGangShan",
+	"name": "井冈山机场"
+}, {
+	"en": "JiuJiangLuShan",
+	"name": "九江庐山机场"
+}, {
+	"en": "JiuZhaiHuangLong",
+	"name": "九寨黄龙机场"
+}, {
+	"en": "KaShi",
+	"name": "喀什机场"
+}, {
+	"en": "KeLaMaYi",
+	"name": "克拉玛依机场"
+}, {
+	"en": "KuCheGuiZi",
+	"name": "库车龟兹机场"
+}, {
+	"en": "KuErLe",
+	"name": "库尔勒机场"
+}, {
+	"en": "KunMingWuJiaBaGuoJi",
+	"name": "昆明巫家坝国际机场"
+}, {
+	"en": "LaSaGongGa",
+	"name": "拉萨贡嘎机场"
+}, {
+	"en": "LanZhouZhongChuan",
+	"name": "兰州中川机场"
+}, {
+	"en": "LiJiangSanYi",
+	"name": "丽江三义机场"
+}, {
+	"en": "LiPing",
+	"name": "黎平机场"
+}, {
+	"en": "LianYunGangBaiTaBu",
+	"name": "连云港白塔埠机场"
+}, {
+	"en": "LinCang",
+	"name": "临沧机场"
+}, {
+	"en": "LinYi",
+	"name": "临沂机场"
+}, {
+	"en": "LinZhiMiLin",
+	"name": "林芝米林机场"
+}, {
+	"en": "LiuZhouBaiLian",
+	"name": "柳州白莲机场"
+}, {
+	"en": "LongYanGuanZhiShan",
+	"name": "龙岩冠豸山机场"
+}, {
+	"en": "LuZhouLanTian",
+	"name": "泸州蓝田机场"
+}, {
+	"en": "LuoYangBeiJiao",
+	"name": "洛阳北郊机场"
+}, {
+	"en": "ManZhouLiXiJiao",
+	"name": "满洲里西郊机场"
+}, {
+	"en": "MianYangNanJiao",
+	"name": "绵阳南郊机场"
+}, {
+	"en": "MoHeGuLian",
+	"name": "漠河古莲机场"
+}, {
+	"en": "MuDanJiangHaiLang",
+	"name": "牡丹江海浪机场"
+}, {
+	"en": "NanChangChangBeiGuoJi",
+	"name": "南昌昌北国际机场"
+}, {
+	"en": "NanChongGaoPing",
+	"name": "南充高坪机场"
+}, {
+	"en": "NanJingLuKouGuoJi",
+	"name": "南京禄口国际机场"
+}, {
+	"en": "NanNingWuXu",
+	"name": "南宁吴圩机场"
+}, {
+	"en": "NanTongXingDong",
+	"name": "南通兴东机场"
+}, {
+	"en": "NanYangJiangYing",
+	"name": "南阳姜营机场"
+}, {
+	"en": "NingBoLiSheGuoJi",
+	"name": "宁波栎社国际机场"
+}, {
+	"en": "PuErSiMao",
+	"name": "普洱思茅机场"
+}, {
+	"en": "QiQiHaErSanJiaZi",
+	"name": "齐齐哈尔三家子机场"
+}, {
+	"en": "QinHuangDaoShanHaiGuan",
+	"name": "秦皇岛山海关机场"
+}, {
+	"en": "QingDaoLiuTingGuoJi",
+	"name": "青岛流亭国际机场"
+}, {
+	"en": "QuZhou",
+	"name": "衢州机场"
+}, {
+	"en": "QuanZhouJinJiang",
+	"name": "泉州晋江机场"
+}, {
+	"en": "RiKaZeHePing",
+	"name": "日喀则和平机场"
+}, {
+	"en": "SanYaFengHuangGuoJi",
+	"name": "三亚凤凰国际机场"
+}, {
+	"en": "ShanTouWaiSha",
+	"name": "汕头外砂机场"
+}, {
+	"en": "ShangHaiHongQiaoGuoJi",
+	"name": "上海虹桥国际机场"
+}, {
+	"en": "WuHanTianHeGuoJi",
+	"name": "武汉天河国际机场"
+}, {
+	"en": "WuLanHaoTe",
+	"name": "乌兰浩特机场"
+}, {
+	"en": "WuLuMuQiDiWoBaoGuoJi",
+	"name": "乌鲁木齐地窝堡国际机场"
+}, {
+	"en": "WuYiShan",
+	"name": "武夷山机场"
+}, {
+	"en": "WuZhouChangZhouDao",
+	"name": "梧州长洲岛机场"
+}, {
+	"en": "XiAnXianYangGuoJi",
+	"name": "西安咸阳国际机场"
+}, {
+	"en": "XiChangQingShan",
+	"name": "西昌青山机场"
+}, {
+	"en": "XiLinHaoTe",
+	"name": "锡林浩特机场"
+}, {
+	"en": "XiNingCaoJiaBao",
+	"name": "西宁曹家堡机场"
+}, {
+	"en": "XiShuangBanNaGaSa",
+	"name": "西双版纳嘎洒机场"
+}, {
+	"en": "XiaMenGaoQiGuoJi",
+	"name": "厦门高崎国际机场"
+}, {
+	"en": "XiangGangGuoJi",
+	"name": "香港国际机场"
+}, {
+	"en": "XiangYangLiuJi",
+	"name": "襄阳刘集机场"
+}, {
+	"en": "XingYi",
+	"name": "兴义机场"
+}, {
+	"en": "XuZhouGuanYin",
+	"name": "徐州观音机场"
+}, {
+	"en": "YanAnErShiLiBao",
+	"name": "延安二十里堡机场"
+}, {
+	"en": "YanCheng",
+	"name": "盐城机场"
+}, {
+	"en": "YanJiChaoYangChuan",
+	"name": "延吉朝阳川机场"
+}, {
+	"en": "YanTaiLaiShanGuoJi",
+	"name": "烟台莱山国际机场"
+}, {
+	"en": "YiBinCaiBa",
+	"name": "宜宾菜坝机场"
+}, {
+	"en": "YiChangSanXia",
+	"name": "宜昌三峡机场"
+}, {
+	"en": "YiChunLinDu",
+	"name": "伊春林都机场"
+}, {
+	"en": "YiNing",
+	"name": "伊宁机场"
+}, {
+	"en": "YiWu",
+	"name": "义乌机场"
+}, {
+	"en": "YinChuanHeDong",
+	"name": "银川河东机场"
+}, {
+	"en": "YongZhouLingLing",
+	"name": "永州零陵机场"
+}, {
+	"en": "YuLinYuYang",
+	"name": "榆林榆阳机场"
+}, {
+	"en": "YuShuBaTang",
+	"name": "玉树巴塘机场"
+}, {
+	"en": "YunChengZhangXiao",
+	"name": "运城张孝机场"
+}, {
+	"en": "ZhanJiang",
+	"name": "湛江机场"
+}, {
+	"en": "ZhaoTong",
+	"name": "昭通机场"
+}, {
+	"en": "ZhengZhouXinZhengGuoJi",
+	"name": "郑州新郑国际机场"
+}, {
+	"en": "ZhiJiang",
+	"name": "芷江机场"
+}, {
+	"en": "ZhongQingJiangBeiGuoJi",
+	"name": "重庆江北国际机场"
+}, {
+	"en": "ZhongWeiXiangShan",
+	"name": "中卫香山机场"
+}, {
+	"en": "ZhouShanZhuJiaJian",
+	"name": "舟山朱家尖机场"
+}, {
+	"en": "ChangZhouBenNiu",
+	"name": "常州奔牛机场"
+}, {
+	"en": "ChengDuShuangLiuGuoJi",
+	"name": "成都双流国际机场"
+}, {
+	"en": "ChiFeng",
+	"name": "赤峰机场"
+}, {
+	"en": "DaLi",
+	"name": "大理机场"
+}, {
+	"en": "DaLianZhouShuiZiGuoJi",
+	"name": "大连周水子国际机场"
+}, {
+	"en": "DaQingSaErTu",
+	"name": "大庆萨尔图机场"
+}, {
+	"en": "DaTongDongWangZhuang",
+	"name": "大同东王庄机场"
+}, {
+	"en": "DaZhouHeShi",
+	"name": "达州河市机场"
+}, {
+	"en": "ZhuHaiSanZao",
+	"name": "珠海三灶机场"
+}]

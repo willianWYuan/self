@@ -1,0 +1,16 @@
+
+css/public.css
+----------------
+css/public.css
+
+css/style.css
+----------------
+css/public.css
+css/style.css
+
+app.js
+----------------
+js/lib/text.js
+js/lib/text!/user.html!strip
+app.js
+js/lib/jquery.js

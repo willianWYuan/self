@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <link rel="stylesheet" href="dist/idangerous.swiper.css">
+  <style>
+/* Demo Styles */
+html,body { height: 100%; margin: 0; padding: 0;}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+}
+.swiper-slide{background-color: #56989f;}
+
+.pagination {
+  position: absolute;
+  z-index: 20;
+  left: 10px;
+  bottom: 10px;
+}
+.swiper-pagination-switch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: #fff;
+  margin-right: 5px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.swiper-active-switch { background: #f90; }
+
+
+.button-prev,
+.button-next{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  cursor: pointer;
+}
+.button-prev{left: 0;}
+.button-next{right: 0;}
+  </style>
+</head>
+<body>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><a>Slide 1</a></div>
+      <div class="swiper-slide"><a>Slide 2</a></div>
+      <div class="swiper-slide"><a>Slide 3</a></div>
+      <div class="swiper-slide"><a>Slide 4</a></div>
+    </div>
+    <div class="pagination"></div>
+
+    <!-- 按钮 -->
+    <div class="button-prev" onclick="mySwiper.swipePrev();">prev</div>
+    <div class="button-next" onclick="mySwiper.swipeNext();">next</div>
+  </div>
+  <script src="demos/js/jquery-1.10.1.min.js"></script>
+  <script src="dist/idangerous.swiper.min.js"></script>
+  <script>
+  var mySwiper = new Swiper('.swiper-container',{
+    autoplayDisableOnInteraction : false,
+    loop: true,
+    speed:300,
+    autoplay: 2500,
+    pagination: '.pagination',
+    paginationClickable: true,
+    simulateTouch : false,    //禁止鼠标touchmove
+  })
+
+  </script>
+</body>
+</html>

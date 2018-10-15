@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>tree</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <style>
+        *{font-family: "微软雅黑"}
+        .tree-checkbox{display: inline-block; width: 14px; height: 14px; border: 1px solid #999; position: relative; top: 2px; margin-right: 4px; box-sizing: border-box;}
+        .tree-checkbox.on{background: #999}
+        #demo3 .layui-tree-spread,
+        #demo3 .layui-tree-branch,
+        #demo3 .layui-tree-leaf{display: none}
+    </style>
+    <script src="layui/layui.js"></script>
+</head>
+<body>     
+    <ul id="demo1"></ul> <br><br><br><br><br><br>
+    <ul id="demo2"></ul> <br><br><br><br><br><br>
+    <ul id="demo3"></ul>
+     
+    <script>
+    layui.use(['tree', 'layer'], function() {
+        var layer = layui.layer,
+            $ = layui.jquery;
+
+        layui.tree({
+            elem: '#demo1', //指定元素
+
+            target: '_blank', //是否新选项卡打开（比如节点返回href才有效）
+
+            click: function(item) { //点击节点回调
+                // layer.msg('当前节名称：' + item.name + '<br>全部参数：' + JSON.stringify(item));
+                console.log(item);
+            },
+            nodes: [ //节点
+                {
+                    name: '常用文件夹',
+                    id: 1,
+                    // alias: 'changyong',
+                    children: [{
+                        name: '所有未读（设置跳转）',
+                        id: 11,
+                        alias: 'weidu',
+                        a: 'avc'
+                    }, {
+                        name: '置顶邮件',
+                        id: 12
+                    }, {
+                        name: '标签邮件',
+                        id: 13
+                    }]
+                }, {
+                    name: '我的邮箱',
+                    id: 2,
+                    spread: true,
+                    children: [{
+                        name: 'QQ邮箱',
+                        id: 21,
+                        spread: true,
+                        children: [{
+                            name: '收件箱',
+                            id: 211,
+                            children: [{
+                                name: '所有未读',
+                                id: 2111
+                            }, {
+                                name: '置顶邮件',
+                                id: 2112
+                            }, {
+                                name: '标签邮件',
+                                id: 2113
+                            }]
+                        }, {
+                            name: '已发出的邮件',
+                            id: 212
+                        }, {
+                            name: '垃圾邮件',
+                            id: 213
+                        }]
+                    }, {
+                        name: '阿里云邮',
+                        id: 22,
+                        children: [{
+                            name: '收件箱',
+                            id: 221
+                        }, {
+                            name: '已发出的邮件',
+                            id: 222
+                        }, {
+                            name: '垃圾邮件',
+                            id: 223
+                        }]
+                    }]
+                }, {
+                    name: '收藏夹',
+                    id: 3,
+                    alias: 'changyong',
+                    children: [{
+                        name: '爱情动作片',
+                        id: 31,
+                        alias: 'love'
+                    }, {
+                        name: '技术栈',
+                        id: 12,
+                        children: [{
+                            name: '前端',
+                            id: 121
+                        }, {
+                            name: '全端',
+                            id: 122
+                        }]
+                    }]
+                }
+            ]
+        });
+
+
+        //生成一个模拟树
+        var createTree = function(node, start) {
+            node = node || function() {
+                var arr = [];
+                for (var i = 1; i < 10; i++) {
+                    arr.push({
+                        name: i.toString().replace(/(\d)/, '$1$1$1$1$1$1$1$1$1')
+                    });
+                }
+                return arr;
+            }();
+            start = start || 1;
+            layui.each(node, function(index, item) {
+                if (start < 10 && index < 9) {
+                    var child = [{
+                        name: (1 + index + start).toString().replace(/(\d)/, '$1$1$1$1$1$1$1$1$1')
+                    }];
+                    node[index].children = child;
+                    createTree(child, index + start + 1);
+                }
+            });
+            return node;
+        };
+
+        layui.tree({
+            elem: '#demo2', //指定元素
+
+            nodes: createTree()
+        });
+
+
+
+
+
+
+
+        layui.tree({
+            elem: '#demo3', //指定元素
+
+            target: '_blank', //是否新选项卡打开（比如节点返回href才有效）
+
+            click: function(item) { //点击节点回调
+                // layer.msg('当前节名称：' + item.name + '<br>全部参数：' + JSON.stringify(item));
+                // console.log(item);
+            },
+            nodes: [ //节点
+                {
+                    name: '<span class="tree-checkbox" dataid="1"></span>常用文件夹',
+                    id: 1,
+                    // alias: 'changyong',
+                    children: [{
+                        name: '<span class="tree-checkbox" dataid="11">所有未读（设置跳转）',
+                        id: 11,
+                        alias: 'weidu',
+                        a: 'avc'
+                    }, {
+                        name: '<span class="tree-checkbox" dataid="12">置顶邮件',
+                        id: 12
+                    }, {
+                        name: '<span class="tree-checkbox" dataid="13">标签邮件',
+                        id: 13
+                    }]
+                }, {
+                    name: '<span class="tree-checkbox" dataid="2"></span>我的邮箱',
+                    id: 2,
+                    spread: true,
+                    children: [{
+                        name: '<span class="tree-checkbox" dataid="21"></span>QQ邮箱',
+                        id: 21,
+                        spread: true,
+                        children: [{
+                            name: '<span class="tree-checkbox" dataid="211"></span>收件箱',
+                            id: 211,
+                            children: [{
+                                name: '<span class="tree-checkbox" dataid="2111"></span>所有未读',
+                                id: 2111
+                            }, {
+                                name: '<span class="tree-checkbox" dataid="2112"></span>置顶邮件',
+                                id: 2112
+                            }, {
+                                name: '<span class="tree-checkbox" dataid="2113"></span>标签邮件',
+                                id: 2113
+                            }]
+                        }, {
+                            name: '<span class="tree-checkbox" dataid="212"></span>已发出的邮件',
+                            id: 212
+                        }, {
+                            name: '<span class="tree-checkbox" dataid="213"></span>垃圾邮件',
+                            id: 213
+                        }]
+                    }, {
+                        name: '<span class="tree-checkbox" dataid="22"></span>阿里云邮',
+                        id: 22,
+                        children: [{
+                            name: '<span class="tree-checkbox" dataid="221"></span>收件箱',
+                            id: 221
+                        }, {
+                            name: '<span class="tree-checkbox" dataid="222"></span>已发出的邮件',
+                            id: 222
+                        }, {
+                            name: '<span class="tree-checkbox" dataid="223"></span>垃圾邮件',
+                            id: 223
+                        }]
+                    }]
+                }, {
+                    name: '<span class="tree-checkbox" dataid="3"></span>收藏夹',
+                    id: 3,
+                    alias: 'changyong',
+                    children: [{
+                        name: '<span class="tree-checkbox" dataid="31"></span>爱情动作片',
+                        id: 31,
+                        alias: 'love'
+                    }, {
+                        name: '<span class="tree-checkbox" dataid="12"></span>技术栈',
+                        id: 12,
+                        children: [{
+                            name: '<span class="tree-checkbox" dataid="121"></span>前端',
+                            id: 121
+                        }, {
+                            name: '<span class="tree-checkbox" dataid="122"></span>全端',
+                            id: 122
+                        }]
+                    }]
+                }
+            ]
+        });
+
+
+
+        // 增加checkbox后的代码
+        $('.tree-checkbox').on({
+            dblclick: function(ev){ ev.stopPropagation() },
+            click: function(){
+                var subCheckbox = $(this).closest('li').find('.tree-checkbox');
+                // var parentIcon = $($($(this).parents('li')[1]).find('.tree-checkbox')[0]);
+                // console.log(parentIcon)
+                // var sibling = $(this).closest('li').siblings('li').find('.on').length;
+                if ($(this).hasClass('on')) {
+                    $(this).removeClass('on')
+                    subCheckbox.removeClass('on');
+                    // if (!sibling) parentIcon.removeClass('on');
+                } else {
+                    $(this).addClass('on');
+                    subCheckbox.addClass('on');
+
+                    $(this).parents('li').each(function(i, item){
+                        $($(item).find('.tree-checkbox')[0]).addClass('on');
+                    })
+                    // $($(this).parents('li').find('.tree-checkbox')[0]).addClass('on');
+                }
+            }
+        })
+        $('#checkedBtn').on('click', function(){
+            var arr = []
+            $('#demo3').find('.on').each(function(i, item) {
+                arr.push($(item).attr('dataid'))
+            })
+            alert(arr)
+        })
+
+    });
+    </script>
+    <button id="checkedBtn">已选</button>
+</body>
+</html>

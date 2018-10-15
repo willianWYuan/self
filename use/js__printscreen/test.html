@@ -1,0 +1,62 @@
+<html>  
+    <head>  
+        <meta name="layout" content="main">  
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <style>*{margin: 0;padding: 0;}</style>   
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>  
+        <script type="text/javascript" src="printscreen.js"></script>  
+           
+        <script  type="text/javascript" >  
+        // $(document).ready( function(){  
+        //         $(".example1").on("click", function(event) {  
+        //                 event.preventDefault();  
+        //                 html2canvas(document.body, {  
+        //                 allowTaint: true,  
+        //                 taintTest: false,  
+        //                 onrendered: function(canvas) {  
+        //                     canvas.id = "mycanvas";  
+        //                     //document.body.appendChild(canvas);  
+        //                     //生成base64图片数据  
+        //                     var dataUrl = canvas.toDataURL();  
+        //                     var newImg = document.createElement("img");  
+        //                     newImg.src =  dataUrl;  
+        //                     document.body.appendChild(newImg);  
+        //                 }  
+        //             });  
+        //         });   
+               
+        // });  
+        $(document).ready( function(){  
+            // event.preventDefault();  
+            html2canvas(document.body, {  
+                allowTaint: true,  
+                taintTest: false,  
+                onrendered: function(canvas) {  
+                    canvas.id = "mycanvas";  
+                    //document.body.appendChild(canvas);  
+                    //生成base64图片数据  
+                    var dataUrl = canvas.toDataURL();  
+                    console.log(dataUrl);
+                    var newImg = document.createElement("img");  
+                    newImg.src =  dataUrl;  
+                    document.body.appendChild(newImg);
+                    console.log(newImg);
+                    $('.parents').hide();  
+                }  
+            }); 
+        });  
+           
+        </script>  
+    </head>  
+    <body>  
+        <div class="parents">
+            <p>绝对是福建商品房地方好事</p>
+            <p>绝对是福建商品房地方好事</p>
+            <p>绝对是福建商品房地方好事</p>
+            <p>绝对是福建商品房地方好事</p>
+            <p>绝对是福建商品房地方好事</p>
+            <p>绝对是福建商品房地方好事</p>
+        </div>  
+    </body>  
+</html> 

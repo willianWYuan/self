@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ZYUI</title>
+	<meta name="viewport" content="initial-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../js/ZYUI.js" async></script>
+</head>
+<body>
+	<div class="Page">
+		<div class="page-login">
+			<div class="login-inner">
+				<div class="login-logo"></div>
+				<div class="login-form">
+					<label class="login-form-list" for="user">
+						<span class="login-title">用户名</span>
+						<span class="login-options"><input type="text" id="user"></span>
+					</label>
+					<label class="login-form-list" for="pwd">
+						<span class="login-title">密码</span>
+						<span class="login-options"><input type="text" id="pwd"></span>
+					</label>
+					<label class="login-form-list" for="yzm">
+						<span class="login-title">验证码</span>
+						<span class="login-options"><input type="text" id="yzm"></span>
+						<span class="login-json"></span>
+					</label>
+				</div>
+				<a class="login-btn">登录</a>
+			</div>
+			<span class="login-copyright">@2018 版权所有</span>
+		</div>
+	</div>
+	<script>
+		var $b = document.getElementsByTagName('body')[0]
+		$b.style.height = window.innerHeight + 'px'
+		$b.style.position = 'relative'
+
+	</script>
+</body>
+</html>

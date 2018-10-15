@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Document</title>
+    <style>
+        *{margin:0;padding:0;}
+        html{font-size:4.2vw;}
+        .curr-calen{line-height:2.6rem;text-align:center;background:#eee;}
+        .curr-calen ~ .curr-calen{margin-top:.6rem;}
+        .calen{border-collapse:collapse;width:100%;}
+        .calen th,.calen td{text-align:center;}
+        .calen th{font-weight:normal;width:calc(100% / 7)}
+        .calen th > div,.calen td > div{border-radius:.3rem;margin:.1rem;line-height:1.2;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;height:2rem;align-content:center;}
+        @media (min-width:440px){
+            html{font-size:18px;}
+        }
+    </style>
+    <script src='vue.js'></script>
+</head>
+<body>
+    <div id="app">
+        <template v-for='(item,index) in CalenList'  v-if='today'>
+            <div class="curr-calen">{{ years + '年' + ('0'+(index + 1)).match(/\d{2}$/)[0] + '月' }}</div>
+            <table class="calen">
+                <thead>
+                    <tr><th v-for='thead in CalenHeader'><div class="thead">{{ thead }}</div></th></tr>
+                </thead>
+                <tbody>
+                    <tr v-for='elem in item'>
+                        <td v-for='val in elem'><div v-text='index + 1 == months && val == dates ? "今天" : val'></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                today: null,
+                CalenHeader: ["周日","周一","周二","周三","周四","周五","周六"],
+                CalenList: []
+            },
+            computed: {
+                years() { return this.today.getFullYear()} ,
+                months(){ return this.today.getMonth() + 1 } ,
+                dates() { return this.today.getDate()} ,
+                days()  { return this.today.getDay()}
+            },
+            methods: {
+                init() {
+                    const initnows = new Date('2018/09/30')
+                    this.today = initnows;
+                    this.createCalenListFn();
+                },
+                createCalenListFn() {
+                    let i, index, arr = [], key = 0;
+                    while(key < 12) {
+                        key++;
+                        let subArr = []
+                        let obj = {year: this.years, month: key};
+                        for (index = 0; index < this.currWeekCountFn(obj); index++) {
+                            let subAddArr = [];
+                            for (i = 0; i < 7; i++) {
+                                let compare = index * 7 + i + 1 - this.firstDayIsWeekFn(obj);
+                                if (index == 0 && this.firstDayIsWeekFn(obj) > i || this.currMonthDayCountFn(obj) < compare) subAddArr.push('');
+                                else subAddArr.push(('0' + compare).match(/\d{2}$/)[0]);
+                            }
+                            subArr.push(subAddArr);
+                        }
+                        arr.push(subArr);
+                    }
+                    this.CalenList = arr;
+                },
+                firstDayIsWeekFn(obj) { return new Date(obj.year, obj.month - 1, 1).getDay()},//获取当月的第一天是星期几
+                currMonthDayCountFn(obj) {return new Date(obj.year, obj.month, 0).getDate()},//获取当月的有多少天
+                prevMonthDayCountFn(obj) {return new Date(obj.year, obj.month - 1, 0).getDate()}, //获取上个月的有多少天
+                currMonthLastDayIsWeekFn(obj){ //获取当月的最后一天是星期几 
+                    let daycount = new Date(obj.year, obj.month, 0).getDate()
+                    return new Date(obj.year, obj.month - 1, daycount).getDay()
+                },
+                currWeekCountFn(obj) { //获取当月有多少周
+                    let daycount = new Date(obj.year, obj.month, 0).getDate()
+                    let lastweek = new Date(obj.year, obj.month - 1, daycount).getDay()
+                    return Math.ceil((daycount + 6 - lastweek) / 7)
+                }
+            },
+            mounted() {
+                this.init();
+            }
+        })
+    </script>
+</body>
+</html>

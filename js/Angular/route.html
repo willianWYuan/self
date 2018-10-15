@@ -1,0 +1,51 @@
+<html>
+    <head>
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AngularJS 路由实例 - 菜鸟教程</title>
+        <style>
+            *{margin: 0; padding: 0; list-style: none;}
+            .Footer{position: fixed; bottom: 0; left: 0; width: 100%; background: #f90;}
+            .Footer li{width: 25%; padding: 10px 0; text-align: center; float: left; color: white;}
+        </style>
+    </head>
+    <body ng-app='App'>
+     
+        <h2>AngularJS 路由应用</h2>
+        <ul>
+            <li><a href="#/">首页</a></li>
+            <li><a href="#/computers">电脑</a></li>
+            <li><a href="#/printers">打印机</a></li>
+            <li><a href="#/baidu">百度</a></li>
+            <li><a href="#/other">其他</a></li>
+        </ul>
+        
+         
+        <div ng-view></div>
+        <script src="dist/angular.js"></script>
+        <script src="dist/angular-route.js"></script>
+        <script>
+            angular.module('App',['ngRoute'])
+            .config(['$routeProvider', function($route){
+                $route
+                .when('/',{template:'这是首页页面'})
+                .when('/computers',{template:'这是电脑分类页面'})
+                .when('/printers',{template:'这是打印机页面'})
+                .when('/baidu', {
+                    // redirectTo:'/',
+                    templateUrl: 'views/computers.html',
+                    // template: '百度首页',
+                    controller: 'baiduCtrl',
+                })
+                .otherwise({redirectTo:'/'})
+            }]).controller('baiduCtrl', function($scope, $route){
+                $scope.foots = ['首页', '电话', '预定', '我的'];
+                console.log($route)
+            })
+
+
+        </script>
+     
+     
+    </body>
+</html>

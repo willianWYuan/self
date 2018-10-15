@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js</title>
+	<style>h1{font-size: 16px; margin: 20px 0 4px}p{font-size: 14px; margin: 0}span{color: #e00; margin-left: 12px}</style>
+</head>
+<body>
+	<div id="root"></div>
+	<script>
+var arr = [
+	{
+		title: 'DOM',
+		list: [
+			{text: "document.querySelector('.root')"},
+			{text: "document.querySelector('#root')"},
+			{text: "document.getElementsByClassName('root')[0]"},
+			{text: "document.getElementsByTagName('div')[0]"},
+			{text: "document.getElementById('root')"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "ele.innerHTML = '字符串'"},
+			{text: "ele.setAttribute('attr', '01')"},
+			{text: "ele.getAttribute('attr')"},
+			{text: "ele.removeAttribute('attr')"},
+			{text: "img.src = 'images/bg_01.png'",   des: "设置当前已有的属性"},
+			{text: "ele.style.color = 'red'"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "ele.firstElementChild"},
+			{text: "ele.lastElementChild"},
+			{text: "ele.nextElementSibling"},
+			{text: "ele.previousElementSibling"},
+			{text: "ele.parentNode",   des: "返回一级父元素"},
+			{text: "ele.children"},
+			{text: "ele.nodeName",   des: "返回标签名"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "var node = document.createTextNode('字符串');"},
+			{text: "var head = document.createElement('h1');"},
+			{text: "head.appendChild(node);"},
+			{text: "root.appendChild(head);"},
+			{text: "root.removeChild(head);"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "addEventListener()      removeEventListener()"},
+			{text: "attachEvent() "},
+			{text: "------------------------------------------------------------------------"},
+			{text: "ele.offsetTop",      des: "ele距离position 父元素上边的距离"},
+			{text: "ele.offsetParent",   des: "ele的position 上一级父元素"},
+			{text: "ele.clientHeight"},
+			{text: "ele.offsetHeight"},
+			{text: "document.documentElement.scrollTop || document.body.scrollTop"}
+		]
+	},
+	{
+		title: 'otherImportant',
+		list: [
+			{text: 'isArray(ele)'},
+			{text: 'isDate(ele)'},
+			{text: 'return'},
+			{text: 'void 0', des: '返回一个undefined：不是undefined胜似undefined'}
+		]
+	},
+	{
+		title: 'Math',
+		list: [
+			{text: 'Math.min(12, 5) ==> 5'},
+			{text: 'Math.max(12, 5) ==> 12'},
+			{text: 'Math.abs(-12) ==> 12'},
+			{text: 'Math.PI ==> 3.141592653589793'},
+			{text: 'Math.ceil(32.31) ==> 33'},
+			{text: 'Math.floor(32.91)==> 32'},
+			{text: 'Math.round(32.51)==> 33'}
+		]
+	},
+	{
+		title: 'Number',
+		list: [
+			{text: 'Number var num = 128'},
+			{text: 'num.toString(2) ==>10000000'},
+			{text: 'num.toString(8) ==>200'},
+			{text: 'num.toString() ==>128'},
+			{text: 'num.toString(16) ==>80'},
+			{text: 'isNan(num) ==>false'},
+			{text: 'parseInt(\'10number2.\', 8) ==>8', des: '转为数字，并取整(向下取值), 并声明它是八进制然后转为十进制'},
+			{text: 'parseFloat(\'10.26\') ==>10.26', des: '转为带浮点数字'},
+			{text: 'Number(false) ==>0'},
+			{text: 'Number(true) ==>1'},
+			{text: 'Number(undefined) ==>NaN'},
+			{text: 'Number(null) ==>0'},
+			{text: 'Number(new Object()) ==>NaN'},
+			{text: 'Number(\'new\') ==>NaN'}
+		]
+	},
+	{
+		title: "String",
+		list: [
+			{text: "String var str = 'Hello World!'"},
+			{text: "str.length ==>12"},
+			{text: "str.big() ==>Hello World!"},
+			{text: "str.small() ==>Hello World!"},
+			{text: "str.toLowerCase() ==>hello world!"},
+			{text: "str.toUpperCase() ==>HELLO WORLD!"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "str.indexOf('World', 4) ==>6 ",   des: " 前面4个不在计算范围内，返回索引值"},
+			{text: "str.lastIndexOf('World', 4) ==>-1 ",   des: " 后面4个不在计算范围内，返回索引值"},
+			{text: "str.match('World') ==>World"},
+			{text: "str.charAt(2) ==>l"},
+			{text: "str.search('ll') ==>2"},
+			{text: "str.substring(1, 4) ==>ell ",   des: "1 <= 索引值 < 4"},
+			{text: "str.substr(3, 2) ==>lo"},
+			{text: "str.replace(/Hello/, 'Hi') ==>Hi World!"},
+			{text: "str.split('l', 3) ==>He,,o Wor ",   des: "转为数组，并以‘l’去掉进行分割成几个数组，每个数组不能超过3个字符"},
+			{text: "str.toFixed(2)   ",   des: "保留2个浮点"}
+		]
+	},
+	{
+		title: "Array",
+		list: [
+			{text: "...arr 扩展符"},
+			{text: "Array.from(document.querySelectorAll('p') / [|String|Set])", des:"{a: 1, b: 2,length: 2} => [1, 2]"},
+			{text: "Array.from(obj, x => x+1)", des:"等同于 Array.from(obj).map(x => x+1)"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "Array.of(1,2,3)", des:"=> [1, 2, 3]"},
+			{text: "[1,4,-5,3].find(n=>n<0)", des:"=> -5  只返回一个"},
+			{text: "[1, 2, 3].includes(4, 0)", des:"=> false  从0开始找4 并返回Boolean"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "[,'a'].forEach((x,i) => console.log(i));", des:"=> 1"},
+			{text: "['a',,'b'].filter(x => true)", des:"=> ['a','b']"},
+			{text: "[,'a'].map(x => 1)", des:"=> [,1]"},
+		]
+	},
+	{
+		title: "Date",
+		list: [
+			{text: "Date var today = new Date()"},
+			{text: "today.getFullYear() ==> 2017"},
+			{text: "today.getMonth() ==> 9+1"},
+			{text: "today.getDate() ==> 24"},
+			{text: "today.getDay() ==> 2"},
+			{text: "today.getHours() ==> 23"},
+			{text: "today.getMinutes() ==> 27"},
+			{text: "today.getSeconds() ==> 37"},
+			{text: "today.getMilliseconds() ==> 536"},
+			{text: "today.getTime() ==> 1508858857536"},
+			{text: "------------------------------------------------------------------------"},
+			{text: "today.toString() ==> Tue Oct 24 2017 23:27:37 GMT+0800 (中国标准时间)"},
+			{text: "today.toTimeString() ==> 23:27:37 GMT+0800 (中国标准时间)"},
+			{text: "today.toDateString() ==> Tue Oct 24 2017"},
+			{text: "today.toLocaleString() ==> 2017/10/24 下午11:27:37"}
+		]
+	}
+];
+arr.forEach(function(val){
+	var head = document.createElement('h1');
+	head.appendChild(document.createTextNode(val.title));
+	root.appendChild(head);
+	val.list.forEach(function(item){
+		var span = document.createElement('span');
+		typeof item.des !== "undefined" ? span.appendChild(document.createTextNode(item.des)) : span.appendChild(document.createTextNode(''));
+		var para = document.createElement('p');
+		para.appendChild(document.createTextNode(item.text));
+		para.appendChild(span);
+		root.appendChild(para);
+	});
+});
+	</script>
+</body>
+</html>

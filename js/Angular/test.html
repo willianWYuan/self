@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+		*{margin: 0;padding: 0;list-style: none;}
+		.EventForm, .ng-class{margin-bottom: 20px;}
+		.red{color: red}
+		.orange{color: orange}
+		.blue{color: blue}
+		.ng-class .content{border: 1px solid #ccc;}
+		.ng-class .testList{overflow: hidden;}
+		.ng-class .testList li{float: left; margin-right: 10px;}
+	</style>
+</head>
+<body ng-app="app">
+<!-- event && form -->
+	<form class="EventForm" ng-controller="eventCtrl" name="Fo">
+		<p ng-bind="ease" 
+			ng-copy	   ="DoEvent($event)"
+			ng-cut	   ="DoEvent($event)"
+			ng-paste    ="DoEvent($event)"
+
+			ng-dblclick ="DoEvent($event)"
+			ng-click	   ="DoEvent($event)"
+			ng-mouseup  ="DoEvent($event)"
+			ng-mousedown="DoEvent($event)"
+		></p>
+
+		<!-- 禁止使用按钮ng-disabled：<button>里面的 表单名.name值.是否合法  -->
+		<!-- 需要配合：    <input name值 && ng-model="随意值都行"> -->
+		<button ng-disabled="Fo.name.$invalid">禁用按钮</button>
+		<input name="name" type="text" required ng-model="username"
+			ng-copy	  ="DoEvent($event)"
+			ng-cut	  ="DoEvent($event)"
+			ng-paste  ="DoEvent($event)"
+
+			ng-focus  ="DoEvent($event)"
+			ng-blur   ="DoEvent($event)"
+			ng-keyup  ="DoEvent($event)"
+			ng-keydown="DoEvent($event)"
+		>
+		<input type="radio" 
+			   name="sex5" 
+			   ng-checked="ease == 'ease'">男
+		<input type="radio" 
+			   name="sex5">女
+	</form>
+<!-- ng-class -->
+	<div class="ng-class" ng-controller='navCtrl'>
+		颜色1: <span ng-class="'red'">ng-class="'red'"</span>
+		颜色2: <span ng-class="{blue: true, red: false}">ng-class={blue: true, red: false}</span>
+		颜色3:<span ng-class="{true: 'blue', false: 'orange'}[false]"> ng-class="{true: 'blue', false: 'orange'}[false]"</span>
+		<div class="navTab">
+			<h3>制作tab切换</h3>
+			<ul class="testList">
+				<li ng-class="{'red': color == $index+1}" 
+					ng-click="tab($index+1)" 
+					ng-repeat="x in navData">{{x}}</li>
+			</ul>
+			<ul class="content">
+				<li ng-class-odd="'blue'"
+					ng-if="color == $index+1" 
+					ng-repeat="x in navCntent">{{x}}</li>
+			</ul>
+		</div>
+	</div>
+<script src="dist/angular.js"></script>
+<script src="dist/angular-route.js"></script>
+<script>
+angular.module('app', [])
+//event && form
+	.controller('eventCtrl', function($scope){
+		$scope.ease = '事件机制：可点击、复制、剪切、粘贴等等（看控制台）';
+		$scope.DoEvent = function(that){
+			console.log('这是\"' + that.type + '\"事件');
+		};
+	})
+//ng-class
+	.controller('navCtrl', function($scope, $location){
+		$scope.navData = ['default', 'true', 'false', 'tab'];
+		$scope.navCntent = ['defaultsdefaultsdefaults', 'truestruestruestrues', 'falsesfalsesfalsesfalses', 'tabstabstabstabstabstabs'];
+		$scope.tab = function(param){
+			$scope.color = param;
+		}
+		$scope.color = 1;
+	})
+
+
+
+// 事件
+// blur / focus
+// click / dblclick /  mousedown / mouseup
+// keydown / keyup / keypress / copy / paste / cut
+
+// 验证
+// $dirty / $invalid / $valid / $error / $touched
+
+// 全局API
+// angular.lowercase() / angular.uppercase() / angular.copy() / angular.forEach()
+// angular.isArray()
+// angular.isDate()
+// angular.isDefined()
+// angular.isElement()
+// angular.isFunction()
+// angular.isNumber()
+// angular.isObject()
+// angular.isString()
+// angular.isUnderfined
+// angular.equals(两个对象想到为true)
+
+// json
+// angular.fromJSON()  反序列化json字符串
+// angular.toJSON()    序列化json字符串
+</script>
+</body>
+</html>

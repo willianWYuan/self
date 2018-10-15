@@ -1,0 +1,26 @@
+<h1>购物车</h1>
+
+<div ms-controller='cart'>
+	<h4>{{ url }}</h4>
+	<img src="/QinZi/images/phone_01.jpg" alt="">
+	<img src="/QinZi/images/phone_02.jpg" alt="">
+	<img src="/QinZi/images/phone_03.jpg" alt="">
+	<img src="/QinZi/images/phone_04.jpg" alt="">
+</div>
+
+<script>
+avalon.ready(function(){
+	var vm = avalon.define({
+		$id: 'cart',
+		url: ''
+	})
+
+	vm.url = location.href;
+
+
+
+	avalon.scan();
+})
+
+
+</script>

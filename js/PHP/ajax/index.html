@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <script src="jquery.js"></script>
+    <script>
+        $.ajax({
+            type: 'get',
+            url: 'data.php',
+            data: {
+                uid: 1,
+                len: '3'
+            },
+            async: true,
+            success(res) {
+                var data = JSON.parse(res);
+                var str = '';
+                data.forEach(item => {
+                    str += `<h3>${item.type}</h3><ul>`;
+                    item.has.forEach(el => {
+                        str += `<li>${el}</li>`;
+                    })
+                    str += '</ul>';
+                });
+                $('body').html(str);
+            }
+        })
+    </script>
+</body>
+</html>

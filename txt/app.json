@@ -1,0 +1,74 @@
+{
+    "json": {
+        //设置页面路径
+        "pages": [
+            "pages/index/index",
+            "pages/logs/logs"
+        ],
+
+        //设置默认页面的窗口表现
+        "window": {
+            "navigationBarBackgroundColor": "#000",
+            "navigationBarTextStyle": "#333",
+            "navigationBarTitleText": "标题",
+            "navigationStyle": "default", //custom：不要头部（仅留下退出按钮）
+
+            "backgroundTextStyle": "light",
+            "backgroundColor": "#f00", //最底层背景色
+
+            "enablePullDownRefresh": true //允许下拉刷新
+        },
+
+        //设置底部 tab 的表现
+        "tabBar": {
+            "list": [{
+                "pagePath": "pages/index/index", //pages必须有这个路径
+                "text": "首页",
+                "iconPath": "images/default.png",
+                "selectedIconPath": "images/default_d.png"
+            }, {
+                "pagePath": "pages/logs/logs",
+                "text": "日志",
+                "iconPath": "images/log.png",
+                "selectedIconPath": "images/log_d.png"
+            }],
+            "color": "#fff",
+            "selectedColor": "#F4EA2A",
+            "backgroundColor": "#f90",
+            "borderStyle": "white", //边框上边线 只有black/white值
+            "position": "bottom"
+        },
+
+        //设置网络超时时间
+        "networkTimeout": {
+            "request": 10000,
+            "downloadFile": 10000
+        },
+
+        //设置是否开启 debug 模式
+        "debug": true
+    },
+
+
+    "js钩子函数": [
+        "data { 'msg': '个人界面' }",
+
+        // 生命周期函数--监听页面加载
+        "onLoad: function (options) { console.log('onLoad');}",
+
+        //生命周期函数--监听页面初次渲染完成
+        "onReady: function (options) { console.log('onReady');}",
+
+        //生命周期函数--监听页面显示
+        "onShow: function (options) { console.log('onShow');}",
+
+        //生命周期函数--监听页面隐藏
+        "onHide: function (options) { console.log('onHide');}",
+
+        //页面相关事件处理函数--监听用户下拉动作
+        "onPullDownRefresh: function (options) { console.log('onPullDownRefresh');}",
+
+        //用户点击右上角分享
+        "onShareAppMessage: function (options) { console.log('onShareAppMessage');}"
+    ]
+}

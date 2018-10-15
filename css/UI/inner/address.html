@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ZYUI</title>
+	<meta name="viewport" content="initial-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<div class="Page">
+		<div class="page-address">
+			<div class="page-address-text">
+				<span class="address-left">省市区</span>
+				<span id="address-options"></span>
+			</div>
+
+			<!-- 弹窗 -->
+			<div class="page-alert-mask" onclick="pup()"></div>
+			<div class="page-address-checkbox">
+				<div class="address-checkbox-title">
+					<b>请选择</b>
+					<span id="ok">确定</span>
+				</div>
+				<div class="address-checkbox-inner">
+					<ul id="address-sheng"></ul>
+					<ul id="address-shi"></ul>
+					<ul id="address-qu"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var Options = document.querySelector('#address-options');
+		var Sheng   = document.querySelector('#address-sheng');
+		var Shi     = document.querySelector('#address-shi');
+		var Qu      = document.querySelector('#address-qu');
+		var AddressAlert = document.querySelector('.page-address-checkbox');
+		var Mask    = document.querySelector('.page-alert-mask');
+
+
+		Mask.addEventListener('touchmove', function(ev){ev.preventDefault()})
+		AddressAlert.addEventListener('touchmove', function(ev){ev.preventDefault()})
+		function getAjax(obj) {
+		    obj.type  = obj.type  !== void 0 ? obj.type  : 'GET';
+		    obj.async = obj.async !== void 0 ? obj.async : true;
+		    var xml = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXOject('Microsoft.XMLHTTP');
+		    
+		    xml.onreadystatechange = function() {
+		        if (xml.readyState == 4 && xml.status == 200) {
+
+		            if (obj.success) obj.success(JSON.parse(xml.responseText));
+		        } 
+		    }
+		    xml.timeout = 0;//设置过期时间（毫秒）；0代表不限制
+		    xml.open(obj.type, obj.url, obj.async);
+		    xml.setRequestHeader('If-Modified-Since', '0');    // 必须放在open之后，send之前
+		    xml.setRequestHeader('Cache-Control', '*');
+		    xml.send();
+		    console.log(xml)
+		}
+		getAjax({
+			url: '/API/addr.json',
+			success(res){
+				console.log(res)
+				window.AddrData = res;
+				Options.innerHTML = res[0].one + ' ' + res[0].two[0].name
+				Options.setAttribute('one', 0)
+				Options.setAttribute('two', 0)
+				Options.setAttribute('three', void 0)
+			}
+		})
+
+
+		var pup = function (str) {
+			if (typeof str == 'undefined') {
+				AddressAlert.removeAttribute('AddressCheckboxShow');
+				Mask.removeAttribute('show');
+			} else {
+				AddressAlert.setAttribute('AddressCheckboxShow', '');
+				Mask.setAttribute('show', '');
+			}
+		}
+
+
+		Options.onclick = function() {
+			pup('open')
+			var one   = Number(this.getAttribute('one'));
+			var two   = Number(this.getAttribute('two'));
+
+			addrtag.index = {sheng: one, shi: two, qu: three}
+
+			var shengStr = '';
+			AddrData.forEach(function(item){
+				shengStr += '<li>'+ item.one +'</li>'
+			})
+			Sheng.innerHTML = shengStr;
+
+			var shiStr = '';
+			AddrData[one].two.forEach(function(item){
+				shiStr += '<li>'+ item.name +'</li>'
+			})
+			Shi.innerHTML = shiStr;
+
+
+			var three = this.getAttribute('three');
+			if (three == 'undefined') return;
+			three = Number(three)
+			addrtag.index.qu = three
+			var quStr = '';
+			AddrData[one].two[two].three.forEach(function(item){
+				quStr += '<li>'+ item +'</li>'
+			})
+			Qu.innerHTML = quStr;
+
+
+		};
+
+		(function(){
+			window.addrtag = {
+				everypos: Sheng.clientHeight / 5,
+				startpos: 0,
+				movepos: 0,
+				ts: function(ev, that) {
+					this.startpos = ev.touches[0].pageY;
+
+					if (that == Sheng) {
+						if (this.record.sheng == 'init') this.record.sheng = this.everypos * 2;
+					} else if(that == Shi) {
+						if (this.record.shi == 'init') this.record.shi = this.everypos * 2;
+					} else{
+						if (this.record.qu == 'init') this.record.qu = this.everypos * 2;
+					}
+					
+
+					that.style.transition = '';
+				},
+				tm: function(ev, that) {
+
+					if (that == Sheng) {
+						this.movepos = ev.touches[0].pageY - this.startpos + this.record.sheng;
+					} else if(that == Shi) {
+						this.movepos = ev.touches[0].pageY - this.startpos + this.record.shi;
+					} else{
+						this.movepos = ev.touches[0].pageY - this.startpos + this.record.qu;
+					}
+
+
+					if (this.movepos >= this.everypos * 2) this.movepos = this.everypos * 2;
+					if (this.movepos <= -(that.getElementsByTagName('li').length - 3) * this.everypos) this.movepos = -(that.getElementsByTagName('li').length - 3) * this.everypos;
+					that.style.transform = 'translateY(' + this.movepos + 'px)';
+				},
+				te: function(ev, that) {
+					that.style.transition = 'transform .2s';
+					var round = Math.round(this.movepos / this.everypos);
+					that.style.transform = 'translateY(' + (round * this.everypos) + 'px)';
+
+					if (that == Sheng) {
+						this.record.sheng = this.movepos;
+						this.record.shi = this.everypos * 2;
+						this.record.qu = this.everypos * 2;
+						Shi.style.transform = 'translateY(' + this.everypos * 2 + 'px)';
+						Qu.style.transform = 'translateY(' + this.everypos * 2 + 'px)';
+						this.index.sheng = 2 - round;
+						this.index.shi = 0;
+						this.index.qu = 0;
+					} else if(that == Shi) {
+						this.record.shi = this.movepos;
+						this.record.qu = this.everypos * 2;
+						Qu.style.transform = 'translateY(' + this.everypos * 2 + 'px)';
+						this.index.shi = 2 - round;
+						this.index.qu = 0;
+					} else{
+						this.record.qu = this.movepos;
+						this.index.qu = 2 - round;
+					}
+
+					
+					if (that == Sheng) this.Shengfn();
+					if (that == Shi) this.Shifn();
+				},
+				record: {
+					sheng: 'init',
+					shi: 'init',
+					qu: 'init'
+				},
+				index: {
+					sheng: 'undefined',
+					shi: 'undefined',
+					qu: 'undefined'
+				},
+				Shengfn: function() {
+					var shiStr = '';
+					AddrData[this.index.sheng].two.forEach(function(item){
+						shiStr += '<li>'+item.name+'</li>'
+					})
+					Shi.innerHTML = shiStr
+					var quStr = '';
+					if (!AddrData[this.index.sheng].two[0].three) {
+						Qu.innerHTML = '';
+					} else{
+						AddrData[this.index.sheng].two[0].three.forEach(function(item){
+							quStr += '<li>'+item+'</li>'
+						})
+						Qu.innerHTML = quStr
+					}
+					
+				},
+				Shifn: function(){
+					var quStr = '';
+					if (!AddrData[this.index.sheng].two[this.index.shi].three) return;
+					AddrData[this.index.sheng].two[this.index.shi].three.forEach(function(item){
+						quStr += '<li>'+item+'</li>'
+					})
+					Qu.innerHTML = quStr
+				}
+			};
+			Sheng.addEventListener('touchstart', function(ev) {
+				addrtag.ts(ev, this)
+			});
+			Sheng.addEventListener('touchmove', function(ev) {
+				addrtag.tm(ev, this)
+			});
+			Sheng.addEventListener('touchend', function(ev) {
+				addrtag.te(ev, this)
+			});
+			Shi.addEventListener('touchstart', function(ev) {
+				addrtag.ts(ev, this)
+			});
+			Shi.addEventListener('touchmove', function(ev) {
+				addrtag.tm(ev, this)
+			});
+			Shi.addEventListener('touchend', function(ev) {
+				addrtag.te(ev, this)
+			});
+			Qu.addEventListener('touchstart', function(ev) {
+				addrtag.ts(ev, this)
+			});
+			Qu.addEventListener('touchmove', function(ev) {
+				addrtag.tm(ev, this)
+			});
+			Qu.addEventListener('touchend', function(ev) {
+				addrtag.te(ev, this)
+			});
+		})();
+		
+
+		document.querySelector('#ok').onclick = function(){
+			console.log(addrtag.index)
+			pup()
+			Options.innerHTML = AddrData[addrtag.index.sheng].one + ' ';
+			Options.innerHTML += AddrData[addrtag.index.sheng].two[addrtag.index.shi].name
+			Options.setAttribute('one', addrtag.index.sheng)
+			Options.setAttribute('two', addrtag.index.shi)
+
+
+			if (typeof AddrData[addrtag.index.sheng].two[addrtag.index.shi].three == 'undefined') {
+				Options.setAttribute('three', 'undefined')
+			} else{
+				Options.setAttribute('three', addrtag.index.qu)
+				Options.innerHTML += ' ' + AddrData[addrtag.index.sheng].two[addrtag.index.shi].three[addrtag.index.qu]
+			};
+		}
+	</script>
+</body>
+</html>

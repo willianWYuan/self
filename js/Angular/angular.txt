@@ -1,0 +1,192 @@
+第一部分：快速上手
+1.1 angularJS的4大核心
+      目前最新版本1.3.0、放弃了IE8、引入单向数据绑定、删掉过时的API
+      4大核心：MVC、模块化、指令系统、双向数据绑定
+      MVC：职责清晰，代码模块化
+                Model：数据模型
+                View：视图层
+                Controller：业务逻辑和控制逻辑
+      模块化：module
+                var app = angular.module("myApp", []);
+                app.controller("myController", ["$scope", function hello($scope){
+                        $scope.greeting = {
+                              text: "hello"
+                        }
+                 }])
+      指令系统：自定义指令
+                <hello></hello>
+                var app = angular.module("myApp", []);
+                app.directive("hello", function(){
+                      return {
+                              restrict: "E" ,
+                              template: "<div>用这个内容替代hello标签</div>" ,
+                              replace: true                              
+                      }
+                })
+      双向数据绑定：Template  --> View <- -> Model
+      
+1.2 自己动手搭建开发、调试、测试环境
+      代码编辑工具：sublime text、webStorm
+      断点调试工具：Batarang、firebug
+      版本管理工具：git
+      代码合并和混淆工具：nodejs、npm [npm install grunt]、grunt
+                grunt-contrib(uglify[对代码进行混淆]、concat[合并文件]、watch[监控变化])
+      依赖管理工具：
+                bower[自动安装依赖的组件][bower install jquery]
+                http-server[基于nodejs的http接口]
+      单元测试工具：karma、
+                jasmine[分组describe、用例it、期望expect、匹配to]
+                describe("A suite of basic functions", function(){
+                      it("reverse word", function()){
+                              expect("DCBA").toEqual(reverse("ABCD"));
+                      }
+                })
+      集成测试工具：protractor
+
+第二部分：基础概念和用法
+2.1 MVC：MVC只是手段，终极目标是模块化和复用
+       Controller：一对一(c/v)，不要DOM操作，不要控制器之间互相操作
+       Model：ng-model、{{ 内容 }}
+       View：
+       $scope(作用域)：表达式的执行环境；工具$watch()和$apply()
+       
+2.2 路由、模块化与依赖注入
+       ngRoute进行视图之间的路由  (index.html#/hello)
+       var bookApp = angular.module("myApp", ["ngRoute","ngAnimate","bookCtrl","bookFilters","bookServices","bookDirectives"]);
+       bookApp.config(function($routeProvider){
+              $routeProvider.when("/hello",{
+                   templateUrl: "tpls/hello.html" ,
+                   controller: "HelloCtrl"
+              }).when("/list",{
+                   templateUrl: "tpls/bookList.html" ,
+                   controller: "BookListCtrl"
+              }).otherwise({
+                   redirectTo: "/hello"
+              })
+       })
+      
+       var app = angular.module("myApp", []);
+       app  .config(routes)  
+               .filter 
+               .directive 
+               .factory/ service/ Provider/ value)
+               .controller
+2.3 双向数据绑定
+       ng-bind
+       ng-click="getdata( )"
+              $scope.getdata = function(){
+                    console.log($scope.userInfo)
+              }
+       ng-class="{ 选择器名：$scope.isError，选择器名2：判断2}" 
+       ng-show
+       ng-hide
+2.4 指令
+       ng-repeat="name in names"
+       ng-if
+       ng-init="初始值"
+       ng-submit="方法"
+       ng-include="路径"
+       
+               <hello></hello>                  E
+               <div hello></div>               A
+               div class="hello"></div>     C
+                var app = angular.module("myApp", []);
+                
+                app.run(function($templateCache){       //仅执行一次，被template:  $templateCache.get("index.html") ,
+                      $templateCache.put("index.html","<div>hello world</div>")
+                })
+                app.directive("hello", function(){
+                      return {
+                              restrict: "E" ,   //匹配模式---> A属性 E元素 M注释 C样式css
+                              scope: {}           //独立
+                             template: "<div>用这个内容替代hello标签</div>" ,
+                              template:  $templateCache.get("index.html") ,
+                              templateUrl: "index.html",
+                              
+                              replace: true ，
+                              compile: function() {} ,
+                              link: function(scope, element, attr) {
+                                        //执行一些DOM操作
+                                        element.bind("mouseenter", function()){
+                                                scope.        //调用某个方法
+                                                scope.$apply("某个方法")
+                                        }
+                               }                      
+                      }
+                })
+2.5 Provider：service/Provider/factory
+          <li ng-repeat="user in users">{{user.name}}</li>
+          var app = angular.module("myApp", []);
+          app.controller("myCtrl", function(){
+                  $http({
+                          method: "get",
+                          url: "data.json"
+                  }).success(function(data, status, headers, config){
+                          $scope.users = data;
+                  }).error(function(data, status, headers, config){
+                          .....
+                  });
+          });
+          
+2.6 $filter服务
+          内置：currency, data, json, limitTo, lowercase, number, orderBy, uppercase
+          {{ 5235246234 | date }}
+          {{ 5235246234 | date:"MM/dd/yyyy @ h:mma" }}
+          {{ 5235246234 | date:"yyyy-MM-dd hh:mm:ss" }}
+          自定义：
+          var app = angular.module("myApp", []);
+          app.filter("hello", function(){
+                return function(item){
+                      return item + "不错哦"；
+                }
+          })
+          其它服务：$compile(编译服务)、$interval、$timeout、$locale、$location、$log、$parse、$http(封装ajax)
+          
+2.7 表单
+          required               必填项目
+          $dirty、$pristine  是否有填写记录
+          $valid、$invalid    是否合法
+          
+          
+          ng-show="[form.name].[input.name].$touched "            是否触碰过
+          ng-show="[form.name].[input.name].$error.required "
+          ng-disabled="[form.name].[input.name].$dirty && [form.name].[input.name].$invalid"
+2.8 全局API
+          angular.lowercase()
+          angular.uppercase()
+          angular.isString()
+          angular.isNumber()
+          angular.forEach("数组名", function(i, value){....})
+2.9 综合实例BookStore
+
+第三部分：核心原理解析
+3.1 parser
+3.2 双向数据绑定
+3.3 依赖注入
+
+
+第四部分：ng控件开发
+4.1 用angularJS改写jquery控件
+4.2 angularJS-ui
+4.3 移动控件库ionic
+
+
+第五部分：TDD和前端自动化测试
+5.1 TDD
+5.2 详解jasmine与protractor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

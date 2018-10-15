@@ -1,0 +1,38 @@
+<meta http-equiv="refresh" content="1; URL=http://www.runoob.com">
+
+
+<meta name="keywords" content="" /> 
+<meta name="description" content="" />
+
+
+<!-- 百度禁止转码 -->
+<meta http-equiv="Cache-Control" content="no-siteapp" /> 
+
+
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+
+
+//打开DNS预读取 && 预解析域名"//www.zhix.net"
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//www.zhix.net">
+
+
+/* PC端 */
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta content="always" name="referrer">
+<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+/* 移动端 */
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+

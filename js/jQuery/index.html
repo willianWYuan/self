@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery</title>
+	<style>
+		*{
+			margin: 0; 
+			padding: 0; 
+			list-style: none; 
+			font-family: "Helvetica Neue";
+		}
+		li{padding: 8px 12px;}
+		li:nth-child(odd){background: #eee;}
+	</style>
+</head>
+<body>
+<div></div>
+<img id="test" data-src="http://icon.nipic.com/BannerPic/20170531/home/20170531103230.jpg"></div>
+<ul>
+	<li>$('div,p,span,a,...')</li>
+	<li>:not(.class或者:animated) // :eq() // :lt() // :gt() // :animated</li>
+	<li>[attr (!^$*)= val]</li>
+	<li>:input // :text // :password // :radio // :checkbox // :submit // :images // :reset // :button // :file</li>
+
+	<li>$.each(arr, function(){});</li>
+	<li>$(ele).data('key',{text: ' '})</li>
+	<li>$(ele).removeData('key')</li>
+
+	<li>jQuery.fn.extend({check: function(){};}) ==> $(ele).check()</li>
+	<li>$(document).ready(function(){});</li>
+	<li>var j = jQuery.noConflict();</li>
+
+	<li>css() // offset().top // position().left // scrollLeft()</li>
+	<li>width() // innerWidth() // outerWidth()</li>
+
+	<li>on() // off() // one()</li>
+
+	<li>append() // prepend // after // before // replaceWith</li>
+	<li>empty() // remove()</li>
+	<li>attr() // removeAttr()</li>
+	<li>addClass // removeClass // toggleClass</li>
+	<li>html() // text() // val()</li>
+
+	<li>$.extend(newObj, obj1, obj2) ==> 对象融合成newObj</li>
+	<li>$.each(arr, function(){});</li>
+	<li>$.toArray(val, arr) ==> 返回索引值</li>
+	<li>$.trim(str)</li>
+
+	<li>var newArr = $.map([0,1,2], function(arr){return arr + 1})</li>
+
+	<li>过滤：eq() // first() // last() // hasClass() // filter() // has() // not() // find() //parents() // next() // prev() // siblings() // children()</li>
+
+</ul>
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+$(function(){
+	$('div').data('test', {
+		first: 16,
+		lsat: 'pizza!'
+	});
+	var F = $('div').data('test').first;
+	console.log(F);
+	var data = $('#test').data('src');
+	$('img').attr('src',data)
+});
+$(function(){
+	jQuery.fn.extend({
+		check: function(){
+			return this.each(function(){this.checked = true;})
+		},
+		uncheck: function(){
+			return this.each(function(){this.checked = false;})
+		}
+	});
+	$(':radio').check();
+	$(':checkbox').uncheck();
+})
+$(document).ready(function(){
+	$('img').on('click', {foo: 'bar'}, function(ev){
+		console.info(ev)
+		console.info(this)
+	})
+});
+$(function(){
+	var arr = [];
+	var defaults = {flog: false, limit: 5, name: 'foo'};
+	var options = {flog: true, name: 'bar'}
+	var setting = $.extend(arr, defaults, options);
+	console.log(arr);      //{flog: true, limit: 5, name:'bar'}
+	console.log(setting);  //{flog: true, limit: 5, name:'bar'}
+});
+$(function(){
+	$.map([0, 1, 2], function(arr){
+		console.log(arr)
+	})
+});
+</script>
+</body>
+</html>

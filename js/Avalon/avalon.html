@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>avalon</title>
+	<style>
+		.ms-controller{visibility: hidden;}
+		.white{color: white}
+		.red{background-color: red; color: yellow}
+		td{border:1px solid #ccc; padding: 4px 10px}
+	</style>
+</head>
+<body>
+	<div ms-controller='test' class="ms-controller" id="app">
+		<a href="http://avalonjs.github.io" 
+		   rel="nofllow" 
+		   target="_blank" 
+		   ms-class='red: isShow' ms-class-1='white: isShow'
+		   ms-data-src='bg'>avalon.js</a><br>
+
+	
+		<!-- 循环体 -->
+		<ul ms-visible='isShow'>
+			<li ms-repeat='ms' 
+				ms-click='$remove' 
+				ms-if-loop='$index%2 !== odd' 
+				data-repeat-rendered= 'F_aaa'>
+				{{$index > 8 ? $index+1 : '0'+($index+1)}} -- 
+				{{el.type}} -- 
+				{{ $first }} -- 
+				{{ $last }}
+			</li>
+		</ul>
+		<ul ms-visible='isShow'>
+			<li ms-repeat='obj'>
+				{{ $key }} --
+				{{ $val }}
+			</li>
+		</ul><br>
+
+
+		<!-- 表单 -->
+		<button ms-click-1='F_alert' ms-click-5='F_ms_show'>click绑定多个方法</button>
+		<input type="text" ms-input='check'>{{ wid }}
+		<input type="text" ms-duplex='wid'><br><br>
+
+
+
+		<div style="width:400px;background-color: red" ms-css-background-color='bg'>
+			ms-css-background-color='vm.属性值'<br>
+			ms-css-width='{{值}}px'<br>
+			ms-css-width='vm.属性值 自动补px'<br><br>
+			ms-class='red: true' ms-class-1='black: true'<br>
+			ms-click='red: true' ms-click-1='black: true'<br><br>
+			ms-duplex-boolean, ms-duplex-string, ms-duplex-number, ms-duplex-checked
+		</div><br>{{bg}}<br><br>
+		<select ms-duplex='bg'>
+			<option value="red">红</option>
+			<option value="yellow">黄</option>
+			<option value="green">绿</option>
+		</select><br><br>
+		<input type="radio" ms-duplex-string="bg" value="red">红
+		<input type="radio" ms-duplex-string="bg" value="yellow">黄
+		<input type="radio" ms-duplex-string="bg" value="green">绿<br><br>
+
+
+		<input type="checkbox" ms-duplex-string="lang" value="red">红
+		<input type="checkbox" ms-duplex-string="lang" value="yellow">黄
+		<input type="checkbox" ms-duplex-string="lang" value="green">绿
+			{{lang}}
+
+	</div>
+	<script src="lib/avalon.js"></script>
+	<script>
+		var vm = avalon.define({
+			$id: 'test',
+			isShow: false,
+			bg: 'red',
+			wid: 10,
+			odd: 1,
+			lang: [],
+			check () {
+				vm.wid = this.value;
+			},
+			obj: {name: 'yuan', age: 26, len: 18, width: 100},
+			option: ['name', 'size', 'date'],
+			data: [
+				{name: 'aa', size: 213, date: Date.now() + 20},
+				{name: 'bb', size: 63, date: Date.now() + 1},
+				{name: 'cc', size: 151, date: Date.now() - 14},
+				{name: 'dd', size: 16, date: Date.now() - 6},
+				{name: 'ee', size: 88, date: Date.now() + 5}
+			],
+			ms: [
+				{type: 'ms-attr'},
+				{type: 'ms-active'},
+				{type: 'ms-controller'},
+				{type: 'ms-class'},
+				{type: 'ms-css'},
+				{type: 'ms-data'},
+				{type: 'ms-deplex'},
+				{type: 'ms-each'},
+				{type: 'ms-effect'},
+				{type: 'ms-html'},
+				{type: 'ms-hover'},
+				{type: 'ms-if'},
+				{type: 'ms-input'},
+				{type: 'ms-important'},
+				{type: 'ms-include'},
+				{type: 'ms-on'},
+				{type: 'ms-repeat'},
+				{type: 'ms-skip'},
+				{type: 'ms-text'},
+				{type: 'ms-visible'},
+				{type: 'ms-with'},
+				{type: 'ms-widget'}
+			],
+
+			F_ms_show (e) {
+				vm.isShow = !vm.isShow;
+				console.info(1)
+			},
+			F_alert () {
+				console.info(2)
+			}
+		})
+
+		setInterval(function(){
+			vm.ms.set(0, {type:'你妹的'});     //更改数组数据
+			vm.odd = vm.odd == 1 ? 0 : 1;
+		},3000);
+	</script>
+</body>
+</html>

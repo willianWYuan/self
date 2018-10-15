@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <title>信医健康</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+</head>
+<body class="bodysy">
+    <div class="page hasfooter" id="app" v-cloak>
+        <div class="page-cxt home">
+
+
+            <!-- header -->
+            <div class="home-header">
+                LOGO
+                <i></i>
+            </div>
+
+
+
+
+
+            <!-- banner -->
+            <div class="swiper-container home-banner">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for='item in imagesList'><img :src='item'></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+
+
+            <!-- list -->
+            <div class="home-list">
+                <div class="home-item">
+                    <div class="home-item-header">
+                        <b class="title">服务热卖</b>
+                        <span class="more">查看全部<i class="iconfont">&#xe652;</i></span>
+                    </div>
+                    <ul class="home-elem">
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="home-item">
+                    <div class="home-item-header">
+                        <b class="title">服务热卖</b>
+                        <span class="more">查看全部<i class="iconfont">&#xe652;</i></span>
+                    </div>
+                    <ul class="home-elem">
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="images"><img src="../images/01.png"></div>
+                            <div class="title">母婴护理上门服务</div>
+                            <div class="price">
+                                <span class="old">￥1963.00</span>
+                                <span class="now">￥963.00</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- common -->
+        <transition name="fade">  
+            <div class="tip" v-show='tip'><span>{{ tip }}</span></div>
+        </transition>
+        <div class="loading" v-show='loading'><img src="../images/Spinner-1s-141px.svg"></div>
+
+
+
+    </div>
+
+    <script src="../js/app.common.js" async></script>
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                loading: true,
+                timer: null,
+                tip: '',
+
+                imagesList: []
+            },
+            computed: {
+
+            },
+            methods: {
+                init() {
+                    //异步加载文件
+                    this.importfile(['../js/swiper.min.js', '../css/swiper.min.css'], (Swiper) => {
+                        this.imagesList = [
+                            '../images/01.png',
+                            '../images/01.png',
+                            '../images/01.png'
+                        ];
+                        var timer = setInterval(()=>{
+                            if (document.querySelector('.swiper-wrapper').innerHTML.replace(/\s/g, '')) {
+                                var SwiperInit = new Swiper('.swiper-container', {
+                                    autoplay: 3000,
+                                    loop: true,
+                                    speed: 600,
+                                    autoplayDisableOnInteraction : false,   //用户操作swiper之后，是否禁止autoplay。默认为true：停止
+                                    //autoplay: { delay: 5000, },  //静止时 呆3秒
+                                    pagination : '.swiper-pagination',
+                                });
+                                this.loading = false;
+                                clearInterval(timer);
+                            }
+                        }, 5);
+                    })
+                    
+                },
+                importfile(arr, cb){
+                    if (!arr instanceof Array) return;
+                    for (var i = 0; i < arr.length; i++) {
+                        var obj;
+                        if (arr[i].search(/css/g) != -1) obj = {
+                            name: 'link',
+                            rel: 'stylesheet',
+                            type: 'text/css',
+                            method: 'href'
+                        };
+                        if (arr[i].search(/js/g) != -1) obj = {
+                            name: 'script',
+                            type: 'text/javascript',
+                            method: 'src'
+                        };
+                        var headtag = document.getElementsByTagName('head')[0];
+                        var tag = document.createElement(obj.name);
+                        tag.setAttribute(obj.method, arr[i]);
+                        if (arr[i].search(/css/g) != -1) tag.setAttribute('rel', obj.rel);
+                        tag.setAttribute('type', obj.type);
+                        headtag.insertBefore(tag, headtag.children[0]);
+                    }
+                    var timer = setInterval(()=>{
+                        if (typeof Swiper != 'undefined') {
+                            if (typeof cb == 'function') cb(Swiper);
+                            clearInterval(timer);
+                        }
+                    }, 5);
+                }
+            },
+            mounted() {
+                this.$nextTick(()=>{
+                    this.init()
+                })
+            },
+            watch: {
+                tip(val) {
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(()=>{
+                        if (val) this.tip = ''
+                    }, 4000);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

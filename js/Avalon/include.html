@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>avalon</title>
+</head>
+<body>
+	<div ms-controller='test'>
+		<script type='avalon' id="tpl">
+			ms-include='id', {{ 3 + 5 * 6 }} <p>{{str}}</p>
+		</script>
+		<div ms-include='currid'></div><br><br>
+
+
+		<select ms-duplex='url'>
+			<option value="m1">模块1</option>
+			<option value="m2">模块2</option>
+			<option value="m3">模块3</option>
+		</select><br>
+		data-include-replace='true'  //直接不要外层div
+		<div ms-include-src='module/{{url}}.html' data-include-replace='true'></div>
+
+
+	</div>
+	<script src="lib/avalon.min.js"></script>
+	<script>
+		var vm = avalon.define({
+			$id: 'test',
+			currid: 'tpl',
+			str: 'ms-include-src=\"url\"',
+
+			url: 'm1',
+			name: 'uyan',
+			pwd: 628684887498,
+
+
+			arr: [1,2,3,4,5,6,7],
+			add (e) {
+				if (this.value && e.which == 13) {
+					vm.arr.push(this.value);
+					this.value = '';
+				}
+			}
+		})
+	</script>
+</body>
+</html>

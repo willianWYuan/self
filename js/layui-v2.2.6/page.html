@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <link rel="stylesheet" href="layui/css/layui.css"> 
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+	<ul id="data"></ul>
+	<div id="page"></div>
+	<script>
+		layui.use('laypage', function(laypage){          
+            //测试数据
+			var list = ['北京', '上海', '广州', '深圳', '杭州', '长沙', '合肥', '宁夏', '成都', '西安', '南昌', '上饶', '沈阳', '济南', '厦门', '福州', '九江', '宜春', '赣州', '宁波', '绍兴', '无锡', '苏州', '徐州', '东莞', '佛山', '中山', '成都', '武汉', '青岛', '天津', '重庆', '南京', '九江', '香港', '澳门', '台北']; 
+
+  			laypage.render({
+                elem: 'page', //注意，这里的 test1 是 ID，不用加 # 号
+                count: list.length,    //数据总数，从服务端得到
+                limit: 10,     //每页显示的条数
+                groups: 5,    //出现页码按钮数量
+
+                curr: 1,    //起始页
+
+                layout:['first','prev', 'page', 'next', 'last'],
+                limits: [10,20,30,40,50],   //每页条数的选择项
+
+
+                // prev: '<',
+                // next: '>',
+                // first: '<<',
+                // last: '>>',
+
+                theme: '#e00',
+
+                jump: function(obj, first){
+                    console.log(obj, first);
+                    // if(!first){
+                    //     //do something
+                    // }
+                    var datastr = '';
+                    obj.curr
+                    for (var i = 0; i < obj.limit; i++){
+                    	var index = (obj.curr-1)*obj.limit + i;
+                    	if (!list[index]) continue;
+                    	datastr += '<li>'+list[index]+'</li>';
+                    }
+
+                    document.getElementById('data').innerHTML = datastr;
+                }
+            });
+        })
+	</script>
+</body>
+</html>

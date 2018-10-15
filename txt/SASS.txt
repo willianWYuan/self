@@ -1,0 +1,243 @@
+SASS是一门高于css的元语言，它能清晰地结构化描述文件的样式
+-------------------------------------------------------------------------------
+window环境下：
+    下载Ruby（http://Rubyinstall.org/downloads）最新版本的x64
+    安装选择第二项
+    打开命令面板gem install sass
+    查找sass的路径：lib\ruby\gem\2.3.0\doc\sass-3.4.23/ri
+控制sass样式表：   >sass --watch test.scss:test.css --style expanded
+-------------------------------------------------------------------------------
+使用：
+在html页面中插入的<link rel="stylesheet" href="test.css">     
+插入的还是css文件
+-------------------------------------------------------------------------------
+编译方法：
+    命令编译：dos命令控制
+GUI编译：界面操作工具
+（Koala、scout、compass.app、codekit、Prepros）
+自动化编译：grunt、glup、webpack等
+-------------------------------------------------------------------------------
+输出：
+    使用utf-8方式编译
+输出风格： nested（默认）、expanded（展开）、
+   compact（紧凑）、compressed（压缩）
+-------------------------------------------------------------------------------
+注释：
+     /*注释一段语句*/
+     //注释一段语句
+-------------------------------------------------------------------------------
+变量：$
+    $base: 20px;
+    $base: 15px !default;
+.box{font-size: $base;}   ==>   .box{ font-size: 20px }     
+//默认变量被（只能）上面的该变量取代
+-------------------------------------------------------------------------------
+局部变量和全局变量：
+    $color: red;
+    .box{
+        $color: blue;
+        color: $color; }      ==>     .box{ color: blue }
+    .pro{
+        color: $color }       ==>     .pro{ color: red }
+-------------------------------------------------------------------------------
+嵌套：
+    nav{
+        font-size: 16px;
+        ul{
+            font-size: 0;
+            li{
+                 font-size: 12px;
+                 a{
+                      font-size: 20px;
+    }}}}
+    ======>
+                      nav{ font-size: 16px}
+                      nav ul{ font-size: 0}
+                      nav ul li{ font-size: 12px}
+                      nav ul li a{ font-size: 20px}
+-------------------------------------------------------------------------------
+伪类：
+    .clearfix{
+        &:before, &after{
+            content: "&就是父级"        
+}}
+======>       
+.clearfix:before, .clearfix:after{ content: "&就是父级" }
+-------------------------------------------------------------------------------
+混合宏：（相当于javascript中的function定义方法）
+    @mixin定义
+    @iniclude调用
+-------------------------------------------------------------------------------
+@mixin border{
+         border-radius: 5px;
+         -webkit-border-radius: 5px;
+    }
+button{ @include border;}      
+===========>     
+button{ border-radius: 5px ;  -webkit-border-radius: 5px; }
+-------------------------------------------------------------------------------
+    @mixin border($size){
+         border-radius: $size;
+         -webkit-border-radius: $size;
+    }
+button{ @include border(5px)}   
+============>  
+button{ border-radius: 5px ;  -webkit-border-radius: 5px; }
+-------------------------------------------------------------------------------
+    @mixin border($size: 5px){
+         border-radius: $size;
+         -webkit-border-radius: $size;
+    }
+.box1{ @include border}    
+===========>    
+.box1{ border-radius: 5px ;  -webkit-border-radius: 5px; }
+
+.box2{ @include border($size: 50%)}  
+===========>  
+.box2{ border-radius: 50% ;  -webkit-border-radius: 50%; }
+-------------------------------------------------------------------------------
+    @mixin center($width, $height){
+        width: $width;
+        height: $height;
+    }
+.box{ @include center(100px, 100px)}        
+=============>        
+.box{ width: 100px; height: 100px; }
+-------------------------------------------------------------------------------
+    @mixin box-shadow($shadow...){
+        @if length($shadow) >= 1{
+            box-shadow: $shadow;
+        }@else{
+            $shadow: 0 0 2px #000;
+            box-shadow: $shadow;
+        }
+    }
+.box1{ @include box-shadow(1px 1px 1px red , 2px 2px 2px blue)}        
+==>      .box1{ box-shadow: 1px 1px 1px red, 2px 2px 2px blue; }
+.box2{ @include box-shadow(3px 3px 3px green)}        
+==>      .box1{ box-shadow: 3px 3px 3px green; }
+.box3{ @include box-shadow }        
+==>      .box1{ box-shadow: $shadow: 0 0 2px #000; }
+-------------------------------------------------------------------------------
+扩展/继承（相当于css中的制造  群体选择器）
+    @extend
+-------------------------------------------------------------------------------
+    .btn{
+        border: 1px solid red;
+        padding: 10px;
+        color: black;
+    }
+    .text{
+        margin: 0;
+        font-size: 14px;
+        @extend .btn         //相当于把.btn的样式加进来
+    }
+   ========>
+                             .btn, .text{
+                                border: 1px solid red;
+                                padding: 10px;
+                                color: black;
+                             }
+                             .text{
+                                margin: 0;
+                                font-size: 14px;
+                             }
+-------------------------------------------------------------------------------
+占位符（生成一些样式直接插入某个选择器中；  要配合@extend 使用）
+    %placeholder
+-------------------------------------------------------------------------------
+    %mt { margin-top: 10px}
+    %pt { padding-top: 10px}
+    .btn{
+        @extend  %mt;
+        @extend  %pt;
+    }
+    .block{
+        @extend  %mt;
+        span{
+            @extend  %pt;
+        }
+    }
+    ========>
+                        .btn, .block {  margin-top: 10px; }
+                        .btn, .block span { padding-top: 10px; }
+-------------------------------------------------------------------------------
+插值
+    #{形参}
+-------------------------------------------------------------------------------
+   $propt: (margin, padding);
+    @mixin set($side, $val){
+        @each $pop in $propt{
+            #{$pop}-#{$side} : $val;
+        }
+    }
+.box{ @include set(top, 10px)}      
+=============>
+ .box { margin-top: 10px;  padding-top: 10px; } -------------------------------------------------------------------------------
+数据类型：
+    Number： 1、2、8、 10px
+    String："foo"、'foo'、foo
+    Color：red、#444、rgba(0,0,0,0)
+    Boolean： true、false
+    Null：null
+    值列表：1.5em 1em 0 2em、Helvertial Arial
+    特殊：!important
+-------------------------------------------------------------------------------
+运算
+    相对单位：px  ex  em  rem  vw  vh  %
+绝对单位：pt  in  cm  mm  pc   
+【1in = 2.54cm = 25.4mm = 72pt = 6pc】
+-------------------------------------------------------------------------------
+	特殊不能运算的：
+        在相对单位中，不同的单位相加(减乘除)，都会报错；          //   .box{ 5px+3em }
+        单独的（没有加括号的时候）除法不会运算，但不会报错        //   .box{ font-size: 100px/2 }     			========>      .box{ font-size: 100px/2 }
+    特殊能运算的：
+        .box{ font-size: 100px/2+20px }         
+==>      .box{ font-size: 70px }
+        .box{ font-size: (100px*2+10px)/3 }
+    ==>      .box{ font-size: 70px }
+        box{ font-size: 100px/10px}      
+        ==>      .box{ font-size: 10 }  没有单位
+  	颜色运算：
+        .box{ color: #123456 + #789acb} ==> .box{ color: #8aceff; }  对应位置的数字相加，大于f的就等于f
+12+78 && 34+9a && 56+cb ==>8aceff
+   	字符串运算：
+        $content : "hello" + " " + "world";
+        .box:before{
+            content: $content;        
+        }
+        ==>  .box:before{ content: "hello world";} 
+
+
+
+@import “reset.css”;
+
+
+
+
+
+
+-I,  --load-path PATH
+-r,  --require LIB
+-t,  --style name
+-h,  --help
+-v,  --version--
+--watch
+--update
+-f,  --force
+
+
+
+
+
+@if 1+1==2{border: 1px solid red}
+@else if 1>6 {border: 1px solid green}
+
+
+
+
+
+
+
+
+

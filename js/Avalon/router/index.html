@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>router</title>
+	<script src="avalon.js"></script>
+	<style>.ms-controller{visibility: hidden;}</style>
+</head>
+<body ms-controller='app' class="ms-controller">
+	<div ms-if='path!=""' ms-include-src='template'  data-include-replace='true'></div>
+	<div ms-include-src='"UserControl/footer.html"' data-include-replace='true'></div>
+	<script>
+	avalon.ready(function(){
+		window.model = avalon.define({
+			$id: 'app',
+			path: '',
+			template: ''
+		});
+
+		model.$watch('path', function (msVal) {
+			if (msVal.search('#') == -1) msVal = location.href = location.href + '#/index';
+			var str = msVal.search(/\?/) != -1 ? '?' + msVal.split('?')[1] : '';
+			var pathUrl = '#' + msVal.split('#')[1].split(/\?/)[0];
+			switch (pathUrl){
+				case '#/index': 
+					model.template = 'course/default.html';
+					break;
+				case '#/charge':
+					model.template = 'course/charge.html';
+					break;
+				case '#/other':
+					model.template = 'other/other.html';
+					break;
+				case '#/free':
+					model.template = 'course/free.html';
+					break;
+				case '#/login':
+					model.template = 'member/login.html';
+					break;
+				case '#/reg':
+					model.template = 'member/register.html';
+					break;
+				case '#/member':
+					model.template = 'member/member.html';
+					break;
+				case '#/member/cart':
+					model.template = 'member/cart.html';
+					break;
+				default:
+					model.template = 'error.html';
+			}
+			model.template += str;
+		});
+
+		function EditPath() { model.path = location.href; }
+		window.onhashchange = EditPath;
+		window.onload       = EditPath;
+
+
+		avalon.scan();  
+	})
+	</script>
+</body>
+</html>

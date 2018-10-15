@@ -1,0 +1,54 @@
+
+count
+total every
+min max
+pos speed time
+on off
+
+text
+phone
+tel
+addr
+mess
+info
+status
+alt
+tool
+bar
+
+use
+nav
+sort 种类
+
+calc
+step
+plus
+reduce减少
+sum
+
+add
+dis
+re
+un
+tab
+
+num obj str arr fn null
+
+prev next
+
+
+size
+limit
+zone 区域
+range 范围
+home
+
+
+index val
+key item
+tag  ele
+list data
+url
+path
+dir
+

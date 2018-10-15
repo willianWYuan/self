@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>classify</title>
+	<link rel="stylesheet" href="classify.css?v=1.0.7">
+</head>
+<body>
+	<div class="classify-container"></div>
+
+
+
+	<script>
+		function ajax(url, json, callback) {
+			fetch(url, json).then(res => {
+				return res.json()
+			}).then(({data}) => {
+				if (typeof callback == 'function') callback(data);
+			});
+		};
+
+
+		function parentsFn(elem, findName) {
+			var result;
+			function subParentsFn(subElem){
+				if (!subElem) return;
+				if (subElem.className != findName) subParentsFn(subElem.parentNode);
+				else result = subElem;
+			}
+			subParentsFn(elem);
+			return result;
+		}
+
+
+
+		function classIfyFn(elem) {
+			let subAjaxData, container = document.querySelector(elem);
+			// 左边获取数据
+			ajax('first.json', {}, data => {
+				let str_l = `<div class="c1-first"><ul class="first-list-l">`;
+				data.forEach((item, index) => {
+					if (index == 0) str_l += `<li class="first-item on" cid=${item.cid}>${item.name}</li>`;
+					else str_l += `<li class="first-item" cid=${item.cid}>${item.name}</li>`;
+				});
+				str_l += `</ul></div>`;
+				// 右边获取数据
+				ajax('sub.json', {}, subdata => {
+					let str_r = `<div class="c2-second"><div class="c2-adver"><img src="" alt="广告图" /></div><ul class="second-list-r">`;
+					subAjaxData = subdata;
+					subdata.forEach(item => {
+						if (item.parentId != 1) return;
+						str_r += `<li subId=${item.subId}><strong>${item.name}</strong><div class="second-subList">`;
+						item.children.forEach(elem => {
+							str_r += `<div class="second-subItem" childId=${elem.childId}>
+								<div class="subimage"><img src="5b054fedN2ba90518.jpg" /></div>
+								<span class="name line-clamp">${elem.name}</span>
+							</div>`
+						});
+						str_r += `</div></li>`;
+					});
+					container.innerHTML = str_l + str_r;
+				})
+			});
+			container.onclick = function(ev){
+				if (ev.target.className == 'first-item') {
+					var firstItems = container.getElementsByClassName('first-item');
+					for (var i = 0, len = firstItems.length; i < len; i++) {
+						firstItems[i].className = 'first-item';
+					};
+					ev.target.className = 'first-item on';
+					let subStr = '', cid = ev.target.getAttribute('cid');
+					subAjaxData.forEach(item => {
+						if (item.parentId != cid) return;
+						subStr += `<li subId=${item.subId}><strong>${item.name}</strong><div class="second-subList">`;
+						item.children.forEach(elem => {
+							subStr += `<div class="second-subItem" childId=${elem.childId}><div class="subimage"><img src="5b054fedN2ba90518.jpg" /></div>`;
+							if (item.parentId != 3) subStr += `<span class="name">${elem.name}</span>`;
+							subStr += `</div>`;
+						});
+						subStr += `</div></li>`;
+					});
+					container.querySelector('.second-list-r').innerHTML = subStr;
+				}
+
+
+				var secondSubItem = parentsFn(ev.target, 'second-subItem');
+				if (secondSubItem) {
+					var childId = secondSubItem.getAttribute('childId');
+					location.href = '#childId=' + childId
+				}
+			}
+		}
+
+		classIfyFn('.classify-container')
+	</script>
+</body>
+</html>

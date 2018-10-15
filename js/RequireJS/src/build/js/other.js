@@ -1,0 +1,1 @@
+define({say:function(e){alert(e)}});

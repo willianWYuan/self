@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/me/me",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f93",
+    "navigationBarTitleText": "微信接口功能演示",
+    "navigationBarTextStyle": "#333",
+    "navigationStyle": "default",
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#f00",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 0
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/default.png",
+        "selectedIconPath": "images/default_d.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "日志",
+        "iconPath": "images/log.png",
+        "selectedIconPath": "images/log_d.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "个人中心"
+      }
+    ],
+    "color": "#fff",
+    "selectedColor": "#F4EA2A",
+    "backgroundColor": "#f90",
+    "borderStyle": "white",
+    "position": "bottom"
+  }
+}

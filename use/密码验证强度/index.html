@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>密码强度</title>
+	<script src="js/PsdStrength.js"></script> 
+</head>
+<body> 
+	<div>
+		<div> 
+			<label>输入密码:</label>
+			<input type="text" id="password" onkeyup="pwStrength(this.value)" onblur="pwStrength(this.value)" />
+		</div>
+		<div>
+			<label>密码强度: </label>
+			<span id="strength_L">弱</span>
+			<span id="strength_M">中</span>
+			<span id="strength_H">强 </span>
+		</div>
+	</div> 
+</body> 
+</html>

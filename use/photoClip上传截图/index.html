@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+	<title>图片裁剪</title>
+	<style>
+	*{margin: 0;padding: 0;}
+	</style>
+</head>
+<body>
+<div class="camer" onclick="uploadFn()">
+	上传图片
+</div>
+
+<script src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/hammer.min.js"></script>
+<script type="text/javascript" src="lib/lrz.all.bundle.js"></script>
+<script type="text/javascript" src="lib/iscroll-zoom-min.js"></script>
+<script type="text/javascript" src="lib/PhotoClip.js"></script>
+<!-- <script src="js/all.min.js"></script> -->
+<script>
+function uploadFn(){
+	var str = '', clipOuter = document.querySelector('.photo-cliping-outer');
+	if (clipOuter) clipOuter.remove();
+	var clipNewElem = document.createElement('div');
+	clipNewElem.className = 'photo-cliping-outer';
+	clipNewElem.style.cssText = 'width: 100vw;height: 100vh;background-color: #000;position: absolute;top: 0;left: 0;z-index: 252;display: none;';
+	str += '<div style="width: 100%;height: 100%;" id="photo-cliping-area"></div>';
+	str += '<button style="position: absolute;top: 10px;z-index: 260;right: 10px;" id="photo-cliping-button">截取</button>';
+	str += '<button style="position: absolute;top: 10px;z-index: 260;left: 10px" id="photo-cliping-cancel">clipCancel</button>';
+	str += '<input type="file" id="photo-cliping-file" style="display: none;">';
+	clipNewElem.innerHTML = str;
+	document.body.appendChild(clipNewElem);
+	clipNewElem.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	document.querySelector('#photo-cliping-file').click();
+	var clipArea = new PhotoClip("#photo-cliping-area", {
+		size: [260, 260],   	   // 截取区域大小
+		outputSize: [200, 200],    // 输出图片的大小
+		file: '#photo-cliping-file',		// <input type="file" id="photo-cliping-file">
+		// view: '#view',	    // 显示图片的视口   一般不需要
+		ok: '#photo-cliping-button',     // 立即截取按钮
+		loadStart: function() {
+			console.log("loadStart");
+		},
+		loadComplete: function() {
+			console.log("loadComplete");
+			clipNewElem.style.display = 'block';
+		},
+		done: function(dataURL) {
+			console.log(dataURL);
+			clipNewElem.remove();
+			document.querySelector('.camer').innerHTML = '<img src='+ dataURL +' alt="" />'
+		}
+	});
+	document.querySelector('#photo-cliping-cancel').addEventListener('click', function(){
+		clipNewElem.remove()
+		// clipArea.destroy()
+	}, false);
+};
+
+</script>
+
+</body>
+</html>

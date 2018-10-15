@@ -1,0 +1,6 @@
+<!--pages/me/me.wxml-->
+<view class="container">
+    <view class='msg' bindtap="change">
+        <text data-a="1" data-b="2" catchtap="change">{{ msg }}</text>
+    </view>
+</view>

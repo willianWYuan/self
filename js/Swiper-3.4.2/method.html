@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/swiper.min.css">
+	<style>
+	    html, body {
+	        position: relative;
+	        height: 100%;
+	    }
+	    body {
+	        background: #eee;
+	        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	        font-size: 14px;
+	        color:#000;
+	        margin: 0;
+	        padding: 0;
+	    }
+	    .swiper-container {
+	        width: 100%;
+	        height: 100%;
+	    }
+	    .swiper-slide {
+	        text-align: center;
+	        font-size: 18px;
+	        background: #fff;
+	        display: -webkit-box;
+	        display: flex;
+	        -webkit-justify-content: center;
+	        justify-content: center;
+	        -webkit-align-items: center;
+	        align-items: center;
+	    }
+
+		ul{position: fixed; top: 40px; left: 40%; overflow: hidden;margin: 0;padding: 0; z-index: 4; list-style: none;}
+		li{float: left; background: blue; color: white; margin-right: 10px; width: 40px; text-align: center; height: 40px; line-height: 40px; cursor: pointer; font-size: 20px;}
+
+	    button{position: fixed; top: 40%; left: 40%; height: 40px; line-height: 40px; width: 140px; text-align: center; background: red; color: white; z-index: 1; border: none; outline: none; cursor: pointer;}
+	</style>
+</head>
+<body>
+	<!-- Swiper -->
+	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+
+	        <div class="swiper-slide">
+	            slide1
+	        </div>
+	        <div class="swiper-slide">
+	            slide2
+	        </div>
+	        <div class="swiper-slide">
+	            slide3
+	        </div>
+	        <div class="swiper-slide">
+	            slide4
+	        </div>
+	    </div>
+	    <!-- Add Pagination -->
+	    <div class="swiper-pagination"></div>
+	    <!-- Add Navigation -->
+	    <div class="swiper-button-prev"></div>
+	    <div class="swiper-button-next"></div>
+	</div>
+
+
+	<button id="btn">暂停/播放</button>
+	<ul id="ulbtn"><li>1</li><li>2</li><li>3</li><li>4</li></ul>
+
+	<script src="js/swiper.min.js"></script>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        speed:200,
+        autoplay : 1500,
+        
+        loop: true,         //循环播放
+        // effect: "fade",
+        autoplayDisableOnInteraction : false,   //用户操作swiper之后，是否禁止autoplay。默认为true：停止
+        pagination : '.swiper-pagination',
+        paginationClickable :true,
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        onAutoplay: function(swiper){    //切换时 触发
+        	var html = '';
+        	html += 'realIndex: ' + swiper.realIndex + '    ';
+        	html += 'slides.length: ' + swiper.slides.length + '    ';
+        	// html += 'prevButton: ' + swiper.prevButton + '    ';   左按钮更改样式  swiper.prevButton.css({'background-color':'red', 'border': '1px solid #999'})
+        	// html += 'nextButton: ' + swiper.nextButton + '    ';   右按钮更改样式
+        	// html += 'width: ' + swiper.width + '    ';  
+        	// html += 'height: ' + swiper.height + '    ';  
+        	// html += 'isBeginning: ' + swiper.isBeginning + '    ';     位于最左/上  true
+        	// html += 'isEnd: ' + swiper.isEnd + '    ';     			  位于最右/下  true
+	      console.log(html);
+	    },
+
+
+	    onClick: function(swiper){    //相当于  swiper.on('click', function(){});
+			console.log(swiper)				//  swiper.off('click');
+		}
+    });
+
+
+
+
+
+
+
+    // 通过某事件触发以下
+	    ulbtn.onclick = function (ev) {
+	    	var index = ev.target.innerHTML;
+	    	//swiper.slideTo(index, swiper.speed, false);//切换到第一个slide，速度为1秒  false时不会触发onSlideChange回调函数。
+
+	    	swiper.removeSlide(index - 1); //移除 索引值 slide
+	    	//swiper.removeAllSlides();      //移除全部
+	    }
+
+
+	    btn.onclick = function () {
+	    	// if (swiper.autoplaying) swiper.stopAutoplay();    // [autoplaying 是否播放]   [stopAutoplay 停止播放]  [startAutoplay 开始播放]
+	    	// else swiper.startAutoplay();
+
+
+
+	    	
+	    	swiper.appendSlide('<div class="swiper-slide">这是一个新的slide</div>');  //加到Swiper的最后
+	    	swiper.prependSlide('<div class="swiper-slide">这是一个新的slide</div>'); //加到Swiper的前面
+	    }
+
+    </script>
+</body>
+</html>

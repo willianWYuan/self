@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ZYUI</title>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <div class="Page" onscroll="UI.scroll(event, fn)">
+        <div style="height: 20rem; line-height: 20rem; text-align: center;">其他内容</div>
+
+        <div class="nav-tag">
+            <div class="nav-tag-src" onclick="UI.radio(event, this, 'line')">
+                <a class="on">All</a>
+                <a>Type1</a>
+                <a>Type2</a>
+                <i class="nav-tag-line"></i>
+            </div>
+            <div class="nav-tag-cxt">
+                <div class="nav-tagcxt-inner">
+                    <div class="nav-tagcxt-options">this is All</div>
+                    <div class="nav-tagcxt-options">this is Type1</div>
+                    <div class="nav-tagcxt-options">this is Type2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/ZYUI.js"></script>
+    <script>
+        var recordpos;   
+        function fn(obj){
+            if (typeof recordpos == 'undefined') recordpos = UI.getEle('.nav-tag-src').offsetTop;
+            if (obj.scr_t >= recordpos) UI.css(UI.getEle('.nav-tag-src'), {
+                'position': 'fixed',
+                'top': '0',
+                'left': '0',
+                'width': '100%',
+                'zIndex': '10'
+            });
+            else UI.getEle('.nav-tag-src').removeAttribute('style');
+        }
+    </script>
+</body>
+</html>

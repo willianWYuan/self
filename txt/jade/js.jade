@@ -1,0 +1,75 @@
+//extends <file> 
+//block <blockname>
+extends head
+block content
+
+  
+  //include <file>
+  include include
+
+
+  //if
+  -var author = 'jack';
+  if author
+    p 作者：#{author}
+  else
+    p 真的没有
+
+  //case when
+  -var fruit = ['apple', 'banana'];
+  case fruit[3]
+    when 'apple'
+      p apple
+    when 'banana'
+      p banana
+    default
+      p none
+
+
+
+
+
+
+  //for in
+  -var person = {a: 'abcc', b: 'herr', c: 'asfae', d: 'trika'}
+  dl
+    -for (var x in person)
+      dd #{x}-#{person[x]}
+
+
+  //each in
+  ol.list#data
+    -each item,index in person 
+      li #{index}-#{item}
+
+
+  //while
+  -var n = 0
+  ul
+    while n < 4
+      li= n++
+
+
+
+
+
+  //mixin
+  mixin sayHi(name)
+    p #{name}'s hobbies:
+  
+  mixin personInfo(name, hobbies)
+      +sayHi(name)
+      ul.hobby
+        each hobby in hobbies
+          li= hobby
+
+
+  +personInfo('Jack', ['movie', 'music'])
+
+
+
+  
+
+
+
+
