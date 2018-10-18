@@ -1,0 +1,39 @@
+node 8.2+
+
+
+
+npm init -y
+npm i -D webapck webpack-cli style-loader css-loader file-loader html-webpack-plugin clean-webpack-plugin webpack-dev-server express webpack-dev-middleware
+npm i -S lodash
+
+
+
+
+
+
+
+¡¾webpack.config.js¡¿
+const path = require('path');
+module.exports = {
+	entry: {
+		app: './src/index.js',
+		print: './src/print.js'
+	},
+	output: {
+		filename: '[name].bundle.js',
+		path: path.resolve(__dirname, 'dist')
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
