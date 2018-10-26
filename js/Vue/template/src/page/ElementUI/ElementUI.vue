@@ -26,6 +26,7 @@
 import Vue from 'vue'
 import ElementUI, { Table, TableColumn, Button, Pagination } from 'element-ui';
 console.log(ElementUI)
+Vue.use(ElementUI);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
 Vue.component(Button.name, Button);
@@ -35,40 +36,8 @@ export default {
 	data() {
 		return {
 			currpage: 1,
-			showSize: 2,
-			tableData3: [{
-				date: '2016-05-02',
-				name: '王小虎1',
-				address: '上海市普陀区金沙江路 1518 弄'
-			}, {
-				date: '2016-05-04',
-				name: '王小虎2',
-				address: '上海市普陀区金沙江路 1517 弄'
-			}, {
-				date: '2016-05-01',
-				name: '王小虎3',
-				address: '上海市普陀区金沙江路 1519 弄'
-			}, {
-				date: '2016-05-03',
-				name: '王小虎4',
-				address: '上海市普陀区金沙江路 1516 弄'
-			},{
-				date: '2016-05-02',
-				name: '王小虎5',
-				address: '上海市普陀区金沙江路 1518 弄'
-			}, {
-				date: '2016-05-04',
-				name: '王小虎6',
-				address: '上海市普陀区金沙江路 1517 弄'
-			}, {
-				date: '2016-05-01',
-				name: '王小虎7',
-				address: '上海市普陀区金沙江路 1519 弄'
-			}, {
-				date: '2016-05-03',
-				name: '王小虎8',
-				address: '上海市普陀区金沙江路 1516 弄'
-			}],
+			showSize: 5,
+			tableData3: [],
 			multipleSelection: []
 		}
 	},
@@ -83,6 +52,28 @@ export default {
 	},
 
 	methods: {
+		init() {
+			setTimeout(() => {
+				this.tableData3 = [
+					{date: '2016-05-02',name: '王小虎11111',   address: '上海市普陀区金沙江路 1518'},
+					{date: '2016-05-04',name: '王小虎22222',   address: '上海市普陀区金沙江路 1517'},
+					{date: '2016-05-01',name: '王小虎33333',   address: '上海市普陀区金沙江路 1519'},
+					{date: '2016-05-03',name: '王小虎44444',   address: '上海市普陀区金沙江路 1516'},
+					{date: '2016-05-02',name: '王小虎55555',   address: '上海市普陀区金沙江路 1518'},
+					{date: '2016-05-04',name: '王小虎66666',   address: '上海市普陀区金沙江路 1517'},
+					{date: '2016-05-01',name: '王小虎77777',   address: '上海市普陀区金沙江路 1519'},
+					{date: '2016-05-03',name: '王小虎88888',   address: '上海市普陀区金沙江路 1516'},
+					{date: '2016-05-02',name: '王小虎999999',  address: '上海市普陀区金沙江路 1518'},
+					{date: '2016-05-04',name: '王小虎1111111', address: '上海市普陀区金沙江路 1517'},
+					{date: '2016-05-01',name: '王小虎22222',   address: '上海市普陀区金沙江路 1519'},
+					{date: '2016-05-03',name: '王小虎333333',  address: '上海市普陀区金沙江路 1516'},
+					{date: '2016-05-02',name: '王小虎4444444', address: '上海市普陀区金沙江路 1518'},
+					{date: '2016-05-04',name: '王小虎555',     address: '上海市普陀区金沙江路 1517'},
+					{date: '2016-05-01',name: '王小虎66666',   address: '上海市普陀区金沙江路 1519'},
+					{date: '2016-05-03',name: '王小虎77777',   address: '上海市普陀区金沙江路 1516'}
+				]
+			}, 500);
+		},
 		toggleSelection(rows) {
 			if (rows) {
 				rows.forEach(row => {
@@ -99,13 +90,31 @@ export default {
 		pageChangeFn(val) {
 			this.currpage = val
 		},
-		delFn(rwo, index){
-			console.log(rwo, index)
-			this.tableData3.splice(index, 1)
+		delFn(rwo, index){    // this.$confirm   this.$message      开启 Vue.use(ElementUI);
+			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				let currIndex = (this.currpage - 1) * this.showSize + index;
+				console.log(currIndex)
+				this.tableData3.splice(currIndex, 1)
+				if (!this.currList.length) this.currpage--;
+				this.$message({
+					type: 'success',
+					message: '删除成功!'
+				});
+			}).catch(() => {
+				this.$message({
+					type: 'info',
+					message: '已取消删除'
+				});
+			});
 		}
 	},
 	mounted() {
-
+		console.log(this)
+		this.init();
 	}
 }
 </script>
