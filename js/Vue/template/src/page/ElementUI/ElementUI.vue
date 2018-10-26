@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<el-table ref="multipleTable" :data="currList" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
+		<component is="element-sub"></component>
+		<el-table ref="multipleTable" :data="currList" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" v-loading="isLoading">
 		    <el-table-column type="index" width="55"></el-table-column>
 		    <el-table-column label="日期" width="120">
 		    	<template slot-scope="scope"><i class="el-icon-time"></i>{{ scope.row.date }}</template>
@@ -24,21 +25,27 @@
 
 <script>
 import Vue from 'vue'
-import ElementUI, { Table, TableColumn, Button, Pagination } from 'element-ui';
-console.log(ElementUI)
-Vue.use(ElementUI);
+import ElementUI, { Table, TableColumn, Button, Pagination, Loading } from 'element-ui';
+// console.log(ElementUI)
+Vue.use(Loading);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
 Vue.component(Button.name, Button);
 Vue.component(Pagination.name, Pagination);
 
+
+import ElementSub from './sub'
 export default {
+	components: {
+		ElementSub,
+	},
 	data() {
 		return {
 			currpage: 1,
 			showSize: 5,
 			tableData3: [],
-			multipleSelection: []
+			multipleSelection: [],
+			isLoading: true
 		}
 	},
 	computed: {
@@ -72,6 +79,7 @@ export default {
 					{date: '2016-05-01',name: '王小虎66666',   address: '上海市普陀区金沙江路 1519'},
 					{date: '2016-05-03',name: '王小虎77777',   address: '上海市普陀区金沙江路 1516'}
 				]
+				this.isLoading = false;
 			}, 500);
 		},
 		toggleSelection(rows) {
@@ -113,8 +121,10 @@ export default {
 		}
 	},
 	mounted() {
-		console.log(this)
-		this.init();
+		this.$nextTick(() => {
+			console.log(this)
+			this.init();
+		})
 	}
 }
 </script>
