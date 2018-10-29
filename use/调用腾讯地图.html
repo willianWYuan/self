@@ -45,9 +45,9 @@
                         url: url,
                         success: function (res) {
                             var add_info = res;
-                            //console.log(add_info);
-                            alert('纬度' + wei + '，经度' + jing+'，省份'+add_info.result.address_component.province+'，城市'+add_info.result.address_component.city);
-                            //console.log(add_info.address_component.province,);
+                            console.log(add_info.result.address_component);
+                            // console.log(add_info.address_component);
+                            // alert('纬度' + wei + '，经度' + jing+'，省份'+add_info.result.address_component.province+'，城市'+add_info.result.address_component.city);
                         },
                         error: function (err) {
                             alert("服务端错误，请刷新浏览器后重试")

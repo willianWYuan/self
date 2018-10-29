@@ -480,61 +480,47 @@ Common.prototype.parentNodeFn = function(elem, findName) {
 
 
 
-// sessionStorage 和 cookie 浏览器存储
+// cookie 浏览器存储
 // 				var bdata = new Common().BrowserData();
 // 				bdata.add({username: 'John', userId: 12, token: '5446iph57iaw234g33453h8235'})     添加或修改
 // 				bdata.get() 获取整个对象          bdata.get('user')  获取user值
 // 				bdata.del('user')  删除user值
-Common.prototype.BrowserData = function() {
-	var totalObj = {};
-	totalObj.add = function(argumentObj) { // 添加/修改
-		for (var x in argumentObj) {
-			if (!argumentObj.hasOwnProperty(x)) continue;
-			if (sessionStorage) sessionStorage[x] = argumentObj[x];
-			else document.cookie = x + '=' + argumentObj[x];
-		}
-	}
-	totalObj.get = function(params) { // 获取
-		var obj = {};
-		if (sessionStorage) {
-			for (var x in sessionStorage) {
-				if (!sessionStorage.hasOwnProperty(x)) continue;
-				obj[x] = sessionStorage[x];
-			}
-		} else {
-			var cookArr = document.cookie.split(/;\s?/g),
-				cookArrLen = cookArr.length;
-			for (var i = 0; i < cookArrLen; i++) {
-				var arr1 = cookArr[i].split(/=/);
-				var keys = arr1[0];
-				var vals = arr1[1];
-				obj[keys] = vals;
-			}
-		}
-		return params ? obj[params] : obj;
-	}
-	totalObj.del = function(keys) { // 删除
-		if (sessionStorage) sessionStorage.removeItem(keys);
-		else document.cookie = keys + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-	}
-	totalObj.remove = function() { // 删除全部
-		if (sessionStorage) {
-			for (var x in sessionStorage) {
-				if (!sessionStorage.hasOwnProperty(x)) continue;
-				sessionStorage.removeItem(x);
-			}
-		} else {
-			var cookArr = document.cookie.split(/;\s?/g),
-				cookArrLen = cookArr.length;
-			for (var i = 0; i < cookArrLen; i++) {
-				var arr1 = cookArr[i].split(/=/);
-				var keys = arr1[0];
-				document.cookie = keys + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-			}
-		}
-	}
-
-	return totalObj;
+Common.prototype.Cookies = function() {   // 需要运行在服务器
+    resultCookies = {};
+    resultCookies.add = function(argumentObj) { // 添加/修改
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        for (var x in argumentObj) {
+            if (!argumentObj.hasOwnProperty(x)) continue;
+            document.cookie = x + '=' + argumentObj[x] + "; " + expires;
+        }
+    }
+    resultCookies.get = function(params) { // 获取
+        var obj = {},
+            cookArr = document.cookie.split(/;\s?/g),
+            cookArrLen = cookArr.length;
+        for (var i = 0; i < cookArrLen; i++) {
+            var arr1 = cookArr[i].split(/=/);
+            var keys = arr1[0];
+            var vals = arr1[1];
+            obj[keys] = vals;
+        }
+        return params ? obj[params] : obj;
+    }
+    resultCookies.del = function(keys) { // 删除
+        document.cookie = keys + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
+    resultCookies.remove = function() { // 删除全部
+        var cookArr = document.cookie.split(/;\s?/g),
+            cookArrLen = cookArr.length;
+        for (var i = 0; i < cookArrLen; i++) {
+            var arr1 = cookArr[i].split(/=/);
+            var keys = arr1[0];
+            document.cookie = keys + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        }
+    }
+    return resultCookies;
 }
 
 
