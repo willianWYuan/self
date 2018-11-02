@@ -1,11 +1,259 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-	<meta http-equiv="refresh" content="1; URL=http://es6.ruanyifeng.com/">
+	<meta name="viewport" content="width=device-width">
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>es6风格</title>
 </head>
 <body>
-	
+<a href="http://es6.ruanyifeng.com/" target="_blank">ECMAScript 6 入门</a>
+<div class="pre">
+
+
+<h2>声明</h2>
+<pre>let/const 取代 var</pre>
+
+
+
+
+<h2>String</h2>
+<pre>const b = `foo${a}bar`;</pre>
+
+
+
+
+<h2>Array</h2>
+<pre>
+const [a, b, c] = [1, 2, 3];
+const <span>[first, second]</span> = arr;
+let arr = <span>[...items]</span>;
+
+const foo = document.querySelectorAll('.foo');
+const nodes = <span>Array.from</span>(foo);
+
+
+
+[1, 2, 3].<span>includes</span>(2)     <small>// true</small>
+
+
+[ ,'a'].<span>forEach</span>((x,i) => console.log(i));  <small>// 1</small>
+['a', ,'b'].<span>filter</span>(x => true) 	 <small>// ['a','b']</small>
+[ ,'a'].<span>every</span>(x => x==='a') 	 <small>// true</small>
+[1, ,2].<span>reduce</span>((x,y) => x+y) 	 <small>// 3</small>
+[ ,'a'].<span>map</span>(x => 1) 			 <small>// [,1]</small>
+Array.<span>from</span>({'0': 'a', '1': 'b', length: 3})   <small>// ['a','b', 'undefined']  length必须有 length决定返回数组的长度</small>
+</pre>
+
+
+
+
+<h2>function</h2>
+<pre>
+function getFullName(<span>{ firstName, lastName }</span>) { }
+function handleThings(<span>opts = {}</span>) { }
+function concatenateAll(<span>...args</span>){ }
+</pre>
+
+
+
+
+<h2>Object</h2>
+<pre>
+let obj = {m:0, n:1}, a = {
+	...obj
+};  
+let newObj = Object.<span>assign</span>(a, {});
+
+{a, b, c}    <small>// {a:a, b:b, c:c}</small>
+
+let keys = "first name", obj = {
+	<span>[keys]</span>: 'world',
+	<span>['h' + 'ello']</span>() {
+		return 'hi';
+	}
+};
+
+Object.<span>defineProperty</span>(Object, 'prop', {
+	get(){
+		return 'get';
+	},
+	set(val){
+		console.log(val)
+	}
+})
+
+
+class Queue {
+	<span>constructor</span>(contents = []) {
+		this._queue = [...contents];
+	}
+	pop() {
+		const value = this._queue[0];
+		this._queue.splice(0, 1);
+		return value;
+	}
+}
+class PeekableQueue extends Queue {
+	<span>constructor</span>(contents = []) {
+		<span>super</span>(contents);
+		this._queue = [...contents];
+	}
+}
+
+
+<span>for</span> (let index <span>of</span> <span>Object.keys</span>(['a', 'b'])) {
+  console.log(index);
+}
+for (let elem of <span>Object.values</span>(['a', 'b'])) {
+  console.log(elem);
+}
+for (let [index, elem] of <span>Object.entries</span>(['a', 'b'])) {
+  console.log(index, elem);
+}
+</pre>
+
+
+
+
+
+
+
+<h2>Symbol <small>//唯一值</small></h2>
+<pre>
+let s = Symbol();
+</pre>
+
+
+
+
+<h2>set <small>//类似新型数组</small></h2>
+<pre>
+const set = new Set(document.querySelectorAll('pre'));
+const set = new Set([1, 2, 3, 4, 4]);   <small>// 数组去重</small>
+set     	<small>// Set(4) {1, 2, 3, 4}</small>
+[...set]    Array.from(set)<small>// (4) [1, 2, 3, 4]</small>
+
+set.add(1)    <small>//添加1</small>
+set.remove()  <small>//删除全部</small>
+set.delete(1) <small>//删除元素1</small>
+set.has(1)    <small>//是否有1</small>
+set.size      <small>//set的长度</small>
+</pre>
+
+
+
+
+<h2>map <small>//类似新型对象</small></h2>
+<pre>
+const map = new Map([
+	['name', '张三'],
+	['title', 'Author']
+]);
+map.set('key', '3')   <small>//添加</small>
+map.get('name')         <small>//获得name值</small>
+map.has('name')
+map.delete('name')
+map.size
+</pre>
+
+
+
+<pre>
+new Promise((resolve, reject) => {
+	if (true) resolve('ok')
+	else reject('no')
+}).then(result => {
+	console.log(result)
+}).catch(err => {
+	console.log(err)
+}).finally(() => {
+	console.log('finally')
+})
+</pre>
+
+
+
+
+
+<pre>
+function* F() {
+	yield 'hello';
+	yield 'world';
+	return 'ending';
+}
+let f = F();
+f.next()  <small>//{value: 'hello', done: false}</small>
+f.next()  <small>//{value: 'world', done: false}</small>
+f.next()  <small>//{value: 'ending', done: true}</small>
+f.next()  <small>//{value: undefined, done: true}</small>
+
+function* f() {
+  for(var i = 0; true; i++) {
+    var reset = yield i;
+    if(reset) { i = -1; }
+  }
+}
+var g = f();
+g.next() <small>// { value: 0, done: false }</small>
+g.next() <small>// { value: 1, done: false }</small>
+g.next(true) <small>// { value: 0, done: false }</small>
+</pre>
+
+
+
+
+
+
+
+
+
+<pre>
+function timeout(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function asyncPrint(value, ms) {
+  await timeout(ms);
+  console.log(value);
+}
+
+asyncPrint('hello world', 50);
+</pre>
+
+
+
+
+
+
+
+
+
+<pre>
+import { func1, func2 } from 'moduleA';
+</pre>
+
+
+
+
+
+
+</div>
 </body>
-</html>
+</html>	
+
+
+
+
+
+
+<style>
+	pre{margin-bottom: 120px; font: 18px/1.2 sans-serif;}
+	span{color: #f33; font-weight: bold}
+	small{color: #999;}
+</style>
+
+
+
+
