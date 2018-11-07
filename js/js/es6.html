@@ -86,11 +86,15 @@ Object.<span>defineProperty</span>(Object, 'prop', {
 class Queue {
 	<span>constructor</span>(contents = []) {
 		this._queue = [...contents];
+		console.log(<span>new.target</span>.name);    <small>// new.target指向子对象(PeekableQueue)  没有子对象就指向自己(Queue)</small>
 	}
 	pop() {
 		const value = this._queue[0];
 		this._queue.splice(0, 1);
 		return value;
+	}
+	<span>static</span> myMethod(msg) {   <small>// Queue.myMethod(1)</small>
+	    console.log('static', msg);
 	}
 }
 class PeekableQueue extends Queue {
@@ -158,6 +162,7 @@ map.size
 
 
 
+<h2>Promise</h2>
 <pre>
 new Promise((resolve, reject) => {
 	if (true) resolve('ok')
@@ -174,7 +179,7 @@ new Promise((resolve, reject) => {
 
 
 
-
+<h2>function* F</h2>
 <pre>
 function* F() {
 	yield 'hello';
@@ -206,7 +211,7 @@ g.next(true) <small>// { value: 0, done: false }</small>
 
 
 
-
+<h2>async await</h2>
 <pre>
 function timeout(ms) {
   return new Promise((resolve) => {
@@ -215,7 +220,7 @@ function timeout(ms) {
 }
 
 async function asyncPrint(value, ms) {
-  await timeout(ms);
+  await timeout(ms);   <small>// 多个 await Promise.all([timeout(ms)]);</small>
   console.log(value);
 }
 

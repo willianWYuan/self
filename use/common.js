@@ -541,6 +541,118 @@ class Common {
             }
         }
     }
+
+    // 瀑布流
+    // ---------------------------------------------------样式部分
+    // .wf-list{position: relative; margin: 0 auto;}
+    // .wf-list li{
+    //     position: absolute;
+    //     transition: all .3s;
+    //     overflow: hidden;
+    // }
+    // .wf-list li img{width: 100%; display: block}
+    // .wf-list .wf-name{
+    //     position: absolute;
+    //     bottom: -60px; 
+    //     left: 0;
+    //     width: 100%;
+    //     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAyCAMAAACqJUG4AAAAYFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6T+iNAAAAIHRSTlMBpp+TiHdqUTEqIxwTDgmZjYJ9cGRgXFdLRkM/OzcYBpB7wwsAAAA8SURBVAjXRcHFAYMAAMDA0OLuLvtvSX7c8XmoXbn0TeHcmVNfnBzsbKwkXpiZGIk9ELmnI3TL3w0/BwQven8CWkDaUVAAAAAASUVORK5CYII=") repeat-x ;
+    //     color: white;
+    //     height: 50px;
+    //     line-height: 55px;
+    //     text-align: center;
+    //     transition: bottom .3s;
+    //     font-size: 14px; 
+    // }
+    // .wf-list li:hover .wf-name{bottom: 0; }
+    // ---------------------------------------------------javascript调用部分
+    // waterfall('.waterfall-container', {
+    //     data: ajaxdata,
+    //     // outerWidth: 1200,  // outer的宽度   手机自动适配屏幕宽度  不要传   
+    //     nums: 2,              // 一行的数量
+    //     space: 6,         // 图片之间的间隔
+    //     done: function(elem) {
+    //         console.log(elem)
+    //     }
+    // })
+    waterfall(elem, objective) {
+        const outer = document.querySelector(elem);
+        const {
+            data,       
+            outerWidth = document.documentElement.clientWidth,  // outer的宽度   手机自动适配屏幕宽度  不要传   
+            nums = 4,           // 一行的数量
+            space = 10          // 图片之间的间隔
+        } = objective;
+        const everyWidth = (outerWidth - space * (nums - 1)) / nums;
+
+        const dataLen = data.length;
+        let computedImgOnloadNums = 0;
+        data.forEach(item => {
+            let img = new Image();
+            img.src = item.image;
+            img.onload = function() {
+                computedImgOnloadNums++;
+                item.width = everyWidth;
+                item.height = Math.floor(item.width / this.width * this.height);
+                if (computedImgOnloadNums == dataLen) positionFn(data);
+            }
+        });
+
+
+
+        // 获取   top  left
+        function positionFn(posData) {
+            let lineArr = []; // 一竖每个元素的高度 累加
+            posData.forEach((item, index) => {
+                if (index < nums) {
+                    lineArr.push(item.height);
+                    item.left = index ? (everyWidth + space) * index : 0;
+                    item.top = 0;
+                } else {
+                    let {
+                        minHeightIndex,
+                        minTop
+                    } = getMaxMinHeightFn(lineArr);
+                    lineArr[minHeightIndex] += item.height + space;
+                    item.left = minHeightIndex ? (everyWidth + space) * minHeightIndex : 0;
+                    item.top = minTop + space
+                }
+
+            });
+            createElemFn(lineArr)
+        }
+
+
+
+        // 生成dom
+        function createElemFn(lineArr) {
+            let str = `<ul class="wf-list" style="width: ${outerWidth}px; height: ${getMaxMinHeightFn(lineArr, true)}px">`;
+            data.forEach(item => {
+                str += `<li style="width: ${item.width}px; height: ${item.height}px; top: ${item.top}px; left: ${item.left}px">
+                            <div class="wf-image"><img src="${item.image}" /></div>
+                            <div class="wf-name">${item.name}</div>
+                        </li>`
+            });
+            str += '</ul>';
+            outer.innerHTML = str;
+            if (typeof objective.done == 'function') objective.done(outer.querySelector('.wf-list'));
+        }
+
+
+
+        // type == false  获取 最小高度和当前索引        type==true  直接要最后的最大高度
+        function getMaxMinHeightFn(arr, type) {
+            let [minTop, lastMaxHieght, minHeightIndex] = [10000, 0, null];
+            arr.forEach((item, i) => {
+                if (minTop > item) minTop = item, minHeightIndex = i;
+                if (lastMaxHieght < item) lastMaxHieght = item;
+            })
+            return !type ? {
+                minHeightIndex,
+                minTop
+            } : lastMaxHieght;
+        }
+    }
 }
 
 // getAjax: function(obj) {
