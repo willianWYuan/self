@@ -547,7 +547,7 @@ class Common {
     // .wf-list{position: relative; margin: 0 auto;}
     // .wf-list li{
     //     position: absolute;
-    //     transition: all .3s;
+    //     transition: all .5s;
     //     overflow: hidden;
     // }
     // .wf-list li img{width: 100%; display: block}
@@ -569,20 +569,29 @@ class Common {
     // waterfall('.waterfall-container', {
     //     data: ajaxdata,
     //     // outerWidth: 1200,  // outer的宽度   手机自动适配屏幕宽度  不要传   
-    //     nums: 2,              // 一行的数量
-    //     space: 6,         // 图片之间的间隔
+    //     // nums: 2,           // 一行的数量
+    //     // space: 6,          // 图片之间的间隔
     //     done: function(elem) {
     //         console.log(elem)
     //     }
     // })
     waterfall(elem, objective) {
+        let timer = null;
+        const _self = this;
         const outer = document.querySelector(elem);
+        const bodyClientWidth = document.documentElement.clientWidth;
+        let needNums, needSpace, needOuterWidth;
+        if (bodyClientWidth > 1280)[needNums, needSpace, needOuterWidth] = [5, 10, 1200];
+        if (bodyClientWidth <= 1280 && bodyClientWidth > 1024)[needNums, needSpace, needOuterWidth] = [4, 10, 1024];
+        if (bodyClientWidth <= 1024 && bodyClientWidth > 640)[needNums, needSpace, needOuterWidth] = [3, 6, bodyClientWidth];
+        if (bodyClientWidth <= 640)[needNums, needSpace, needOuterWidth] = [2, 4, bodyClientWidth];
         const {
-            data,       
-            outerWidth = document.documentElement.clientWidth,  // outer的宽度   手机自动适配屏幕宽度  不要传   
-            nums = 4,           // 一行的数量
-            space = 10          // 图片之间的间隔
+            data,
+            outerWidth = needOuterWidth, // outer的宽度   手机自动适配屏幕宽度  不要传   
+            nums = needNums, // 一行的数量
+            space = needSpace // 图片之间的间隔
         } = objective;
+        [needNums, needSpace, needOuterWidth] = [null, null, null];
         const everyWidth = (outerWidth - space * (nums - 1)) / nums;
 
         const dataLen = data.length;
@@ -619,7 +628,7 @@ class Common {
                 }
 
             });
-            createElemFn(lineArr)
+            !outer.innerHTML ? createElemFn(lineArr) : resizePosFn(lineArr, posData);
         }
 
 
@@ -639,6 +648,21 @@ class Common {
         }
 
 
+        // window.onresize
+        function resizePosFn(lineArr, posData) {
+            const wful = outer.querySelector('.wf-list');
+            wful.style.width = outerWidth + 'px';
+            wful.style.height = getMaxMinHeightFn(lineArr, true) + 'px';
+            let wfList = wful.querySelectorAll('li');
+            posData.forEach((item, index) => {
+                wfList[index].style.width = item.width + 'px';
+                wfList[index].style.height = item.height + 'px';
+                wfList[index].style.top = item.top + 'px';
+                wfList[index].style.left = item.left + 'px';
+            })
+        }
+
+
 
         // type == false  获取 最小高度和当前索引        type==true  直接要最后的最大高度
         function getMaxMinHeightFn(arr, type) {
@@ -652,6 +676,18 @@ class Common {
                 minTop
             } : lastMaxHieght;
         }
+
+
+        function windowEventFn() {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                _self.waterfall(elem, {
+                    data: objective.data
+                })
+                window.removeEventListener('resize', windowEventFn);
+            }, 200);
+        }
+        window.addEventListener('resize', windowEventFn)
     }
 }
 

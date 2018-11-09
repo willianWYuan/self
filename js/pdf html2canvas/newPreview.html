@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new预览</title>
+    <link rel="stylesheet" href="./lib/layui/css/layui.css">
+    <link rel="stylesheet" href="./css/preview.css">
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <div class="skim" id="app" v-cloak>
+
+        <div class="loading" v-if='!isShowOutputBtn'>
+            <img src="/lib/layui/css/modules/layer/default/loading-2.gif">
+        </div>
+
+        <transition name="downtoup">
+            <div class="skim-btn" v-if='isShowOutputBtn'>
+                <span class="layui-btn" @click='printFn'>导出pdf</span>
+            </div>
+        </transition>
+
+
+        <dl class="skim-list">
+
+
+
+
+            <!-- 1 -->
+            <dd dd-index="1">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                    <div class="slt-r">
+                        <div class="time">発行日： {{ sheetPaper.updateTime | formatTime }}</div>
+                        <i class="iconImage"><img src="./images/privary.png"></i>
+                    </div>
+                </div>
+
+                <div class="sl-content">
+                    <div class="slc-text">検品報告書</div> 
+                    <ul class="slc-ul">
+                        <li><span class="key">工厂名：</span>                 <span class="val">{{ sheetPaper.sheetPaperFactoryName | Japan }}</span></li>
+                        <li><span class="key">商品名：</span>                 <span class="val">{{ sheetPaper.sheetPaperProductName | Japan }}</span></li>
+                        <li><span class="key">品&nbsp;&nbsp;&nbsp;番：</span> <span class="val">{{ sheetPaper.sheetPaperProductCode | Japan }}</span></li>
+                        <li><span class="key">報告者：</span>                 <span class="val">{{ sheetPaper.userName }}</span></li>
+                        <li><span class="key">立会検品結果：</span>           <span class="val">{{ sheetPaper.sheetPaperReslut | qualified }}</span></li>
+                        <li><span class="key">備考：</span>                   <span class="val">{{ sheetPaper.sheetPaperRemark | Japan }}</span></li>
+                    </ul> 
+                </div>
+                <div class="sl-foot">報告書管理番号：{{ sheetPaper.sheetPaperNumber }}</div>
+            </dd>
+
+
+
+            <!-- 2 -->
+            <dd dd-index="2">
+                <div class="sl-title slt2">
+                    <h3>検品立会報告書（詳細）</h3>
+                </div>
+                <div class="sl-table">
+                    <table class="layui-table">
+                        <tr> 
+                            <td>品番</td> 
+                            <td>{{ reportDetails.reportDetailsProductNumber | Japan }}</td> 
+                            <td colspan="12">{{ reportDetails.reportDetailsAqlStandard | Japan }}</td>
+                        </tr> 
+                        <tr> 
+                            <td>ブランド</td> 
+                            <td>{{ reportDetails.reportDetailsBrand | Japan }}</td> 
+                            <td colspan="2">CRI: 基準</td> 
+                            <td colspan="2">{{ reportDetails.reportDetailsCriStandard | Japan }}</td> 
+                            <td colspan="2">MA: 基準</td> 
+                            <td colspan="2">{{ reportDetails.reportDetailsMaStandard | Japan }}</td> 
+                            <td colspan="2">MI: 基準</td> 
+                            <td colspan="2">{{ reportDetails.reportDetailsMaStandard | Japan }}</td> 
+                        </tr> 
+                        <tr> 
+                            <td>製品色</td> 
+                            <td>{{ reportDetails.reportDetailsColour | Japan }}</td> 
+                            <td colspan="3">P/O数量 {{ reportDetails.reportDetailsPoNum | Japan }}</td> 
+                            <td colspan="3">ALLOW</td> 
+                            <td colspan="3">FOUND</td> 
+                            <td colspan="3">RATE(%)</td> 
+                        </tr> 
+                        <tr> 
+                            <td>抜取数</td> 
+                            <td>{{ reportDetails.reportDetailsPoNum | Japan }}</td> 
+                            <td colspan="3">CRITICAL</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsCriticalAllow | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsCriticalFound | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsCriticalRate | Japan }}</td>
+                        </tr> 
+                        <tr> 
+                            <td>ロット NO</td> 
+                            <td>{{ reportDetails.reportDetailsBatchNumber | Japan }}</td> 
+                            <td colspan="3">MAJOR</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMajorAllow | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMajorFound | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMajorRate | Japan }}</td> 
+                        </tr> 
+                        <tr> 
+                            <td>ロット 数量</td> 
+                            <td>{{ reportDetails.reportDetailsBatch | Japan }}</td> 
+                            <td colspan="3">MINOR</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMinorAllow | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMinorFound | Japan }}</td> 
+                            <td colspan="3">{{ reportDetails.reportDetailsMinorRate | Japan }}</td> 
+                        </tr> 
+                    </table>
+                    <table class="layui-table line">
+                        <tr v-for='item in reportDetailsCheckItem'> 
+                            <td>item</td> 
+                            <td><div class="flex">結果: <i class="block on"></i>合格</div></td> 
+                            <td><div class="flex"><i class="block"></i>不合格; 確認数量（ 80 PCS）</div></td> 
+                        </tr>  
+                    </table>
+                </div>
+                <div class="sld-list">
+                    <div class="sl-maxGenre">不良明細：</div>
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">CR不良: 0</div>
+                        <div class="sl-minGenre-text">1: 不良品がない</div>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">MA不良: 0</div>
+                        <div class="sl-minGenre-text">1: 不良品がない</div>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">MI不良: 4</div>
+                        <div class="sl-minGenre-text">1: 3台で汚れた1台の汚れ</div>
+                    <!-- </div> -->
+                    <div class="sl-maxGenre">不良写真：</div>
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">CR不良:</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">MA不良:</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">MI不良:</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                </div>
+                <div class="sl-remark reset-posiion">
+                    備考欄：,
+                </div>
+            </dd>
+
+
+            <!-- 3 -->
+            <dd dd-index="3">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sl-caption">検品現場風景</div>
+                <div class="sld-list noborder">
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">在庫風景</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div>     -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">外箱写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">外箱開梱写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">個装梱包箱写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">製品個装状態開梱写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">本体外観写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">付属品写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">印刷物、定格ラベル、表示物確認写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">説明書確認写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">検品現場風景</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">性能検査測定画面</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/1a8bc91e-8b92-46d5-a9b2-118ab5f47d3d.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/d2f824a5-7fff-4638-ba58-19aa1fac9c57.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                </div>
+            </dd>
+
+
+
+
+            <!-- 4 -->
+            <dd dd-index="4">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sl-caption">外観検査報告書</div>
+                <div class="sl-table">
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査年月日</td> 
+                            <td>20180911 / 12</td> 
+                            <td colspan="2">検査結果</td> 
+                        </tr> 
+                        <tr> 
+                            <td>検査実施場所</td> 
+                            <td>20180911 / 12</td> 
+                            <td rowspan="2">判定 基準</td> 
+                            <td>5</td> 
+                        </tr> 
+                        <tr> 
+                            <td>品番</td> 
+                            <td>EB 1 RM 6400 A</td> 
+                            <td>5</td> 
+                        </tr> 
+                        <tr> 
+                            <td>定格事項</td> 
+                            <td>100 V / 50 / 60 Hz / 1300 W</td> 
+                            <td>検出不良数</td> 
+                            <td>4</td> 
+                        </tr> 
+                        <tr> 
+                            <td>ロット数</td> 
+                            <td>750 pcs</td> 
+                            <td rowspan="2" colspan="2"> 合格  </td> 
+                        </tr> 
+                        <tr> 
+                            <td>検査数</td> 
+                            <td>80 pcs</td> 
+                        </tr> 
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査内容</td> 
+                            <td>検査数</td> 
+                            <td>結果</td> </tr>  
+                        <tr> 
+                            <td>整機の外観検査</td> 
+                            <td>80pcs</td> 
+                            <td>刮花3pcs，脏污1pcS</td> </tr>  
+                        <tr> 
+                            <td>整機シルクチェック</td> 
+                            <td>80pcs</td> 
+                            <td>无问题</td> 
+                        </tr>
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査S/N</td> 
+                        </tr>   
+                        <tr>  
+                            <td>无流水号</td>   
+                        </tr>
+                    </table>
+                </div>
+                    
+                <div class="sld-list">
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">外観検査不良内容</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                </div>
+                <div class="sl-remark reset-posiion">
+                    備考欄：,
+                </div>
+            </dd>
+
+
+
+
+
+            <!-- 5 -->
+            <dd dd-index="5">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sl-caption">構造検査報告書</div>
+                <div class="sl-table">
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査年月日</td> 
+                            <td>20180911 / 12</td> 
+                            <td colspan="2">検査結果</td> 
+                        </tr> 
+                        <tr>
+                            <td>検査実施場所</td> 
+                            <td>寧波市峰亜電器有限会社</td> 
+                            <td rowspan="2">判定 基準</td> 
+                            <td>0</td> 
+                        </tr> 
+                        <tr>
+                            <td>品番</td> 
+                            <td>EB 1 RM 6400 A</td> 
+                            <td>0</td> 
+                        </tr> 
+                            <tr>
+                                <td>定格事項</td> 
+                            <td>100 V / 50 / 60 Hz / 1300 W</td> 
+                            <td>検出不良数</td> 
+                            <td>0</td> 
+                        </tr> 
+                            <tr>
+                                <td>ロット数</td> 
+                            <td>750 pcs</td> 
+                            <td rowspan="2" colspan="2"> 合格  </td> 
+                        </tr> 
+                            <tr>
+                                <td>検査数</td> 
+                            <td>5 pcs</td> 
+                        </tr>
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査内容</td> 
+                            <td>検査数</td> 
+                            <td>結果</td> 
+                        </tr>  
+                        <tr>
+                            <td>内部構造検査</td> 
+                            <td>5pcs</td> 
+                            <td>无问题</td> 
+                        </tr>  
+                        <tr>
+                            <td>内部配線検査</td> 
+                            <td>5pcs</td> 
+                            <td>无问题</td> 
+                        </tr>  
+                        <tr>
+                            <td>内部重要エレメントのチェック</td> 
+                            <td>5pcs</td> 
+                            <td>无问题</td> 
+                        </tr>
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>構造内部検査不良内容</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sl-remark reset-posiion">
+                    備考欄：不良問題がない
+                </div>
+            </dd>
+
+
+
+
+
+            <!-- 6 -->
+            <dd dd-index="6">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sl-caption">構造検査報告書</div>
+                <div class="sld-list noborder">
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">内部分解確認</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                    <!-- <div class="sld-item"> -->
+                        <div class="sl-minGenre reset-posiion">内部分解重要部品与配线确认写真</div>
+                        <ul class="sl-minGenre-images">
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                            <li class="reset-posiion">
+                                <i class="photoImage"><img src="http://szguanhong.lexintech.com/file/sheetPaper/73c3c6a2-2796-49ab-afaa-3ec8e920e262.jpg"></i>
+                                <div class="name">花を吹く</div>
+                            </li>
+                        </ul>
+                    <!-- </div> -->
+                </div>
+            </dd>
+
+
+
+
+            <!-- 7 -->
+            <dd dd-index="7">
+                <div class="sl-title slt1">
+                    <div class="slt-l">
+                        <i class="iconImage"><img src="./images/login.jpg"></i>
+                        <div class="text">
+                            <div>カンホン株式会社</div>
+                            <div>冠泓咨询（深圳）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sl-caption">機能検査報告書</div>
+                <div class="sl-table">
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査年月日</td> 
+                            <td>20180911 / 12</td> 
+                            <td colspan="2">検査結果</td> 
+                        </tr> 
+                        <tr>
+                            <td>検査実施場所</td> 
+                            <td>寧波市峰亜電器有限会社</td> 
+                            <td rowspan="5" colspan="4"> 合格   </td> 
+                        </tr> 
+                        <tr>
+                            <td>品番</td> 
+                            <td>EB 1 RM 6400 A</td> 
+                        </tr> 
+                        <tr>
+                            <td>定格事項</td> 
+                            <td>100 V / 50 / 60 Hz / 1300 W</td> 
+                        </tr> 
+                        <tr>
+                            <td>ロット数</td> 
+                            <td>750 pcs</td> 
+                        </tr> 
+                        <tr>
+                            <td>検査数</td> 
+                            <td>80 pcs</td> 
+                        </tr>
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>検査内容</td> 
+                            <td>検査数</td> 
+                            <td>結果</td> 
+                        </tr>  
+                        <tr>
+                            <td>機能検査</td> 
+                            <td>80pcs</td> 
+                            <td>无不良问题</td> 
+                        </tr>  
+                        <tr>
+                            <td>絶縁耐圧（150 V / 5 mA / 3 s）</td> 
+                            <td>80pcs</td> 
+                            <td>无不良问题</td> 
+                        </tr>  
+                        <tr>
+                            <td>パワーテスト（v / 60 / 50 Hzz13 00 w</td> 
+                            <td>80p%</td> 
+                            <td>无不良问题</td> 
+                        </tr>
+                    </table>
+                    <table class="layui-table">
+                        <tr>
+                            <td>構造内部検査不良内容</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sl-remark reset-posiion">
+                    備考欄：不良問題がない
+                </div>
+            </dd>
+
+
+
+
+
+
+        </dl>
+    </div>
+
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="./lib/toPdf/jspdf.min.js"></script>
+    <script src="./lib/toPdf/html2canvas.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isShowOutputBtn: false,
+
+                ajaxdata: {}
+            },
+            computed: {
+                params() {
+                    let href = location.href.split('?')[1];
+                    if (!href) return;
+                    href = href.split(/&+/g);
+                    let newObj = {};
+                    for (let i = 0; i < href.length; i++) {
+                        newObj[href[i].split('=')[0]] = href[i].split('=')[1]
+                    }
+                    return newObj;
+                },
+                sheetPaper() {
+                    let result = this.ajaxdata.sheetPaper ? this.ajaxdata.sheetPaper : {};
+                    return result
+                },
+                reportDetails() {
+                    let result = this.ajaxdata.reportDetails ? this.ajaxdata.reportDetails : {};
+                    return result
+                },
+                reportDetailsCheckItem() {
+                    let result = this.ajaxdata.reportDetails && this.ajaxdata.reportDetailsCheckItem ? 
+                        this.ajaxdata.reportDetails.reportDetailsCheckItem.split("|1") : [];
+                    return result
+                }
+            },
+            methods: {
+                ajax(url, data, callback) {
+                    let xml = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXOject('Microsoft.XMLHTTP');
+                    xml.onreadystatechange = function() {
+                        if (xml.readyState == 4 && xml.status == 200) {
+                            if (typeof callback == 'function') callback(JSON.parse(xml.responseText));
+                        } 
+                    }
+                    xml.open('POST', url);
+                    xml.setRequestHeader('Content-Type', 'application/json'); 
+                    xml.setRequestHeader('If-Modified-Since', '0'); 
+                    xml.send(JSON.stringify(data));
+                },
+                init() {
+                    new Promise((resolve, error) => {
+                        this.ajax('http://szguanhong.lexintech.com/api/sheetPaper/getReport.json', {sheetPaperId: this.params.sheetPaperId}, res => {
+                            console.log(res)
+                            this.ajaxdata = res.data;
+                            resolve();
+                        })
+                    }).then(_ => {
+                        // computedGlobalPosition()
+                    })
+                    
+                },
+                // 更改位置 增加分页
+                computedGlobalPosition() {
+                    let [rpList, classifyArr] = [$('.reset-posiion'), []];
+
+
+                    // 过滤  7个dd   二位数组 classifyArr
+                    rpList.each((index, item) => {
+                        let ddindex = $(item).parents('dd').index();
+                        if (!classifyArr[ddindex]) classifyArr[ddindex] = [];
+                        classifyArr[ddindex].push(item);
+                    })
+
+
+                    classifyArr.forEach((item, index) => {
+                        let doneArr = [];
+
+                        // 超过范围
+                        item.forEach(elem => {
+                            let elemoffsetBottom = elem.offsetTop + elem.offsetHeight;
+                            if (elemoffsetBottom > 1680) {
+                                let [tagname, classname, innerhtml] = [elem.tagName.toLowerCase(), elem.className, elem.innerHTML];
+                                doneArr.push(`<${tagname} class="${classname}">${innerhtml}</${tagname}>`);
+                                $(elem).addClass('lastDelete')  // 标记 后面要删除的元素
+                            }
+                            $(elem).removeClass('reset-posiion');
+                        });
+
+
+                        // 有数据  在下面添加一个 <dd></dd>
+                        if (doneArr.length) $(item).parents('dd').after(`<dd><div class="sld-list reseting"></div></dd>`);
+                        let resetElem = $('.reseting');
+
+                        // 插入<dd></dd>  超过范围的数据
+                        doneArr.forEach(elem => {
+                            let liLoad = resetElem.find('[liLoad]');
+                            if (elem.match(/sl-minGenre/)){   //  小标题
+                                liLoad.removeAttr('liLoad');
+                                resetElem.append(elem)
+                            }
+                            if (elem.match(/photoImage/)){    //  图片的li
+                                if (liLoad[0]) liLoad.append(elem);
+                                else resetElem.append(`<ul class="sl-minGenre-images" liLoad>${elem}</ul>`)
+                            }
+                            if (elem.match(/sl-remark/)){     //  最后的备注
+                                resetElem.append(elem)
+                            }
+                        })
+
+                        // 重置 classname attrname
+                        resetElem.find('[liLoad]').removeAttr('liLoad')
+                        resetElem.removeClass('reseting');
+                    })
+
+
+
+                    // 检测是否还要继续调用 this.computedGlobalPosition    (没有超过范围的元素  就不循环)
+                    if ((amount => {
+                        classifyArr.forEach(item => {
+                            item.forEach(elem => {
+                                if (elem.offsetTop + elem.offsetHeight > 1680) amount++;
+                            });
+                        })
+                        return amount;
+                    })(0)) this.computedGlobalPosition();
+                    else $('.lastDelete').remove(), this.isShowOutputBtn = true;
+                },
+                printFn() {
+                    this.isShowOutputBtn = false;
+                    const skimList = document.querySelector('.skim-list');
+                    html2canvas(skimList).then(canvas => {
+                        const [outputWidth, outputHeight, pageData, pdf] = [595, 840, canvas.toDataURL('image/jpeg', 1.0), new jsPDF('', 'pt', 'a4')];
+                        const [resizeTotalWidth, resizeTotalHeight] = [outputWidth, outputWidth / canvas.width * canvas.height];
+                        if (outputHeight > resizeTotalHeight) {
+                            pdf.addImage(pageData, 'JPEG', 0, 0, resizeTotalWidth, resizeTotalHeight );
+                        } else {
+                            let nums = 0;
+                            const cutLen = resizeTotalHeight / outputHeight;
+                            while(nums < cutLen) {
+                                let nowTop = nums ? -((outputHeight + 25) * nums) : 0;
+                                pdf.addImage(pageData, 'JPEG', 0, nowTop, resizeTotalWidth, resizeTotalHeight );
+                                if (nums < cutLen - 2) pdf.addPage();
+                                nums++;
+                            }
+                        }
+                        pdf.save('stone.pdf');
+                        this.isShowOutputBtn = true;
+                    });
+                }
+            },
+            mounted() {
+                this.$nextTick(_ => {
+                    this.init();
+                    setTimeout(this.computedGlobalPosition, 1000)
+                })
+            },
+            filters: {
+                formatTime(timeStamp) {
+                    let result = timeStamp ? (() => {
+                        let now    = new Date(timeStamp);
+                        let year   = now.getFullYear();
+                        let month  = ("0" + (now.getMonth() + 1)).match(/\d{2}$/)[0];
+                        let date   = ("0" + now.getDate()).match(/\d{2}$/)[0];
+                        let str;
+                        return year + '年' + month + '月' + date + '日';
+                    })() : timeStamp
+                    return result;
+                },
+                Japan(str) {
+                    let result = str ? str.split('|1')[1] : '';
+                    return result;
+                },
+                qualified(val) {
+                    let result = '';
+                    if (val == 0) result = '其他';
+                    if (val == 1) result = '合格';
+                    if (val == 2) result = '不合格';
+                    return result
+                }
+            }
+        })
+    </script>
+</body>
+</html>
