@@ -1,135 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <title>ZYUI</title>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no, email=no">
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/ZYUI.js" async></script>
+    <link rel="stylesheet" href="../css/phone.css">
+    <style>
+        [class^="page-alert"], .page-mask, .page-loading{display: none}
+        .ul li{line-height: 44px;text-align: center;;border-bottom: 1px solid #eee}
+    </style>
 </head>
 <body>
-    <div class="Page">
-        <ul class="page-alert-list">
-            <li onclick="UI.alert(0, '自动关闭提示语')">自动关闭提示语</li>
-            <li onclick="UI.alert(1)">只有文案的alert</li>
-            <li onclick="UI.alert(2)">带文案标题的alert</li>
-            <li onclick="UI.alert(3)">confirm</li>
-            <li onclick="UI.alert(4)">带表单提交</li>
-            <li onclick="UI.alert(5)">由下往上展现</li>
+    <div class="Page">     
+        <ul class="ul">
+            <li onclick="pop(1)">messages</li>
+            <li onclick="pop(2)">confirm</li>
+            <li onclick="pop(3)">from</li>
+            <li onclick="pop(4)">loading</li>
         </ul>
-        
 
-        <div class="page-alert-mask" onclick="UI.alert()"></div>
+
+
+
+        <div class="page-mask page-fixed"></div>
 
         
-        <!-- alert-0 -->
-        <div class="page-alert alert-0">
-            弹窗提示语
+        <!-- page-alert-messages -->
+        <div class="page-alert-messages" id="messages">
+            <span>弹窗提示语</span>
         </div>
-        <!-- alert-1 -->
-        <div class="page-alert alert-1">
-            <div class="alert-text">this is a tip1!</div>
-            <a class="alert-ok"  onclick="UI.alert(a1)">确定</a>
-        </div>
-        <script>
-            function a1(){alert('关闭弹窗时，回调这个函数')}
-        </script>
-        <!-- alert-2 -->
-        <div class="page-alert alert-2">
-            <div class="alert-text">
-                <h3>自定义标题</h3>
-                <p>消息内容带你飞SOP地方经济老年法SAP发看到你放声大哭你干啥可怕的发送到皮肤男士皮带</p>
-            </div>
-            <a class="alert-ok"  onclick="UI.alert()">确定</a>
-        </div>
-        <!-- alert-3 -->
-        <div class="page-alert alert-3">
-            <div class="alert-text">你确定吗？</div>
-            <div class="alert-done">
-                <a class="alert-cancel"  onclick="UI.alert()">取消</a>
-                <a class="alert-sure"  onclick="UI.alert(a1)">确定</a>
+`
+
+
+
+        <!-- page-alert -->
+        <div class="page-alert page-fixed flex-center" id="confirm">
+            <div class="alert-inner">
+                <div class="alert-text">this is a tip1!</div>
+                <div class="alert-done flex-center">
+                    <a class="alert-sure on">确定</a>
+                    <a class="alert-cancel">取消</a>
+                </div>
+                <div class="alert-done flex-center">
+                    <a class="alert-sure background">确定</a>
+                </div>
             </div>
         </div>
-        <!-- alert-4 -->
-        <div class="page-alert alert-4">
-            <div class="alert-form">
-                <h5>自定义标题</h5>
-                <ul class="formList">
-                    <li class="form-row">
-                        <div class="form-title">Name</div>
+
+
+
+        <!-- page-alert -->
+        <div class="page-alert page-fixed flex-center" id="alertfrom">
+            <div class="alert-inner">
+                <ul class="nav-list formList">
+                    <li class="flex-around">
+                        <div class="form-title">text</div>
                         <div class="form-input">
-                            <input type="text" placeholder="Your name">
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-title">Tel</div>
-                        <div class="form-input">
-                            <input type="Number" placeholder="Your Tel">
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-title">E-mail</div>
-                        <div class="form-input">
-                            <input type="email" placeholder="E-mail">
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-title">Password</div>
-                        <div class="form-input">
-                            <input type="password" placeholder="Password">
-                        </div>
-                    </li>
-                    <li class="form-row">
-                        <div class="form-title">Gender</div>
-                        <div class="form-input">
-                            <select>
-                                <option>Man</option>
-                                <option>Woman</option>
-                            </select>
+                            <input type="text" placeholder="text">
                         </div>
                     </li>
                     <!-- Date -->
-                    <li class="form-row">
-                        <div class="form-title">Birth date</div>
+                    <li class="flex-around">
+                        <div class="form-title">datetime</div>
                         <div class="form-input">
-                            <input type="date" placeholder="Birth day" value="2014-04-30">
+                            <input type="datetime-local" placeholder="date" value="2014-04-30T12:00">
                         </div>
                     </li>
-                    <!-- Switch (Checkbox) -->
-                    <li class="form-row">
-                        <div class="form-title">Switch</div>
+                    <li class="flex-around">
+                        <div class="form-title">date</div>
                         <div class="form-input">
-                            <input type="checkbox" id="s1">
-                            <label for="s1" class="form-checkbox"></label>
+                            <input type="date" placeholder="date" value="2014-04-30">
                         </div>
                     </li>
-                    <li class="form-row textadd">
-                        <div class="form-title">Textarea</div>
+                    <li class="flex-around">
+                        <div class="form-title">month</div>
                         <div class="form-input">
-                            <textarea></textarea>
+                            <input type="month" value="2018-04">
+                        </div>
+                    </li>
+                    <li class="flex-around">
+                        <div class="form-title">tel</div>
+                        <div class="form-input">
+                            <input type="tel" placeholder="tel">
+                        </div>
+                    </li>
+                    <li class="flex-around">
+                        <div class="form-title">time</div>
+                        <div class="form-input">
+                            <input type="time" value="10:30">
                         </div>
                     </li>
                 </ul>
-            </div>
-            <div class="alert-done">
-                <a class="alert-cancel"  onclick="UI.alert()">取消</a>
-                <a class="alert-sure"  onclick="UI.alert(a1)">确定</a>
+                <div class="alert-done flex-center">
+                    <a class="alert-sure on">确定</a>
+                    <a class="alert-cancel">取消</a>
+                </div>
             </div>
         </div>
 
-        <!-- alert-5 -->
-        <div class="page-alert alert-5">
-            <div class="alert-5-inner">
-                <div class="alert-smalltitle">请选择</div>
-                <div class="alert-doing">
-                    <a>卖出</a>
-                    <a>卖入</a>
-                </div>
-            </div>
-            <div class="alert-doing-btn"><a  onclick="UI.alert()">取消</a></div>
+
+
+        <!-- page-loading -->
+        <div class="page-loading page-fixed flex-center">
+            <img src="../img/Spinner-1s-141px.svg" width="50">
         </div>
     </div>
+
+
+    <script>
+        const messages = document.querySelector('#messages')
+        const confirm = document.querySelector('#confirm')
+        const alertfrom = document.querySelector('#alertfrom')
+        const loading = document.querySelector('.page-loading')
+        const mask = document.querySelector('.page-mask')
+
+        function pop(index){
+            if (index == 1) messages.style.display = 'block';
+            if (index == 2) confirm.style.display = 'flex';
+            if (index == 3) alertfrom.style.display = 'flex';
+            if (index == 4) loading.style.display = 'flex';
+            if (index == 2 || index == 3)mask.style.display = 'flex';
+        }
+
+    </script>
 </body>
 </html>
+
+

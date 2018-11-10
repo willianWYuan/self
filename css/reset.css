@@ -10,7 +10,7 @@ html {
 body,form,header,article,aside,nav,section,footer,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;}
 h1,h2,h3,h4,h5,h6,strong,b{font-weight:normal;}
 i,em{font-style:normal;}
-table{border-collapse:collapse;width:100%; /*table-layout:fixed;*/}
+table{border-collapse:collapse;width:100%;font-size: inherit; /*table-layout:fixed;*/}
 th,td{text-align:center;padding:0;border:1px solid #ccc;}
 ul,ol,li{list-style:none;}
 a{text-decoration:none;color:inherit;cursor:pointer;}
@@ -42,7 +42,7 @@ input, textarea, select {
 
 input[type="radio"]{}
 input[type="checkbox"]{}
-textarea{padding:6px;height:100px;line-height:1.4;overflow:hidden;}
+textarea{padding:6px;height:100px;overflow:hidden;}
 
 ::-ms-check{	/*[type=radio/checkbox]*/
 color:#34538b;background:#a0b3d6;padding:.5em;}

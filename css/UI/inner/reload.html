@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 	<meta charset="utf-8">
-	<title>ZYUI</title>
+	<title>上拉加载更多</title>
 	<meta name="viewport" content="initial-scale=1, user-scalable=no">
 	<meta name="format-detection" content="telephone=no, email=no">
 	<link rel="stylesheet" href="../css/reset.css">
-	<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-	<div class="Page" onscroll="UI.scroll(event, fn)">
-		<div class="page-reload-icon">下拉刷新页面</div>
+	<div class="Page">
 		<ul id="ulis">
 			<li style="height: 10rem; background: #ddd"></li>
 			<li style="height: 10rem; background: #aaa"></li>
@@ -21,82 +19,58 @@
 			<li style="height: 10rem; background: #ddd"></li>
 			<li style="height: 10rem; background: #aaa"></li>
 		</ul>
-		
-		<!-- 回到头部 -->
-		<div class="page-backtop" onclick="UI.backtop()"></div>
-
 	</div>
-	<script src="../js/ZYUI.js"></script>
 	<script>
-	// 下拉刷新页面
-	(function(w) {
-		'use strict';
-		
-		var reload = {
-			elpage: document.querySelector('.Page'),
-			elicon: document.querySelector('.page-reload-icon'),
-			iconfisrtpos: document.querySelector('.page-reload-icon').offsetHeight
-		};
-
-		// 浏览器sessionStorage存储 是否下拉刷新 重新加载仍在显示加载图标
-		if (typeof sessionStorage.reload !== 'undefined') {
-			reload.elicon.style.cssText = 'top: 0; opacity: 1';
-			sessionStorage.removeItem('reload');
-			setTimeout(function(){
-				reload.elicon.style.cssText = 'transition: all .8s; opacity: 0; top: -' + reload.iconfisrtpos + 'px';
-			},500);
-		};
-
-		UI.touch(reload.elpage, {
-			touchevent: 'down',
-			done: function(ts){
-				reload.flog = reload.elpage.scrollTop <= 0 ? true : false;
-				reload.elicon.style.transition = ''
-			}
-		},{
-			touchevent: 'move',
-			done: function(tm, ev){
-				var pos_y = tm.move_y - tm.start_y;
-				if (reload.flog && pos_y > 0) {
-					ev.preventDefault();
-					pos_y = pos_y >= reload.iconfisrtpos ? reload.iconfisrtpos : pos_y;
-					reload.elicon.style.top = (pos_y - reload.iconfisrtpos) +'px'
-					reload.elicon.style.opacity = pos_y / reload.iconfisrtpos
+		document.querySelector('.Page').onscroll = scroll
+		function scroll(ev) {
+			if (typeof ev == 'undefined') return;
+			var _this = ev.target;
+			// 控制节流
+			_this.onscroll = null;
+			setTimeout(function() {
+				_this.onscroll = function() {
+					scroll(event, fn)
 				}
-			}
-		},{
-			touchevent: 'up',
-			done: function(te){
-				reload.elicon.style.transition = 'all .8s'
-				if (reload.flog && te.end_y - te.start_y >= reload.iconfisrtpos) {
-					setTimeout(function(){
-						sessionStorage.reload = true
-						location.reload();
-					}, 800);
-				} else {
-					reload.elicon.style.top = -reload.iconfisrtpos +'px'
-					reload.elicon.style.opacity = 0
-				}
-			}
-		})
-		
-	})(this);
+			}, 15);
+			if (typeof fn == 'function') fn({
+				el: _this,
+				scr_t: _this.scrollTop,
+				scr_l: _this.scrollLeft,
+				off_w: _this.offsetWidth,
+				off_h: _this.offsetHeight,
+				tot_h: (function() {
+					var totalh = {
+						a: 0,
+						s: 0
+					};
+					for (var i = 0; i < _this.children.length; i++) {
+						if (thisStyle(_this.children[i], 'position') == 'absolute' || thisStyle(_this.children[i], 'position') == 'fixed') totalh.a = _this.children[i].offsetHeight > totalh.a ? _this.children[i].offsetHeight : totalh.a;
+						else totalh.s += _this.children[i].offsetHeight;
+					};
+					totalh = totalh.a > totalh.s ? totalh.a : totalh.s;
+					return totalh;
+				}())
+			})
 
-	function fn(obj) {
-		if (obj.scr_t + obj.off_h > obj.tot_h - 50) {
-			for (var i = 0; i < 4; i++) {
-				var color = '#' + Math.floor(Math.random() * 1000000);
-				var li = document.createElement('li');
-				li.style.height = '10rem';
-				li.style.background = color;
-				ulis.appendChild(li);
-				console.log('UI.loadScroll(event, fn, 延迟时间间隔)')
+			function thisStyle(el, type) {
+				return el.currentStyle ? el.currentStyle[type] : window.getComputedStyle(el, null)[type];
 			}
 		}
-	}
 
+		
 
-
+		function fn(obj) {
+			if (obj.scr_t + obj.off_h > obj.tot_h - 50) {
+				for (var i = 0; i < 4; i++) {
+					var color = '#' + Math.floor(Math.random() * 1000000);
+					var li = document.createElement('li');
+					li.style.height = '10rem';
+					li.style.background = color;
+					ulis.appendChild(li);
+					console.log('UI.loadScroll(event, fn, 延迟时间间隔)')
+				}
+			}
+		}
 	</script>
 </body>
 </html>

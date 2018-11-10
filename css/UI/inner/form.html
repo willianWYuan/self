@@ -1,67 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 	<meta charset="utf-8">
 	<title>ZYUI</title>
 	<meta name="viewport" content="initial-scale=1, user-scalable=no">
 	<meta name="format-detection" content="telephone=no, email=no">
 	<link rel="stylesheet" href="../css/reset.css">
-	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/phone.css">
 </head>
 <body>
 	<div class="Page">
-		<ul class="formList">
-			<li class="form-row">
+		<ul class="nav-list formList">
+			<li class="flex-around">
 				<div class="form-title">text</div>
 				<div class="form-input">
 					<input type="text" placeholder="text">
 				</div>
 			</li>
-			<li class="form-row">
-				<div class="form-title">Number</div>
+			<!-- Date -->
+			<li class="flex-around">
+				<div class="form-title">datetime</div>
 				<div class="form-input">
-					<input type="Number" placeholder="Number">
+					<input type="datetime-local" placeholder="date" value="2014-04-30T12:00">
 				</div>
 			</li>
-			<li class="form-row">
-				<div class="form-title">email</div>
+			<li class="flex-around">
+				<div class="form-title">date</div>
 				<div class="form-input">
-					<input type="email" placeholder="email">
+					<input type="date" placeholder="date" value="2014-04-30">
 				</div>
 			</li>
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">month</div>
 				<div class="form-input">
 					<input type="month" value="2018-04">
 				</div>
 			</li>
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">tel</div>
 				<div class="form-input">
 					<input type="tel" placeholder="tel">
 				</div>
 			</li>
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">time</div>
 				<div class="form-input">
 					<input type="time" value="10:30">
 				</div>
 			</li>
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">Password</div>
 				<div class="form-input">
-					<input type="password" placeholder="Password">
-					<span class="pwd-isShow">眼睛</span>
+					<input type="password" placeholder="Password" id="pwd">
 				</div>
+				<span class="pwd-isShow">眼睛</span>
 				<script>
 					document.querySelector('.pwd-isShow').onclick = function(){
-						var currtype = this.previousElementSibling.getAttribute('type');
-						if (currtype == 'password') this.previousElementSibling.setAttribute('type', 'text');
-						else this.previousElementSibling.setAttribute('type', 'password');
+						var currtype = pwd.getAttribute('type');
+						if (currtype == 'password') pwd.setAttribute('type', 'text');
+						else pwd.setAttribute('type', 'password');
 					}
 				</script>
 			</li>
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">Gender</div>
 				<div class="form-input">
 					<select>
@@ -70,22 +71,30 @@
 					</select>
 				</div>
 			</li>
-			<!-- Date -->
-			<li class="form-row">
-				<div class="form-title">Birth date</div>
-				<div class="form-input">
-					<input type="date" placeholder="Birth day" value="2014-04-30">
-				</div>
-			</li>
+			
 			<!-- Switch (Checkbox) -->
-			<li class="form-row">
+			<li class="flex-around">
 				<div class="form-title">Switch</div>
 				<div class="form-input">
-					<input type="checkbox" id="s1">
-					<label for="s1" class="form-checkbox"></label>
+					<i class="icon-switch"></i>
+				</div>
+				<div class="form-input">
+					<i class="icon-switch on"></i>
 				</div>
 			</li>
-			<li class="form-row textadd">
+
+
+			<li class="flex-around">
+				<div class="form-title">checked</div>
+				<div class="form-input">
+					<i class="icon-checked"></i>
+				</div>
+				<div class="form-input">
+					<i class="icon-checked on"></i>
+				</div>
+			</li>
+
+			<li class="flex-around from-textarea">
 				<div class="form-title">Textarea</div>
 				<div class="form-input">
 					<textarea></textarea>
@@ -93,28 +102,6 @@
 			</li>
 		</ul>
 
-
-		<div class="form-search form-search-bg" style="margin-top: 20px;" onclick="UI.search(event, this)">
-			<label class="search-input">
-				<input type="search" placeholder="输入关键字...">
-			</label>
-			<a class="searchbar-cancel" onclick="UI.search(event, this)">取消</a>
-		</div>
-
-		<div class="form-search form-search-btn">
-			<label class="search-input" for="search">
-				<input type="search" placeholder="输入关键字...">
-			</label>
-			<a class="searchbar-cancel" onclick="UI.search(event, this)">取消</a>
-		</div>
-
-
-
-		<div class="btn-grid" style="padding: 16px;">
-			<a class="red">提交</a>
-			<a class="blue">重置</a>
-		</div>
 	</div>
-	<script src="../js/ZYUI.js"></script>
 </body>
 </html>

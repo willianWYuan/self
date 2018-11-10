@@ -6,136 +6,37 @@
 	<meta name="viewport" content="initial-scale=1, user-scalable=no">
 	<meta name="format-detection" content="telephone=no, email=no">
 	<link rel="stylesheet" href="../css/reset.css">
-	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/phone.css">
 </head>
 <body>
-	<div class="Page" style="background-color: #fff;overflow: hidden;">
-		<div class="telbooklist-search">
-			<input type="text" id="search" placeholder="搜索">
+	<div class="Page">
+
+
+		<div class="telbooklist-search flex-center">
+			<input type="text" placeholder="搜索">
 		</div>
+
+
 		<!-- 右侧字母导航 -->
 		<div class="telbooklist-list-bar">
-			<a>A</a>
-			<a>B</a>
-			<a>C</a>
-			<a>D</a>
-			<a>E</a>
-			<a>F</a>
-			<a>G</a>
-			<a>H</a>
-			<a>I</a>
-			<a>J</a>
-			<a>K</a>
-			<a>L</a>
-			<a>M</a>
-			<a>N</a>
-			<a>O</a>
-			<a>P</a>
-			<a>Q</a>
-			<a>R</a>
-			<a>S</a>
-			<a>T</a>
-			<a>U</a>
-			<a>V</a>
-			<a>W</a>
-			<a>X</a>
-			<a>Y</a>
-			<a>Z</a>
+			<a>A</a><a>B</a><a>C</a><a>D</a><a>E</a><a>F</a><a>G</a><a>H</a><a>I</a><a>J</a><a>K</a><a>L</a><a>M</a><a>N</a><a>O</a><a>P</a><a>Q</a><a>R</a><a>S</a><a>T</a><a>U</a><a>V</a><a>W</a><a>X</a><a>Y</a><a>Z</a>
 		</div>
+
+
 		<!-- main -->
 		<div class="telbooklist-inner">
-			<div class="telbooklist-empty">没有数据</div>
-			<ul class="telbooklist-view" id="view"></ul>
+			<!-- <div class="telbooklist-empty">没有数据</div> -->
+			<ul class="telbooklist-view">
+				<li class="view-type">S</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+				<li class="view-type">S</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+				<li class="view-list" en="ShangHaiPuDongGuoJi" simple="SHPDGJ">上海浦东国际机场</li>
+			</ul>
 		</div>
 	</div>
-	<script src="../js/ZYUI.js"></script>
-	<script>
-		(function(w){
-			var ele = {};
-			ele.empty = document.querySelector('.telbooklist-empty');
-			ele.aside = document.querySelector('.telbooklist-list-bar');
-			ele.bar = document.querySelector('.telbooklist-list-bar').getElementsByTagName('a');
-			ele.search = document.querySelector('.telbooklist-search');
-			ele.inner = document.querySelector('.telbooklist-inner');
-
-			var renderlist = function (data){
-				var telbook = {str: ''};
-				data.forEach(function(item){
-					if (telbook.en != item.en.substr(0,1)) {
-						telbook.str += '<li class="view-type">' + item.en.substr(0,1) + '</li>';
-						telbook.en = item.en.substr(0,1);
-					}
-					telbook.str += '<li class="view-list" en='+ item.en +' simple='+ item.simple +'>' + item.name + '</li>';
-				})
-				view.innerHTML = telbook.str;
-
-				// 记录每个字母的offsetTop   dom渲染完成 才循环
-				ele.viewType = document.querySelector('.telbooklist-view').querySelectorAll('.view-type');
-				setTimeout(function() {
-				    for (var i = 0; i < ele.bar.length; i++){
-				    	for (var j = 0; j < ele.viewType.length; j++){
-				    		if (ele.viewType[j].innerHTML == ele.bar[i].innerHTML) {
-				    			ele.bar[i].setAttribute('ot', ele.viewType[j].offsetTop - ele.viewType[0].offsetTop);
-				    		}
-				    	}
-				    }
-				}, 200)
-			}
-
-			UI.getAjax({
-				url: '/API/telbook.JSON',
-				success: function(res){
-					res.sortparams('en').forEach(function(item){
-						item.simple = item.en.match(/[A-Z]/g).join('');   //添加简写字段
-					})
-					ele.data = res.sortparams('en');
-					renderlist(ele.data)
-				}
-			});
-
-
-			// 右侧点击导航
-			for (var i = 0; i < ele.bar.length; i++){
-				ele.bar[i].onclick = function(){
-					var ot = this.getAttribute('ot');
-					var _this = this;
-					while(ot == null){
-						_this = _this.previousElementSibling
-						ot = _this.getAttribute('ot');
-					}
-					ele.inner.scrollTop =  parseInt(ot);
-				}
-			}
-
-
-			// 搜索
-			search.oninput = function() {
-				var val = this.value.toLowerCase();
-				ele.aside.style.display = val != '' ? 'none' : 'block';
-
-				var newData = [];
-				var elsearr = ele.data;
-
-				(function(arr) {
-					for (var i = 0; i < arr.length; i++) {
-						var delarr = []
-						elsearr.forEach(function(item) {
-							if (item[arr[i]].toLowerCase().indexOf(val) != -1) newData.push(item);
-							else delarr.push(item);
-						})
-						elsearr = delarr;
-					}
-				})(['name', 'en', 'simple']);
-
-				ele.empty.style.display = newData.length > 0 ? 'none' : 'block';
-				renderlist(newData)
-			}
-
-
-		})(this);
-	</script>
-
-
-	
 </body>
 </html>

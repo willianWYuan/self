@@ -6,20 +6,16 @@
 	<meta name="viewport" content="initial-scale=1, user-scalable=no">
 	<meta name="format-detection" content="telephone=no, email=no">
 	<link rel="stylesheet" href="../css/reset.css">
-	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/phone.css">
 </head> 
 <body>
-	<div class="page-info-l">
-		
-	</div>
-
 	<div class="Page">
-		<div class="bar-top">
-			<a class="bar-top-l" onclick="pageuse(event)">用户</a>
+		<div class="bar-top flex-around">
+			<a class="bar-top-l">返回</a>
 			<h1>头部</h1>
 			<div class="bar-top-r">
 				<i class="bar-menu"></i>
-				<ul class="top-r-list" id="iconnavmenu">
+				<ul class="top-r-list">
 					<li><a>list1</a></li>
 					<li><a>list2</a></li>
 					<li><a>list3</a></li>
@@ -27,52 +23,15 @@
 			</div>
 			
 		</div>	
-		<div class="bar-nav" onclick="UI.radio(event, this);">
-			<a class="on sonsd">label</a>
-			<a>tar</a>
-			<a>me</a>
+		<div class="bar-nav flex-around">
+			<a class="on"><i class="icon"></i><div class="barf-text">label</div></a>
+			<a><i class="icon"></i><div class="barf-text">tar</div></a>
+			<a><i class="icon"></i><div class="barf-text">me</div></a>
 		</div>
-		<div class="page-cxt" id="cxt">
+		<div class="page-cxt">
 			<div style="height: 80rem"></div>
 			中间内容
 		</div>
 	</div>
-	<script src="../js/ZYUI.js"></script>
-	<script>
-		// user alert
-		(function(w){
-			var page = document.querySelector('.Page');
-			w.pageuse = function(ev){
-				ev.stopPropagation();
-				if (typeof ev == 'undefined') page.removeAttribute('Pagehide');
-				else  page.setAttribute('Pagehide', '');
-			}
-			page.onclick = function(){
-				if(this.getAttribute('Pagehide') != null) this.removeAttribute('Pagehide');
-			}
-		})(this);
-		// nav
-		(function(){
-			var barTopR = document.querySelector('.bar-top-r');
-			document.querySelector('.Page').addEventListener('click', function(){
-				barTopR.removeAttribute('bartopanim');
-				iconnavmenu.removeAttribute('style')
-			})
-			var ulli = iconnavmenu.getElementsByTagName('li');
-			barTopR.onclick = function(ev){
-				var ulh = ulli.length * ulli[0].offsetHeight;
-				ev.stopPropagation();
-				if (this.getAttribute('bartopanim') == null) {
-					this.setAttribute('bartopanim', '');
-					iconnavmenu.style.cssText = 'opacity: 1;transform: translateY(0) scale(1,1) rotateX(0);height:' + ulh + 'px';
-				} else {
-					this.removeAttribute('bartopanim');
-					iconnavmenu.removeAttribute('style')
-				}
-			}
-
-			
-		})(this);
-	</script>
 </body>
 </html>
