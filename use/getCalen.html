@@ -18,69 +18,68 @@
 </head>
 <body onload="updateCalen()">
   <script>
-    function getCalen(curr){
-      
-      curr         = curr || new Date();
-      var now      = new Date(curr),
-      years        = now.getFullYear(),
-      months       = now.getMonth() + 1,
-      dates        = now.getDate(),
-      days         = now.getDay(),
-      FirstDayWeek = new Date(years,months-1,1).getDay(), //获取当月的第一天是星期几
-      CurrCount    = new Date(years,months,0).getDate(), //获取当月的有多少天
-      PrevCount    = new Date(years,months-1,0).getDate(), //获取上个月的有多少天
-      LastDayWeek  = new Date(years,months-1,CurrCount).getDay(), //获取当月的最后一天是星期几
-      len          = Math.ceil((CurrCount + 6 - LastDayWeek) / 7), //获取当月有多少周
-      tableStr     = '<table class="CalenTable"><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody>';
-      console.log(years,months,dates)
+    function getCalen(curr) {
 
-      function eachDay(n){
-      //遍历每天
-      for (var j = 0; j < 7; j++){
-        var today = j - FirstDayWeek + 1 + 7 * n < 10 ? '0' + (j - FirstDayWeek + 1 + 7 * n) : j - FirstDayWeek + 1 + 7 * n;
-        if (j < FirstDayWeek && n == 0) {
-          tableStr = tableStr + "<td class='prev'>" + (PrevCount - FirstDayWeek + j + 1) + "</td>";
+        curr = curr || new Date();
+        var now = new Date(curr),
+            years = now.getFullYear(),
+            months = now.getMonth() + 1,
+            dates = now.getDate(),
+            days = now.getDay(),
+            FirstDayWeek = new Date(years, months - 1, 1).getDay(), //获取当月的第一天是星期几
+            CurrCount = new Date(years, months, 0).getDate(), //获取当月的有多少天
+            PrevCount = new Date(years, months - 1, 0).getDate(), //获取上个月的有多少天
+            LastDayWeek = new Date(years, months - 1, CurrCount).getDay(), //获取当月的最后一天是星期几
+            len = Math.ceil((CurrCount + 6 - LastDayWeek) / 7), //获取当月有多少周
+            tableStr = '<table class="CalenTable"><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody>';
+        console.log(years, months, dates)
+
+        function eachDay(n) {
+            //遍历每天
+            for (var j = 0; j < 7; j++) {
+                var today = j - FirstDayWeek + 1 + 7 * n < 10 ? '0' + (j - FirstDayWeek + 1 + 7 * n) : j - FirstDayWeek + 1 + 7 * n;
+                if (j < FirstDayWeek && n == 0) {
+                    tableStr = tableStr + "<td class='prev'>" + (PrevCount - FirstDayWeek + j + 1) + "</td>";
+                } else if (today <= CurrCount) {
+                    if (Number(today) != new Date().getDate() ||
+                        months != new Date().getMonth() + 1 ||
+                        years != new Date().getFullYear())
+                        tableStr = tableStr + "<td class='curr'>" + today + "</td>";
+                    else tableStr = tableStr + "<td class='today'>" + today + "</td>";
+                }
+                if (today > CurrCount) {
+                    tableStr = tableStr + "<td class='next'>" + ('0' + (today - CurrCount)) + "</td>";
+                }
+            };
+            today = null;
         }
-        else if (today <= CurrCount) {
-          if (Number(today) != new Date().getDate() || 
-            months != new Date().getMonth() + 1 || 
-            years != new Date().getFullYear()) 
-            tableStr = tableStr + "<td class='curr'>" + today + "</td>";
-          else  tableStr = tableStr + "<td class='today'>" + today + "</td>";
+
+        //遍历每周
+        for (var i = 0; i < len; i++) {
+            tableStr += '<tr>';
+            eachDay(i);
+            tableStr += '</tr>';
         }
-        if (today > CurrCount){
-          tableStr = tableStr + "<td class='next'>" + ('0' + (today - CurrCount)) + "</td>";
-        }
-      };
-      today = null;
+        tableStr += '</tbody></table>';
+
+
+
+        // 控制器
+        var CtrlStr = '<div class="CalenCtrl">';
+        CtrlStr = CtrlStr + '<span class="CCleft" onclick="updateCalen(' + (now.getTime() - 60 * 60 * 24 * 1000 * CurrCount) + ')">prev</span><span class="currMonth"  onclick="updateCalen()">'
+        CtrlStr = months < 10 ? CtrlStr + (years + '/0' + months) : CtrlStr + (years + '/' + months);
+        CtrlStr = CtrlStr + '</span><span class="CCright" onclick="updateCalen(' + (now.getTime() + 60 * 60 * 24 * 1000 * CurrCount) + ')">next</span></div>';
+
+
+
+        now = years = months = dates = days = FirstDayWeek = CurrCount = PrevCount = LastDayWeek = len = null;
+        return '<div class="Calen">' + (CtrlStr + tableStr) + '</div>';
     }
 
-    //遍历每周
-    for (var i = 0; i < len; i++){
-      tableStr += '<tr>';
-      eachDay(i);
-      tableStr += '</tr>';
+    function updateCalen(curr) {
+        curr = curr || null;
+        document.body.innerHTML = getCalen(curr);
     }
-    tableStr += '</tbody></table>';
-
-
-
-    // 控制器
-    var CtrlStr = '<div class="CalenCtrl">';
-    CtrlStr = CtrlStr + '<span class="CCleft" onclick="updateCalen('+(now.getTime()-60*60*24*1000*CurrCount)+')">prev</span><span class="currMonth"  onclick="updateCalen()">'
-    CtrlStr = months < 10 ? CtrlStr + (years + '/0' + months) : CtrlStr + (years + '/' + months);
-    CtrlStr = CtrlStr + '</span><span class="CCright" onclick="updateCalen('+(now.getTime()+60*60*24*1000*CurrCount)+')">next</span></div>';
-
-
-
-    now = years = months = dates = days = FirstDayWeek = CurrCount = PrevCount = LastDayWeek = len = null;
-    return '<div class="Calen">' + (CtrlStr + tableStr) + '</div>';
-  }
-  function updateCalen(curr){
-    curr = curr || null;
-    document.body.innerHTML = getCalen(curr);
-  }
-
   
 
 </script>
