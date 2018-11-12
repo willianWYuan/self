@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>cart</title>
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../css/phone.css?v=0.0.7">
+</head>
+<body style="background-color: #f9f9f9">
+	<div class="cart" id="app" v-cloak>
+		<div class="cartList" v-for='(itemVal, itemIndex) in cartList'>
+			<div class="c-shop flex-start">
+				<i class="icon-checked" :class='{on: itemVal.shopChecked}' @click='shopCheckedFn(itemIndex, !itemVal.shopChecked)'></i>{{ itemVal.shopName }}
+			</div>
+			<ul class="c-list">
+				<li v-for='(elemVal, elemIndex) in itemVal.list'>
+					<div class="c-inner flex-center">
+						<i class="icon-checked" :class='{on: elemVal.cartChecked}' @click='cartCheckedFn(itemIndex, elemIndex, !elemVal.cartChecked)'></i>
+						<div class="c-cxt flex-center">
+							<div class="image flex-center"><img :src='elemVal.cartImage'></div>
+							<div class="c-wrap">
+								<div class="cart-name line-clamp">{{ elemVal.cartName }}</div>
+								<div class="cart-remark">{{ elemVal.cartRemark }}</div>
+								<div class="flex-around">
+									<div class="cart-price">{{ elemVal.cartPrice | formatPrice }}</div>
+									<div class="max-nums" v-if='elemVal.cartNums == elemVal.maxNums'>没有库存</div>
+									<div class="cart-nums flex-center" @click='cartCheckedFn(itemIndex, elemIndex, true)'>
+										<i class="reduce" :class='{off: elemVal.cartNums == 1}'               @click='elemVal.cartNums > 1 ? elemVal.cartNums-- : 1'></i>
+										<span class="nums flex-center">{{ elemVal.cartNums }}</span>
+										<i class="plus"   :class='{off: elemVal.cartNums == elemVal.maxNums}' @click='elemVal.cartNums < elemVal.maxNums ? elemVal.cartNums++ : elemVal.maxNums'></i>
+									</div>
+								</div>
+							</div>
+							<div class="icon-delete" @click='isDeteleFn(itemIndex, elemIndex)' v-if='isEditing'></div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="c-foot flex-around">
+			<div class="conputed flex-start">
+				<i class="icon-checked" :class='{on: totalChecked}' @click='totalCheckedFn()'></i>
+				<small>全选</small>
+				<small @click='isEditFn(!isEditing)'>{{ !isEditing ? "编辑" : "完成" }}</small>
+				<span class="price" v-if='!isEditing'>合计：{{ totalPrice | formatPrice }}</span>
+			</div>
+			<div class="foot-r">
+				<span class="button" v-if='isEditing' @click='isShowSure=true'>删除所选</span>
+				<span class="button" v-if='!isEditing'>去结算</span>
+			</div>
+		</div>
+
+
+
+		<transition name="fade"><div class="page-mask page-fixed" v-if='isShowSure'></div></transition>
+		<transition name="fade"><div class="page-alert page-fixed flex-center" v-if='isShowSure'>
+		     <div class="alert-inner">
+		         <div class="alert-text">确定要删除所选？</div>
+		         <div class="alert-done flex-center">
+		             <a class="alert-sure on" @click='sureDeleteFn'>确定</a>
+		             <a class="alert-cancel" @click='isShowSure=false'>取消</a>
+		         </div>
+		     </div>
+		 </div></transition>
+	</div>
+
+	<script src="../js/vue.js"></script>
+	<script>
+		const ajaxdata = [
+			{
+				shopId: 1,
+				shopName: '京东自营',
+				cartId: 20111,
+				cartImage: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2647499043,1767426570&fm=26&gp=0.jpg',
+				cartName: 'LG 23.8英寸光滑切割设计 IPS硬屏 低山滤蓝光液晶显示器 HDMI接口 黑色',
+				cartRemark: '4.6kg 23.8英寸 23.8英寸/IPS硬屏',
+				cartNums: 2, 
+				maxNums: 10, 
+				cartPrice: 869,
+				isSuit: false,
+			}, {
+				shopId: 1,
+				shopName: '京东自营',
+				cartId: 26891,
+				cartImage: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3843287922,1312219388&fm=26&gp=0.jpg',
+				cartName: 'LG 23.8英寸光滑切割设计 IPS硬屏 低山滤蓝光液晶显示器 HDMI接口 黑色',
+				cartRemark: '7.02kg 29英寸/21:9/IPS硬屏',
+				cartNums: 3, 
+				maxNums: 5, 
+				cartPrice: 1199,
+				isSuit: false,
+			}, {
+				shopId: 1,
+				shopName: '京东自营',
+				cartId: 35697,
+				cartImage: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2184045611,844511256&fm=26&gp=0.jpg',
+				cartName: '小米(MI)Pro 15.6英寸金属轻薄笔记本(i7-8550U 16G 256GSSD MX150 2G独立显卡)',
+				cartRemark: '3.32kg 【MX150 2G独显】 四核i7',
+				cartNums: 1, 
+				maxNums: 4, 
+				cartPrice: 6998,
+				isSuit: false,
+			}, {
+				shopId: 1697,
+				shopName: '华志电脑专营店',
+				cartId: 42588,
+				cartImage: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2354182476,1679973731&fm=26&gp=0.jpg',
+				cartName: '英特尔（Intel）全新八代i3 i5 i7酷睿 奔腾 赛扬 盒装cpu处理器【国行】i5 8600k',
+				cartRemark: '0.58kg i5 8600k',
+				cartNums: 1, 
+				maxNums: 7, 
+				cartPrice: 2059,
+				isSuit: false,
+			}, {
+				shopId: 1955,
+				shopName: '松人数码旗舰店',
+				cartId: 49788,
+				cartImage: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2285807714,2580593635&fm=26&gp=0.jpg',
+				cartName: '松人（SONGREN）27英寸显示器广视角不闪屏 液晶电脑显示屏 家用办公2k/游戏电脑屏',
+				cartRemark: '7.58kg （2560*1440） 珍珠白',
+				cartNums: 1, 
+				maxNums: 10, 
+				cartPrice: 899,
+				isSuit: false,
+			}
+		];
+
+		new Vue({
+			el: '#app',
+			data: {
+				cartList: [],
+				totalChecked: false,
+				isEditing: false,
+
+				isShowSure: false
+			},
+			computed: {
+				totalPrice() {
+					let result = 0;
+					this.cartList.map(item => {
+						item.list.map(elem => {
+							if (elem.cartChecked) result += elem.cartPrice * elem.cartNums
+						}) 
+					});
+					return result
+				}
+			},
+			methods:{
+				isHasArray(compareArr, shopId) {
+					let isflog;
+					compareArr.map((item, index) => {
+						if (item.shopId == shopId) isflog = index;
+					})
+					return isflog;
+				},
+				init() {
+					let result = [];
+					ajaxdata.map(item => {
+						let {shopId, shopName} = item;
+						let flogIndex = this.isHasArray(result, item.shopId);
+						typeof flogIndex == 'undefined' ? 
+							result.push({shopId, shopName, list: [item]}) : 
+							result[flogIndex].list.push(item);
+					})
+					// 转为二维数组
+					this.cartList = result;
+				},
+
+
+
+				// shopCheckedFn 点击店家     
+				// cartCheckedFn 点击产品  
+				// isTotalFn 店家/产品是否勾选  
+				// totalCheckedFn 是否全选
+				shopCheckedFn(itemIndex, flog) {
+					this.$set(this.cartList[itemIndex], 'shopChecked', flog);
+					this.cartList[itemIndex].list.map(item => {
+						this.$set(item, 'cartChecked', flog);
+					})
+					this.isTotalFn()
+				},
+				cartCheckedFn(itemIndex, elemIndex, flog) {
+					const cartCheckedList = this.cartList[itemIndex].list;
+					this.$set(cartCheckedList[elemIndex], 'cartChecked', flog);
+					let [cartLength, isParentTrue] = [cartCheckedList.length, true];
+					cartCheckedList.map(item => {
+						if (!item.cartChecked) isParentTrue = false;
+					});
+					this.$set(this.cartList[itemIndex], 'shopChecked', isParentTrue);
+					this.isTotalFn()
+				},
+				isTotalFn() {
+					let [totalLength, isTotalTrue] = [this.cartList.length, true];
+					this.cartList.map(item => {
+						if (!item.shopChecked) isTotalTrue = false;
+					});
+					this.totalChecked = isTotalTrue;
+				},
+				totalCheckedFn(isflog) {
+					const flog = typeof isflog != 'undefined' ? isflog : !this.totalChecked;
+					this.cartList.map(item => {
+						this.$set(item, 'shopChecked', flog);
+						item.list.map(elem => {
+							this.$set(elem, 'cartChecked', flog);
+						}) 
+					});
+					this.totalChecked = flog;
+				},
+
+
+				// 是否 正在编辑中
+				isEditFn(flog) {
+					this.isEditing = flog;
+					this.totalCheckedFn(false);    // 清掉所有已选项
+				},
+
+
+
+				// detele
+				isDeteleFn(itemIndex, elemIndex) {
+					this.isShowSure = {itemIndex, elemIndex};
+				},
+				sureDeleteFn() {
+					typeof this.isShowSure != 'boolean' ? (() => {
+						const {itemIndex, elemIndex} = this.isShowSure
+						this.cartList[itemIndex].list.splice(elemIndex, 1);
+						if (!this.cartList[itemIndex].list.length) this.cartList.splice(itemIndex, 1);
+					})() : (() => {
+						let delArr = [];
+						this.cartList.map((item, itemIndex) => {
+							if (item.shopChecked) delArr.unshift({itemIndex});
+							else item.list.map((elem, elemIndex) => {
+								if (elem.cartChecked) delArr.unshift({itemIndex, elemIndex});
+							}) 
+						});
+						delArr.map(item => {
+							const {itemIndex, elemIndex} = item;
+							if (typeof elemIndex == 'undefined') this.cartList.splice(itemIndex, 1);
+							else this.cartList[itemIndex].list.splice(elemIndex, 1);
+						})
+					})();
+					this.isShowSure = false;
+				}
+
+
+
+			},
+			mounted() {
+				this.init();
+			},
+			filters: {
+				formatPrice(val) {
+					let result = '';
+					if (typeof val != 'undefined') result = val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+					return result
+				}
+			}
+		})
+	</script>
+</body>
+</html>

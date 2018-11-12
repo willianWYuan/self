@@ -1,5 +1,5 @@
 @charset "UTF-8";
-html{font-family:-apple-system-font,"Helvetica Neue","Microsoft Yahei",sans-serif;font-size:4.2vw;color:#333;word-wrap:break-word;-webkit-overflow-scrolling:touch;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+html{font: 4.2vw "Helvetica Neue","Droidsansfallback","Microsoft Yahei";color:#333;word-wrap:break-word;-webkit-overflow-scrolling:touch;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;-webkit-text-size-adjust:100%;}
 body,form,header,article,aside,nav,section,footer,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;}
 h1,h2,h3,h4,h5,h6,strong,b{font-weight:normal;}
 i,em{font-style:normal;}
@@ -22,7 +22,7 @@ textarea{height:4rem;}
 [hidden]{display:none!important;}
 
 /* flex */
-.flex-center,.flex-wrap,.flex-between,.flex-around{display:flex;align-items:center;}
+.flex-start,.flex-center,.flex-wrap,.flex-between,.flex-around{display:flex;align-items:center;}
 .flex-center{justify-content:center;}
 .flex-between{justify-content:space-between;}
 .flex-around{justify-content:space-around;}
@@ -47,7 +47,7 @@ textarea{height:4rem;}
 .ellipsis{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
 
 /* moblie：line-clamp */
-.line-clamp{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;max-height:3.2em;line-height:1.6em;}
+.line-clamp{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;max-height:2.6rem;line-height:1.3rem;}
 
 /* justify */
 .justify{width:10rem;       /*Will be covered*/display:inline-block;text-align:justify;}
@@ -55,6 +55,8 @@ textarea{height:4rem;}
 .Page{box-sizing:border-box;position:absolute;left:0;top:0;width:100%;height:100%;background:#fff;overflow-x:hidden;overflow-y:auto;}
 .downtoup-enter-active,.downtoup-leave-active{transition:all .5s;}
 .downtoup-enter,.downtoup-leave-to{opacity:0;top:-200px;}
+.fade-enter-active,.fade-leave-active{transition:all .3s;}
+.fade-enter,.fade-leave-to{opacity:0;}
 @media(min-width:375px){
 	html{font-size:16px;}
 }
