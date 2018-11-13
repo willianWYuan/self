@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta content="always" name="referrer">
+    <title>瀑布流</title>
+    <!-- [if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.js"></script>
+    <![endif] -->
+    <link rel="stylesheet" href="../css/reset.css?v=1.2.9">
+    <link rel="stylesheet" href="../css/style.css?v=1.2.9">
+</head>
+<body>
+    <div class="waterfall-container"></div>
+    <script>
+        var ajaxdata = [
+            {id: 1,  name: '根深蒂固',      image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541578101655&di=628dc1a6db315b1d989071a46c5656b0&imgtype=0&src=http%3A%2F%2F0.image.kw.okbuycdn.com%2Fimages%2Fmultipic%2F4%2F20140916%2F53a759ae38bdec1134b8673c8b40ddba.jpg'},
+            {id: 2,  name: 'b十大歌手222',  image: 'https://ss3.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=4fbff84f6e2762d09f3ea2bf90ed0849/5243fbf2b2119313562db8dc68380cd791238d74.jpg'},
+            {id: 3,  name: '3开个会看过33', image: 'https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad846bd1d93f8794ccff4e2ee21a0ead/728da9773912b31b8f9045408b18367adbb4e1df.jpg'},
+            {id: 4,  name: '更快更好看',    image: 'https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=0620f1c8dc43ad4bb92e40c0b2025a89/03087bf40ad162d92dc06e711cdfa9ec8a13cdb5.jpg'},
+            {id: 5,  name: '5如图如图555',  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541578218414&di=4931ffbf6f3a07129fae200549aafc58&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F241f95cad1c8a786bd0346636a09c93d70cf50b5.jpg'},
+            {id: 6,  name: '好多人',        image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541578218414&di=fc0e4b6d7ffe32956a7d85833bd1a306&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa5c27d1ed21b0ef487ce8633d0c451da81cb3ebc.jpg'},
+            {id: 7,  name: '11如图如1',     image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541578218413&di=bfd6133fe5341093b59d0685c7a2bc38&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fe4dde71190ef76c6aaaabf479016fdfaaf516765.jpg'},
+            {id: 8,  name: '日阎',          image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2884462686,373541941&fm=26&gp=0.jpg'},
+            {id: 9,  name: '他的条打人机',  image: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3469920784,654787919&fm=26&gp=0.jpg'},
+            {id: 10, name: '11他的基督徒1', image: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3381877500,3805985240&fm=26&gp=0.jpg'},
+            {id: 11, name: '都挺简单',      image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2579617446,1638994956&fm=26&gp=0.jpg'},
+            {id: 12, name: '肯定',          image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1095296088,3284179619&fm=26&gp=0.jpg'},
+            {id: 13, name: '老用户',        image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1071790883,1006859623&fm=26&gp=0.jpg'},
+            {id: 14, name: '人与人',        image: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1340907236,1884557852&fm=26&gp=0.jpg'},
+            {id: 15, name: '给你答复',      image: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=137881026,553041365&fm=26&gp=0.jpg'},
+            {id: 16, name: '密封条没得退',  image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2584750901,766897664&fm=26&gp=0.jpg'},
+            {id: 17, name: '软件么多人',    image: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2510850411,3248680042&fm=26&gp=0.jpg'},
+            {id: 18, name: '我没有',        image: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4163356517,1798677704&fm=26&gp=0.jpg'},
+            {id: 19, name: '设计',          image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1582796180,3403716268&fm=26&gp=0.jpg'},
+            {id: 20, name: '多少人所',      image: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1572582262,3885002536&fm=26&gp=0.jpg'},
+            {id: 21, name: '干涉',          image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3193440563,348055461&fm=26&gp=0.jpg'},
+            {id: 22, name: '图看了他认识',  image: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2522969686,3535503219&fm=26&gp=0.jpg'},
+        ];
+        waterfall('.waterfall-container', {
+            data: ajaxdata,
+            done: function(elem) {
+                console.log(elem)
+            }
+        })
+
+
+
+        
+
+
+
+        function waterfall(elem, objective) {
+            var timer = null;
+            var _self = this;
+            var outer = document.querySelector(elem);
+            var bodyClientWidth = document.documentElement.clientWidth;
+            var needNums = void 0,
+                needSpace = void 0,
+                needOuterWidth = void 0;
+            if (bodyClientWidth > 1280) {;
+                needNums = 5;
+                needSpace = 10;
+                needOuterWidth = 1200;
+            }
+            if (bodyClientWidth <= 1280 && bodyClientWidth > 1024) {;
+                needNums = 4;
+                needSpace = 10;
+                needOuterWidth = 1024;
+            }
+            if (bodyClientWidth <= 1024 && bodyClientWidth > 640) {;
+                needNums = 3;
+                needSpace = 6;
+                needOuterWidth = bodyClientWidth;
+            }
+            if (bodyClientWidth <= 640) {;
+                needNums = 2;
+                needSpace = 4;
+                needOuterWidth = bodyClientWidth;
+            }
+            var data = objective.data,
+                _objective$outerWidth = objective.outerWidth,
+                outerWidth = _objective$outerWidth === undefined ? needOuterWidth : _objective$outerWidth,
+                _objective$nums = objective.nums,
+                nums = _objective$nums === undefined ? needNums : _objective$nums,
+                _objective$space = objective.space,
+                space = _objective$space === undefined ? needSpace : _objective$space;
+            needNums = null;
+            needSpace = null;
+            needOuterWidth = null;
+
+            var everyWidth = (outerWidth - space * (nums - 1)) / nums;
+
+            var dataLen = data.length;
+            var computedImgOnloadNums = 0;
+            data.forEach(function(item) {
+                var img = new Image();
+                img.src = item.image;
+                img.onload = function() {
+                    computedImgOnloadNums++;
+                    item.width = everyWidth;
+                    item.height = Math.floor(item.width / this.width * this.height);
+                    if (computedImgOnloadNums == dataLen) positionFn(data);
+                };
+            });
+
+            // 获取   top  left
+            function positionFn(posData) {
+                var lineArr = []; // 一竖每个元素的高度 累加
+                posData.forEach(function(item, index) {
+                    if (index < nums) {
+                        lineArr.push(item.height);
+                        item.left = index ? (everyWidth + space) * index : 0;
+                        item.top = 0;
+                    } else {
+                        var _getMaxMinHeightFn = getMaxMinHeightFn(lineArr),
+                            minHeightIndex = _getMaxMinHeightFn.minHeightIndex,
+                            minTop = _getMaxMinHeightFn.minTop;
+
+                        lineArr[minHeightIndex] += item.height + space;
+                        item.left = minHeightIndex ? (everyWidth + space) * minHeightIndex : 0;
+                        item.top = minTop + space;
+                    }
+                });
+                !outer.innerHTML ? createElemFn(lineArr) : resizePosFn(lineArr, posData);
+            }
+
+            // 生成dom
+            function createElemFn(lineArr) {
+                var str = '<ul class="wf-list" style="width: ' + outerWidth + 'px; height: ' + getMaxMinHeightFn(lineArr, true) + 'px">';
+                data.forEach(function(item) {
+                    str += '<li style="width: ' + item.width + 'px; height: ' + item.height + 'px; top: ' + item.top + 'px; left: ' + item.left + 'px">\n                            <div class="wf-image"><img src="' + item.image + '" /></div>\n                            <div class="wf-name">' + item.name + '</div>\n                        </li>';
+                });
+                str += '</ul>';
+                outer.innerHTML = str;
+                if (typeof objective.done == 'function') objective.done(outer.querySelector('.wf-list'));
+            }
+
+            // window.onresize
+            function resizePosFn(lineArr, posData) {
+                var wful = outer.querySelector('.wf-list');
+                wful.style.width = outerWidth + 'px';
+                wful.style.height = getMaxMinHeightFn(lineArr, true) + 'px';
+                var wfList = wful.querySelectorAll('li');
+                posData.forEach(function(item, index) {
+                    wfList[index].style.width = item.width + 'px';
+                    wfList[index].style.height = item.height + 'px';
+                    wfList[index].style.top = item.top + 'px';
+                    wfList[index].style.left = item.left + 'px';
+                });
+            }
+
+            // type == false  获取 最小高度和当前索引        type==true  直接要最后的最大高度
+            function getMaxMinHeightFn(arr, type) {
+                var minTop = 10000,
+                    lastMaxHieght = 0,
+                    minHeightIndex = null;
+
+                arr.forEach(function(item, i) {
+                    if (minTop > item) minTop = item, minHeightIndex = i;
+                    if (lastMaxHieght < item) lastMaxHieght = item;
+                });
+                return !type ? {
+                    minHeightIndex: minHeightIndex,
+                    minTop: minTop
+                } : lastMaxHieght;
+            }
+
+            function windowEventFn() {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    _self.waterfall(elem, {
+                        data: objective.data
+                    });
+                    window.removeEventListener('resize', windowEventFn);
+                }, 200);
+            }
+            window.addEventListener('resize', windowEventFn);
+        }
+
+    </script>
+</body>
+</html>

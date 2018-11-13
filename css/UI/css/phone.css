@@ -7,14 +7,20 @@
 .icon-right:before{top:6px;left:4px;transform:rotate(135deg);}
 .icon-top:before{top:8px;left:6px;transform:rotate(45deg);}
 .icon-bottom:before{top:3px;left:6px;transform:rotate(225deg);}
-.icon-checked{width:20px;height:20px;border-radius:50%;border:1px solid #c6c6c6;box-sizing:border-box;transition:background-color .2s;display:inline-flex;position:relative;margin-right:.5rem;}
+.icon-checked, .icon-radio{width:20px;height:20px;border-radius:50%;border:1px solid #c6c6c6;box-sizing:border-box;transition:all .2s;display:inline-flex;position:relative;margin-right:.5rem;}
 .icon-checked:after{content:"";position:absolute;top:2px;left:6px;width:4px;height:10px;border-left:2px solid #fff;border-top:2px solid #fff;transform:scale(1.6,1.6) rotate(-135deg);transition:all .4s;opacity:0;}
-.icon-checked.on{border-color:#09BB07;background-color:#09BB07;}
+.icon-radio:after{content:"";position:absolute;border-radius: 10px;background-color: #fff;top:4px;left:4px;width:10px;height:10px;transform:scale(1.8,1.8);transition:all .4s;opacity:0;}
+.icon-checked.on, .icon-radio.on{border-color:#09BB07;background-color:#09BB07;}
 .icon-checked.on:after{border-color:#fff;transform:scale(1,1) rotate(-135deg);opacity:1;}
-.icon-delete{background:#09BB07;color:white;width:20px;height:20px;border-radius:20px;}
+.icon-radio.on:after{opacity:1; transform: scale(1, 1);}
+.icon-delete{background:#09BB07;color:white;width:20px;height:20px;border-radius:20px;position: relative;}
 .icon-delete:before,.icon-delete:after{content:"";width:12px;height:2px;display:block;position:absolute;top:50%;left:50%;margin-left:-6px;margin-top:-1px;background-color:#fff;}
 .icon-delete:before{transform:rotate(45deg);}
 .icon-delete:after{transform:rotate(-45deg);}
+.icon-switch{width:2.8rem;height:1.4rem;border:1px solid #ccc;border-radius:1.4rem;display:inline-flex;position:relative;box-shadow:0 1px .1rem rgba(0,0,0,0.2);transition:all .5s;}
+.icon-switch:after{content:"";height:1.4rem;width:1.4rem;border-radius:1.4rem;background:#fff;position:absolute;top:0;left:0;transition:all .3s;box-shadow:0 1px 0.25rem rgba(0,0,0,.4);}
+.icon-switch.on{border-color:#09BB07;background:#09BB07;box-shadow:none;}
+.icon-switch.on:after{left:1.45rem;}
 
 /*列表*/
 .nav-list-title{text-align:center;font-size:18px;line-height:3.4rem;background-color:#eee}
@@ -29,10 +35,6 @@
 .nav-list .form-title{width:6rem;}
 .nav-list .form-input{flex:1;display:flex;align-items:center;}
 .formList{line-height:1.4rem;}
-.formList .icon-switch{width:2.8rem;height:1.4rem;border:1px solid #ccc;border-radius:1.4rem;display:inline-flex;position:relative;box-shadow:0 1px .1rem rgba(0,0,0,0.2);transition:all .5s;}
-.formList .icon-switch:after{content:"";height:1.4rem;width:1.4rem;border-radius:1.4rem;background:#fff;position:absolute;top:0;left:0;transition:all .3s;box-shadow:0 1px 0.25rem rgba(0,0,0,.4);}
-.formList .icon-switch.on{border-color:#09BB07;background:#09BB07;box-shadow:none;}
-.formList .icon-switch.on:after{left:1.45rem;}
 .formList .pwd-isShow{font-size:.8rem;}
 .formList .from-textarea{height:auto;display:block;padding-top:.5rem;}
 .formList .from-textarea textarea{background-color:#eee}
