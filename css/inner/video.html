@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit" />
+	<meta content="always" name="referrer">
+	<title>video</title>
+	<link rel="stylesheet" href="../css/reset.css?v=0.0.5">
+	<link rel="stylesheet" href="../css/phone.css?v=0.0.5">
+</head>
+<body>
+	<div class="video">
+		<!-- <video id="video" muted></video> -->
+	</div>
+	
+	
+
+	<!-- controls autoplay -->
+	<script>
+		let [video, source]  = [document.querySelector('.video'), document.createElement('video')];
+		source.src = 'http://www.w3school.com.cn/i/movie.ogg';
+		source.muted = 'muted';
+		video.appendChild(source)
+		source.play()
+	</script>
+</body>
+</html>

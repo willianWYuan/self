@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width">
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit" />
+	<meta content="always" name="referrer">
 	<title>cart</title>
 	<link rel="stylesheet" href="../css/reset.css">
 	<link rel="stylesheet" href="../css/phone.css?v=0.0.7">
 </head>
 <body style="background-color: #f9f9f9">
-	<div class="cart" id="app" v-cloak>
-		<div class="cartList" v-for='(itemVal, itemIndex) in cartList'>
-			<div class="c-shop flex-start">
-				<i class="icon-checked" :class='{on: itemVal.shopChecked}' @click='shopCheckedFn(itemIndex, !itemVal.shopChecked)'></i>{{ itemVal.shopName }}
-			</div>
-			<ul class="c-list">
-				<li v-for='(elemVal, elemIndex) in itemVal.list'>
-					<div class="c-inner flex-center">
-						<i class="icon-checked" :class='{on: elemVal.cartChecked}' @click='cartCheckedFn(itemIndex, elemIndex, !elemVal.cartChecked)'></i>
-						<div class="c-cxt flex-center">
-							<div class="image flex-center"><img :src='elemVal.cartImage'></div>
-							<div class="c-wrap">
-								<div class="cart-name line-clamp">{{ elemVal.cartName }}</div>
-								<div class="cart-remark">{{ elemVal.cartRemark }}</div>
-								<div class="flex-around">
-									<div class="cart-price">{{ elemVal.cartPrice | formatPrice }}</div>
-									<div class="max-nums" v-if='elemVal.cartNums == elemVal.maxNums'>没有库存</div>
-									<div class="cart-nums flex-center" @click='cartCheckedFn(itemIndex, elemIndex, true)'>
-										<i class="reduce" :class='{off: elemVal.cartNums == 1}'               @click='elemVal.cartNums > 1 ? elemVal.cartNums-- : 1'></i>
-										<span class="nums flex-center">{{ elemVal.cartNums }}</span>
-										<i class="plus"   :class='{off: elemVal.cartNums == elemVal.maxNums}' @click='elemVal.cartNums < elemVal.maxNums ? elemVal.cartNums++ : elemVal.maxNums'></i>
+	<div class="Page" id="app" v-cloak>
+		<div class="page-cxt-nohead cart">
+			<div class="cartList" v-for='(itemVal, itemIndex) in cartList'>
+				<div class="c-shop flex-start">
+					<i class="icon-checked" :class='{on: itemVal.shopChecked}' @click='shopCheckedFn(itemIndex, !itemVal.shopChecked)'></i>{{ itemVal.shopName }}
+				</div>
+				<ul class="c-list">
+					<li v-for='(elemVal, elemIndex) in itemVal.list'>
+						<div class="c-inner flex-center">
+							<i class="icon-checked" :class='{on: elemVal.cartChecked}' @click='cartCheckedFn(itemIndex, elemIndex, !elemVal.cartChecked)'></i>
+							<div class="c-cxt flex-center">
+								<div class="image flex-center"><img :src='elemVal.cartImage'></div>
+								<div class="c-wrap">
+									<div class="cart-name line-clamp">{{ elemVal.cartName }}</div>
+									<div class="cart-remark">{{ elemVal.cartRemark }}</div>
+									<div class="flex-around">
+										<div class="cart-price">{{ elemVal.cartPrice | formatPrice }}</div>
+										<div class="max-nums" v-if='elemVal.cartNums == elemVal.maxNums'>没有库存</div>
+										<div class="cart-nums flex-center" @click='cartCheckedFn(itemIndex, elemIndex, true)'>
+											<i class="reduce" :class='{off: elemVal.cartNums == 1}'               @click='elemVal.cartNums > 1 ? elemVal.cartNums-- : 1'></i>
+											<span class="nums flex-center">{{ elemVal.cartNums }}</span>
+											<i class="plus"   :class='{off: elemVal.cartNums == elemVal.maxNums}' @click='elemVal.cartNums < elemVal.maxNums ? elemVal.cartNums++ : elemVal.maxNums'></i>
+										</div>
 									</div>
 								</div>
+								<div class="icon-delete" @click='isDeteleFn(itemIndex, elemIndex)' v-if='isEditing'></div>
 							</div>
-							<div class="icon-delete" @click='isDeteleFn(itemIndex, elemIndex)' v-if='isEditing'></div>
 						</div>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="c-foot flex-around">
 			<div class="conputed flex-start">

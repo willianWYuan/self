@@ -17,32 +17,42 @@
 </head>
 <body> 
 	<div class="Page">
-		<h1 class="nav-list-title">Plug-in unit</h1>
+		<div class="nav-list-title">Plug-in unit</div>
 		<ul class="nav-list">
 			<li class="flex-between" href="inner/animate.html"><div class="nav-text">animate</div></li>
 		</ul>
-		<h1 class="nav-list-title">mobile</h1>
+		<div class="nav-list-title">mobile</div>
 		<ul class="nav-list">
 			<li class="flex-between" href="inner/login.html">    <div class="nav-text">登录</div>               <span class="flex-center nav-num">2</span><i class="icon-top"></i></li>
 			<li class="flex-between" href="inner/header.html">   <div class="nav-text">标题栏和底部导航栏</div> <span class="flex-center nav-num">2</span><i class="icon-right"></i></li>
 			<li class="flex-between" href="inner/form.html">     <i class="nav-icon"><img src="./img/01.jpg"></i> <div class="nav-text">表单</div>               <span class="flex-center nav-num"></span></li>
 			<li class="flex-between" href="inner/alert.html">    <div class="nav-text">对话框</div>             <span class="flex-center nav-circle">84</span><i class="icon-bottom"></i></li>
-			<li class="flex-between" href="inner/reload.html">   <div class="nav-text">上拉加载更多</div>           <span class="flex-center nav-circle">6</span></li>
+			<li class="flex-between" href="inner/reload.html">   <div class="nav-text">上拉加载更多</div>       <span class="flex-center nav-circle">6</span></li>
 			<li class="flex-between" href="inner/telbook.html">  <div class="nav-text">手机电话搜索</div>       <span class="flex-center nav-num"></span></li>
 			<li class="flex-between" href="inner/cart.html">     <div class="nav-text">购物车</div>     	    <span class="flex-center nav-num"></span><i class="icon-left"></i></li>
+			<li class="flex-between" href="inner/classify.html">     <div class="nav-text">产品分类</div>     	<span class="flex-center nav-num"></span><i class="icon-left"></i></li>
 		</ul>
-		<h1 class="nav-list-title">pc</h1>
+		<div class="nav-list-title">pc</div>
 		<ul class="nav-list">
+			<li class="flex-between" href="inner/fluid.html"><div class="nav-text">响应式</div></li>
 			<li class="flex-between" href="inner/waterfall.html"><div class="nav-text">瀑布流</div></li>
+		</ul>
+		<div class="nav-list-title">h5</div>
+		<ul class="nav-list">
+			<li class="flex-between" href="inner/svg.html"><div class="nav-text">svg</div></li>
+			<li class="flex-between" href="inner/canvas.html"><div class="nav-text">canvas</div></li>
+			<li class="flex-between" href="inner/video.html"><div class="nav-text">video</div></li>
 		</ul>
 	</div>
 	<script>
-		Array.from(document.querySelectorAll('li')).forEach(item => {
-			item.onclick = function(ev) {
-				let href = this.getAttribute('href');
+		var list = document.querySelectorAll('li');
+		var len = list.length;
+		for(var i = 0; i < len; i++) {
+			list[i].onclick = function(ev) {
+				var href = this.getAttribute('href');
 				location.href = href
 			}
-		})
+		}
 	</script>
 </body>
 </html>

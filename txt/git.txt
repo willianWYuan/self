@@ -91,4 +91,7 @@ $ git push -u origin master
 
 
 
+reset  清屏
+
+
 
