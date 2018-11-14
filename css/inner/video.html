@@ -7,24 +7,127 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="renderer" content="webkit" />
 	<meta content="always" name="referrer">
-	<title>video</title>
+	<title>media</title>
 	<link rel="stylesheet" href="../css/reset.css?v=0.0.5">
-	<link rel="stylesheet" href="../css/phone.css?v=0.0.5">
 </head>
 <body>
-	<div class="video">
-		<!-- <video id="video" muted></video> -->
-	</div>
-	
-	
+	<div class="video"></div>
+	<div id="start">START</div>
+	<!-- <iframe src="http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=0c3e8fd50d86e0d751095a01aad836ad&tvId=1552837100&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%" frameborder="0" scrolling="no" allowfullscreen="true" width="100%" height="500px"></iframe> -->
 
 	<!-- controls autoplay -->
 	<script>
+		const starttime = new Date().getTime()
 		let [video, source]  = [document.querySelector('.video'), document.createElement('video')];
-		source.src = 'http://www.w3school.com.cn/i/movie.ogg';
-		source.muted = 'muted';
+		source.src = '../img/movie.ogg';
+		// source.innerHTML = `
+		//     <source src="../img/movie.ogg" type="video/ogg">
+		// 	   <source src="../img/video.mp4" type="video/mp4">
+		// `
+		// source.src = '../img/movie.ogg';
+		// source.controls = true;
+		// source.preload = 'none';
+		source.crossOrigin = '*';
+		// source.loop = true;
+		// source.width = 80;
+		// source.height = 80;
+		source.autoplay = 'autoplay';
+		 
+		 
+		
+		// source.currentTime = 2;   // 设置初始帧数位置
+		// source.volume = value; //设置音量
+		// this.defaultPlaybackRate = value; //默认的回放速度，可以设置
+		// this.playbackRate = value; //当前播放速度，设置后马上改变
+		 
+		 
+		// source.muted = true;   //静音
+		// source.poster = '../img/qq-icon.png';
 		video.appendChild(source)
-		source.play()
+
+		// source.play();   // 播放
+		// source.pause();   // 暂停
+
+
+		source.onloadstart = function(){
+			console.log('onloadstart 视频加载完', new Date().getTime() - starttime);
+		}
+		source.oncanplay = function(){
+			if (this.readyState != 4) return;
+			console.log('oncanplay 可以播放，但中途可能因为加载而暂停', new Date().getTime() - starttime);
+		}
+		source.oncanplaythrough = function(){
+			if (this.readyState != 4) return;
+			console.log('oncanplaythrough 可以播放，歌曲全部加载完毕', new Date().getTime() - starttime);
+			// this.play();
+		}
+		source.onplay = function(){
+			console.log('onplay 开始播放/点击播放', new Date().getTime() - starttime);
+		}
+		source.onpause = function(){
+			console.log('onpause 结束播放/暂停播放', new Date().getTime() - starttime);
+		}
+		source.ontimeupdate = function(){
+			// console.log('ontimeupdate 每一帧变化', new Date().getTime() - starttime);
+			console.log(this.currentTime)
+			// if (this.currentTime > 10) source.src = '../img/喜欢你.mp3';
+			// source.play();
+			// this.currentTime // 当前时间 / 设置当前时间
+			// this.paused // 是否暂停
+			// this.ended // 是否结束
+			// this.duration // 视频长度
+		}
+		source.onended = function(){
+			console.log('onended          结束播放',     new Date().getTime() - starttime);
+		}
+		source.onwaiting = function(){
+			console.log('onwaiting        等待下一帧',   new Date().getTime() - starttime);
+		}
+		source.onerror = function(){
+			console.log('onerror          错误提示',     new Date().getTime() - starttime);
+		}
+		source.onratechange = function(){
+			console.log('onratechange     播放速率变化', new Date().getTime() - starttime);
+		}
+		source.onvolumechange = function(){
+			console.log('onvolumechange   声音变化',     new Date().getTime() - starttime);
+		}
+		source.ondruationchange = function(){
+			console.log('ondruationchange 播放时长变化', new Date().getTime() - starttime);
+		}
+
+
+
+
+
+
+
+		function FullScreen() {
+			video.className = video.className.match('fullScreen') ? 'video' : 'video fullScreen';
+		}
+		// document.onclick = FullScreen
+
+
+		start.onclick = function() {
+			// FullScreen()
+			source.play()
+		}
 	</script>
 </body>
 </html>
+
+
+<style>
+	.fullScreen{
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    background: #000;
+	    z-index: 20181114
+	}
+</style>
