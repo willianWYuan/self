@@ -85,7 +85,10 @@
 .page-alert .alert-done a + a{border-left:1px solid #e9e9e9;}
 .page-alert-messages{position:fixed;left:0;bottom:2rem;right:0;text-align:center;}
 .page-alert-messages span{display:inline-block;background-color:rgba(0,0,0,.5);font-size:.9rem;padding:.5rem 1.2rem;color:white;border-radius:.2rem;max-width:200px;line-height:1.5;}
-
+.p404{}
+@media(max-width:500px){
+	.p404 img{width: 20rem}
+}
 /*手机电话搜索*/
 .telbooklist-search{margin:.7rem .6rem;background:#eee;padding:0 1.2rem;border-radius:2.2rem;height:2.2rem;}
 .telbooklist-search input{}
