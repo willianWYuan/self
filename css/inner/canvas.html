@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<title>canvas</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		html, body{height: 100%; overflow: hidden;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+		var canvas = document.getElementById('canvas');
+		canvas.width  = document.documentElement.clientWidth;
+		canvas.height = document.documentElement.clientHeight;
+		var ctx = canvas.getContext('2d');
+		// ctx.fillRect(10,   10, 255, 250);  // 绘制一个填充的矩形
+		// ctx.clearRect(45,  45, 60,  60);   // 清除指定矩形区域，让清除部分完全透明。
+		// ctx.strokeRect(50, 50, 50,  50);  	// 绘制一个矩形的边框
+
+
+
+
+		// ctx.beginPath();
+		// ctx.lineWidth = 1;
+		// ctx.moveTo(75, 50);
+		// ctx.lineTo(100, 75);
+		// ctx.lineTo(100, 25);
+		// ctx.closePath()       // 当你调用fill()函数时，所有没有闭合的形状都会自动闭合，所以你不需要调用closePath()函数。但是调用stroke()时不会自动闭合。
+		
+		// ctx.fill();
+		// ctx.stroke();
+
+
+
+
+
+		// ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+
+
+
+
+
+
+
+		// ctx.beginPath();
+		// ctx.fillStyle    = "rgba(255, 165, 0, .5)";     // 填充颜色
+		// ctx.strokeStyle  = "rgba(255, 165, 0, .5)";     // 边框颜色
+		// var x = 200; // x 坐标值
+		// var y = 200; // y 坐标值
+		// var radius = 50; // 圆弧半径
+		// var startAngle = 0; // 开始点
+		// var endAngle = Math.PI / 2 * 3; // 结束点
+		// var anticlockwise = true; // 顺时针或逆时针
+
+		// ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+		// ctx.fill();
+		// ctx.stroke();
+
+
+
+
+
+
+
+		
+
+		// ctx.beginPath();
+		// ctx.font = "48px sans-serif";
+		// ctx.textAlign = "center";
+		// ctx.fillText("center", 300, 100);
+
+		// ctx.beginPath();
+		// ctx.textAlign = "left";
+		// ctx.fillText("left", 400, 200);
+
+
+
+
+
+
+
+		console.log(ctx)
+
+
+		function clock() {
+			var now = new Date();
+			ctx.save();
+			ctx.clearRect(0, 0, 750, 750);
+			ctx.translate(375, 375);
+			ctx.scale(0.4, 0.4);
+			ctx.rotate(-Math.PI / 2);
+			ctx.strokeStyle = "black";
+			ctx.fillStyle = "white";
+			ctx.lineWidth = 8;
+			ctx.lineCap = "round";
+
+			// Hour marks
+			ctx.save();
+			for (var i = 0; i < 12; i++) {
+				ctx.beginPath();
+				ctx.rotate(Math.PI / 6);
+				ctx.moveTo(100, 0);
+				ctx.lineTo(120, 0);
+				ctx.stroke();
+			}
+			ctx.restore();
+
+			// Minute marks
+			ctx.save();
+			ctx.lineWidth = 5;
+			for (i = 0; i < 60; i++) {
+				if (i % 5 != 0) {
+					ctx.beginPath();
+					ctx.moveTo(117, 0);
+					ctx.lineTo(120, 0);
+					ctx.stroke();
+				}
+				ctx.rotate(Math.PI / 30);
+			}
+			ctx.restore();
+
+			var sec = now.getSeconds();
+			var min = now.getMinutes();
+			var hr = now.getHours();
+			hr = hr >= 12 ? hr - 12 : hr;
+
+			ctx.fillStyle = "black";
+
+			// write Hours
+			ctx.save();
+			ctx.rotate(hr * (Math.PI / 6) + (Math.PI / 360) * min + (Math.PI / 21600) * sec)
+			ctx.lineWidth = 14;
+			ctx.beginPath();
+			ctx.moveTo(-20, 0);
+			ctx.lineTo(80, 0);
+			ctx.stroke();
+			ctx.restore();
+
+			// write Minutes
+			ctx.save();
+			ctx.rotate((Math.PI / 30) * min + (Math.PI / 1800) * sec)
+			ctx.lineWidth = 10;
+			ctx.beginPath();
+			ctx.moveTo(-28, 0);
+			ctx.lineTo(112, 0);
+			ctx.stroke();
+			ctx.restore();
+
+			// Write seconds
+			ctx.save();
+			ctx.rotate(sec * Math.PI / 30);
+			ctx.strokeStyle = "#D40000";
+			ctx.fillStyle = "#D40000";
+			ctx.lineWidth = 6;
+			ctx.beginPath();
+			ctx.moveTo(-30, 0);
+			ctx.lineTo(83, 0);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.arc(95, 0, 10, 0, Math.PI * 2, true);
+			ctx.stroke();
+			ctx.fillStyle = "rgba(0,0,0,0)";
+			ctx.arc(0, 0, 3, 0, Math.PI * 2, true);
+			ctx.fill();
+			ctx.restore();
+
+			ctx.beginPath();
+			ctx.lineWidth = 14;
+			ctx.strokeStyle = '#325FA2';
+			ctx.arc(0, 0, 142, 0, Math.PI * 2, true);
+			ctx.stroke();
+
+			ctx.restore();
+
+			window.requestAnimationFrame(clock);
+		}
+
+		window.requestAnimationFrame(clock);
+
+
+		// setInterval(clock, 1000)
+
+
+
+
+		var n = 1;
+		function drawThis() {
+			ctx.save();
+			ctx.lineWidth = 4;
+			ctx.translate(20 * n, 20 * n);
+			ctx.rotate(Math.PI * 2 / n);
+			ctx.strokeRect(0, 0, 150,  150);
+			n++;
+			ctx.restore();
+		}
+		// setInterval(drawThis, 200)
+
+
+
+
+
+		// function Canv() {
+		// 	canvas.width  = document.documentElement.clientWidth;
+		// 	canvas.height = document.documentElement.clientHeight;
+		// }
+
+		// window.onload = Canv;
+		// window.onresize = Canv
+	</script>
+</body>
+</html>
+
+
+
+

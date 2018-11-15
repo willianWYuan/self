@@ -702,9 +702,27 @@ class Common {
 //     }
 //     xml.timeout = 0;//设置过期时间（毫秒）；0代表不限制
 //     xml.open(obj.type, obj.url, obj.async);
+//     xml.setRequestHeader('Content-Type', 'application/json');    // 必须放在open之后，send之前
 //     xml.setRequestHeader('If-Modified-Since', '0');    // 必须放在open之后，send之前
 //     xml.send(JSON.stringify(data));
 
+// }
+// 
+// 
+// function jsonp(url, data, callback) {
+//     var dataString = url.indexOf('?') == -1 ? '?' : '&';
+//     for (var key in data) {
+//         dataString += key + '=' + data[key] + '&';
+//     };
+//     var cbFuncName = 'my_json_cb_' + Math.random().toString().replace('.', '');
+//     dataString += 'callback=' + cbFuncName;
+//     var scriptEle = document.createElement('script');
+//     scriptEle.src = url + dataString;
+//     window[cbFuncName] = function(data) {
+//         callback(data.result);
+//         document.body.removeChild(scriptEle);
+//     }
+//     document.body.appendChild(scriptEle);
 // }
 
 

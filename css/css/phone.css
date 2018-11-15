@@ -43,12 +43,12 @@
 .page-login{width:80%;height:24rem;max-width:400px;font-size:.9rem;}
 .page-login .login-logo{width:12rem;height:7rem;background:#eee;margin:0 auto 1rem;}
 .page-login .login-form{}
-.page-login .login-form-list{border:1px solid #ddd;border-radius:.3rem;background-color:#fff;}
+.page-login .login-form-list{border:1px solid #ddd;border-radius:.2rem;background-color:#fff;height: 2.8rem; box-sizing: border-box;align-items: stretch;}
 .page-login .login-form-list + .login-form-list{margin-top:.6rem;}
-.page-login .login-title{width:4.5rem;background-color:#eee;text-align:center;height:2.6rem;line-height:2.6rem;}
-.page-login .login-options{height:2.6rem;line-height:2.6rem;padding:0 .5rem;flex:1;}
+.page-login .login-title{width:4.5rem;background-color:#eee;}
+.page-login .login-options{padding:0 .5rem;flex:1;}
 .page-login .login-options input{}
-.page-login .login-json{width:7rem;height:2.6rem;line-height:2.6rem;background-color:#eee}
+.page-login .login-json{width:7rem;background-color:#f6f6f6}
 .page-login .button{margin-top:1rem;}
 .login-copyright{position:absolute;bottom:1rem;left:0;width:100%;text-align:center;font-size:.75rem;color:#999;}
 
@@ -69,9 +69,8 @@
 .bar-nav a.on{color:#09BB07;}
 .bar-nav .icon{display:block;width:1.4rem;height:1.4rem;margin:.2rem auto .1rem;border:1px solid;box-sizing:border-box;}
 .bar-nav .barf-text{font-size:.75rem;}
-.page-cxt,
-.page-cxt-nohead{position:absolute;top:2.8rem;left:0;right:0;bottom:3rem;overflow-y:auto;overflow-x:hidden;}
-.page-cxt-nohead{top:0;}
+.page-cxt{position:absolute;top:0;left:0;right:0;bottom:3rem;overflow-y:auto;overflow-x:hidden;}
+.bar-top + .page-cxt{top:2.8rem;}
 /*mask*/
 .page-fixed{position:fixed;top:0;bottom:0;left:0;right:0;}
 .page-loading{z-index:260}

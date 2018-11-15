@@ -13,7 +13,7 @@
 </head>
 <body style="background-color: #f9f9f9">
 	<div class="Page" id="app" v-cloak>
-		<div class="page-cxt-nohead cart">
+		<div class="page-cxt cart">
 			<div class="cartList" v-for='(itemVal, itemIndex) in cartList'>
 				<div class="c-shop flex-start">
 					<i class="icon-checked" :class='{on: itemVal.shopChecked}' @click='shopCheckedFn(itemIndex, !itemVal.shopChecked)'></i>{{ itemVal.shopName }}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit" />
+	<meta content="always" name="referrer">
+	<title>geolocation</title>
+	<link rel="stylesheet" href="../css/reset.css?v=0.2.9">
+	<link rel="stylesheet" href="../css/phone.css?v=0.2.9">
+</head>
+<body>
+	<ul class="nav-list">
+		<li class="flex-start"><a href="https://lbs.qq.com/javascript_v2/guide-base.html">查看官网</a></li>
+		<li class="flex-start"><div onclick="step1()">位置展示组件</div></li>
+		<li class="flex-start"><div onclick="step4()">获取当前位置（运行服务）</div></li>
+	</ul>
+	
+
+
+	<!-- 地图组件（H5） -->
+				<!-- 跳转位置页面 -->
+				<script>
+					const mykey = 'IGRBZ-OYPCQ-7JU5C-G5QYK-6SNXO-6PBUO';
+					function step1(){
+						// 精准 查找
+						let str = `https://apis.map.qq.com/tools/poimarker?
+							type=0&
+							marker=coord:22.609114,114.121201;title:深圳市;addr:广东省深圳市布吉金昌大厦&
+							key=${mykey}&
+							referer=myapp`;
+						// 关键字 查找
+						let str2 = `https://apis.map.qq.com/tools/poimarker?
+							type=1&
+							keyword=酒店&
+							center=22.609114,114.121201&
+							radius=1000&
+							key=${mykey}&
+							referer=myapp`
+						location.href = str;
+					}
+				</script>
+
+
+				<!-- 定位 -->
+				<script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+				<script>
+					var geolocation = new qq.maps.Geolocation(mykey, "myapp");
+
+					function step4(){
+						geolocation.getLocation(function(position) {   // getLocation 精准定位  getIpLocation  粗糙定位
+							console.log(position)
+							alert(JSON.stringify(position))
+						}, function() {
+							console.log('定位失败！')
+						}, {
+							timeout: 8000
+						})
+					}
+
+
+					// 开始监听位置！
+					// geolocation.watchPosition(function(position) {
+					// 	console.log(position)
+					// });
+					// 停止监听位置！
+					// geolocation.clearWatch();
+				</script>
+
+
+
+
+
+	<!-- javascript API -->
+				<!-- <div id="container"></div> -->
+				<!-- <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=IGRBZ-OYPCQ-7JU5C-G5QYK-6SNXO-6PBUO"></script>
+				<script>
+
+				    // ==================初始化==================
+				    var center = new qq.maps.LatLng(22.609114, 114.121201)
+				    var map = new qq.maps.Map(document.getElementById("container"), {
+				        center: center,   // 地图的中心地理坐标。
+				        zoom: 18 // 地图的中心地理坐标。
+				    });
+				    // map.panTo(new qq.maps.LatLng(39.916527, 116.397128));    // 更改地图的中心地理坐标。
+				    
+
+
+				    // ==================事件==================
+				    // qq.maps.event.removeListener(listener);
+				    var listener = qq.maps.event.addListener(map, 'click', function(ev) { // 点击地图 绑定事件
+				        // console.log(ev);
+				        jsonp('https://apis.map.qq.com/ws/geocoder/v1/', {
+				            location: ev.latLng.getLat() + ',' + ev.latLng.getLng(),
+				            key: "IGRBZ-OYPCQ-7JU5C-G5QYK-6SNXO-6PBUO",  // 需要设置key 的授权IP
+				            get_poi: 1,//是否返回周边POI列表：1.返回；0不返回(默认)
+				            output: 'jsonp'
+				        }, function(res) {
+				            console.log(res)
+				        })
+				    });
+				    function jsonp(url, data, callback) {
+				        var dataString = url.indexOf('?') == -1 ? '?' : '&';
+				        for (var key in data) {
+				            dataString += key + '=' + data[key] + '&';
+				        };
+				        var cbFuncName = 'my_json_cb_' + Math.random().toString().replace('.', '');
+				        dataString += 'callback=' + cbFuncName;
+				        var scriptEle = document.createElement('script');
+				        scriptEle.src = url + dataString;
+				        window[cbFuncName] = function(data) {
+				            callback(data.result);
+				            document.body.removeChild(scriptEle);
+				        }
+				        document.body.appendChild(scriptEle);
+				    }
+
+
+
+
+				    // ==================添加/删除比例尺控件==================
+				    var scaleControl = new qq.maps.ScaleControl({
+				        align: qq.maps.ALIGN.BOTTOM_LEFT,
+				        margin: qq.maps.Size(85, 15),
+				        map: map
+				    });
+				    // scaleControl.setMap(null);  //删除
+
+
+
+				    // ==================标注==================
+				    var marker = new qq.maps.Marker({ // 图标 标注
+				        position: center,
+				        map: map,
+				        draggable: true,   // 可拖动图标
+				    });
+				    var label = new qq.maps.Label({ // 图标 文本标注
+				        position: center,
+				        map: map,
+				        content: '文本标注'
+				    });
+				    
+
+				    var info = new qq.maps.InfoWindow({ //添加到提示窗
+				        map: map
+				    });
+				    qq.maps.event.addListener(marker, 'click', function() { // 点击图标 绑定事件
+				        info.open();
+				        info.setContent('<div style="text-align:center;white-space:nowrap;' +
+				            'margin:10px;">单击标记</div>');
+				        info.setPosition(center);
+				    });
+				</script> -->
+</body>
+</html>
