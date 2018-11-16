@@ -70,7 +70,7 @@
 .bar-nav .icon{display:block;width:1.4rem;height:1.4rem;margin:.2rem auto .1rem;border:1px solid;box-sizing:border-box;}
 .bar-nav .barf-text{font-size:.75rem;}
 .page-cxt{position:absolute;top:0;left:0;right:0;bottom:3rem;overflow-y:auto;overflow-x:hidden;}
-.bar-top + .page-cxt{top:2.8rem;}
+.bar-top ~ .page-cxt{top:2.8rem;}
 /*mask*/
 .page-fixed{position:fixed;top:0;bottom:0;left:0;right:0;}
 .page-loading{z-index:260}

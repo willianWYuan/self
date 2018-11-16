@@ -15,6 +15,7 @@ import F from '@/page/vuex/F'
 import P from '@/page/fetch/P'
 import MintUI from '@/page/MintUI/MintUI'
 import ElementUI from '@/page/ElementUI/ElementUI'
+// const ElementUI = resolve => require(['../page/ElementUI/ElementUI.vue'], resolve)
 
 Vue.use(Router)
 
