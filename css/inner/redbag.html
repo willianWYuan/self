@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta content="always" name="referrer">
+    <title>UI</title>
+    <!-- [if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.js"></script>
+    <![endif] -->
+    <link rel="stylesheet" href="../css/reset.css?v=0.2.9">
+    <title>红包雨</title>
+    <style>
+        .imagesbag-outer{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #000;
+            z-index: -1
+        }
+        .imagesbag{
+            background: url("data:image/png;base64,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") no-repeat;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: -60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="imagesbag-outer"></div>
+    <script>
+        RedBagFn('.imagesbag-outer', function(){
+            console.log(this)
+        })
+
+        function RedBagFn(elem, clickFn) {
+            var outer = document.querySelector(elem);
+            var uptodown = function(imgDiv, speed, oheight) {
+                var currTop = -60;
+                var timer = setInterval(function() {
+                    currTop += 1;
+                    imgDiv.style.top = currTop + 'px';
+                    if (currTop > oheight) {
+                        outer.removeChild(imgDiv);
+                        clearInterval(timer);
+                    }
+                }, 15 / speed);
+            }
+            clearInterval(outerTimer);
+            var outerTimer = setInterval(function() {
+                if (outer.querySelectorAll('.imagesbag').length > 4) return;
+                var owidth = outer.clientWidth;
+                var oheight = outer.clientHeight;
+
+                var bag_images = document.createElement('div');
+                bag_images.className = 'imagesbag';
+                bag_images.style.left = Math.floor(Math.random() * (owidth - 60)) + 'px';
+                outer.appendChild(bag_images);
+
+                var speed = Math.random() * 3;
+                uptodown(bag_images, speed < 1 ? 1 : speed, oheight)
+            }, Math.random() * 3000);
+            outer.onclick = function(ev) {
+                ev = ev || window.event 
+                var target = ev.target || event .srcElement;
+                if (target.className == 'imagesbag'  && typeof clickFn == 'function') clickFn.call(target);
+            }
+        }
+    </script>
+</body>
+</html>
+
