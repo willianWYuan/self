@@ -75,6 +75,11 @@ $ git push -u origin master
 
 
 
+$ git remote rm origin [url]     //删除远程库
+$ git remote add origin [url]    //添加远程库
+$ git remote set-url origin [url]    //修改远程库
+$ git pull --allow-unrelated-histories   //拉取时 允许历史冲突
+
 
 
 
