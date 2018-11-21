@@ -1,51 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script src="jquery-1.11.3.min.js"></script>
-    <script src="jquery-router.js" ></script>
-    <style>
-        html{font-family: "微软雅黑"}
-    </style>
+	<meta charset="UTF-8">
+	<title>router</title>
+	<script src="jquery-1.11.3.min.js"></script>
+	<script src="router.js"></script>
 </head>
 <body>
-<div class="aside" include-html-src="head.html"></div>
-<ul> 
-    <li><a href="#/main/USEID15465">turn main</a></li> 
-    <li><a href="#/left/HID001">turn left</a></li> 
-    <li><a href="#/right/MID5465">turn right</a></li> 
-    <li><a href="#/head2">turn head2 这个页面是不存在的情况下</a></li> 
-    <li><a href="#/foot">turn foot</a></li> 
-</ul> 
-
-<div class="page" router-html-src="main.html"></div>
-<div include-html-src="/common/foot.html"></div>
-
-<script>
-    Router.url = [{
-        elem: '.page',
-        rootpath: '/', // 根路径
-        path: '/main/:USEID',
-        url: 'main.html'
-    }, {
-        elem: '.page',
-        path: '/head',
-        url: 'head.html'
-    }, {
-        elem: '.page',
-        path: '/left/:hid/:type/:user', // 带参数
-        url: 'left.html'
-    }, {
-        elem: '.page',
-        path: '/right/:mid',
-        url: 'right.html'
-    }, {
-        elem: '.page',
-        path: '/foot',
-        url: '/common/foot.html'
-    }];
-</script>
-
+	<ul>
+		<li><a href="#/a">a</a></li>
+		<li><a href="#/b/2/95">b</a></li>
+		<li><a href="#/bag">bag</a></li>
+		<li><a href="#/c">c</a></li>
+	</ul>
+	<div class="router-view"></div>
 </body>
 </html>
