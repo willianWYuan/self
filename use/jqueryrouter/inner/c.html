@@ -1,14 +1,21 @@
 <h1>a</h1>
 <h2>b</h2>
-<a href="#/c/c1">c1</a>
-<a href="#/c/c2">c2</a>
-<div class="router-view"></div>
+<h3>router-c</h3>
+<div class="compnents"></div>
 
+<div to=".compnents|/inner/c1.html"><h2>c1</h2></div>
+<div to=".compnents|/inner/c2.html"><h2>c2</h2></div>
 
 
 
 <script>
-	
+	(function(){
+		router.include('.compnents', '/inner/c1.html')
+		router.data = {
+			c1: '来自rouer.data的传值c1',
+			c2: '来自rouer.data的传值c2'
+		}
+	})()
 </script>
 
 

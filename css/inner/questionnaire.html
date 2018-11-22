@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>q</title>
+	<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+
+		<!-- 答题 -->
+		<div class="start" v-if='list.length'>
+			<div class="title">{{currques.qID + '、' + currques.title_q}}</div>
+			<ul class="list">
+				<li v-for='(item, itemIndex) in currques.list_a' :class='{on: item.on}' @click='checkFn(itemIndex, !item.on, item.next)'>{{ item.type + ' ' + item.name }}</li>
+			</ul>
+			<button @click='nextFn'>确定</button>
+		</div>
+
+
+		<!-- 查看已选 -->
+		<ul class="result">
+			<li v-for='(item, itemIndex) in resultList'>
+				<template v-for='elem in item'>{{ elem }} </template>
+			</li>
+		</ul>
+
+
+		<div class="progress"><div :style='"width: " + progress'></div></div>
+	</div>
+	<script>
+		const ajaxdata = [{qID: 1, maximum: 1, title_q: '请问您通过何种渠道获得这张卡：（单选）', list_a: [{type: 'A', name: '自己买的', next: 2 }, {type: 'B', name: '公司发的', next: 3 }, {type: 'C', name: '联通赠送的', next: 3 }, {type: 'D', name: '其他', next: 2 }, ] }, {qID: 2, maximum: 1, title_q: '请问您选择这张卡的原因是：（单选）', list_a: [{type: 'A', name: '资费便宜', next: 4 }, {type: 'B', name: '优惠活动多', next: 4 }, {type: 'C', name: '套餐符合需求', next: 4 }, {type: 'D', name: '服务态度好，解决问题及时', next: 4 }, ] }, {qID: 3, maximum: 1, title_q: '请问您每月的话费预算是：（单选）', list_a: [{type: 'A', name: '30以内', next: 4 }, {type: 'B', name: '50以内', next: 4 }, {type: 'C', name: '100以内', next: 4 }, {type: 'D', name: '200以内', next: 4 }, {type: 'E', name: '500以内', next: 4 }, {type: 'F', name: '不限', next: 4 }, ] }, {qID: 4, maximum: 2, title_q: '请问您会选择哪种渠道充值缴费：（可多选，最多选2项）', list_a: [{type: 'A', name: '广东联通”微信公众号', next: 5 }, {type: 'B', name: '王卡助手', next: 5 }, {type: 'C', name: '手机营业厅APP', next: 5 }, {type: 'D', name: '中国联通网上营业厅（10010', next: 5 }, {type: 'E', name: '其他线上充值渠道，如淘宝等', next: 5 }, {type: 'F', name: '线下充值，如营业厅、通信卡行等实体门店', next: 5 }, ] }, {qID: 5, maximum: 1, title_q: '请问您会选择哪种方式在“广东联通”官微充值缴费：（单选）', list_a: [{type: 'A', name: '按需手动缴费（菜单“服务”—“充话费”）', next: 6 }, {type: 'B', name: '微信自动代扣（菜单“开通”—“托收有礼”）', next: 6 }, ] }, {qID: 6, maximum: 1, title_q: '请问您查询话费、语音、流量余额的频率是：（单选）', list_a: [{type: 'A', name: '每天查询', next: 7 }, {type: 'B', name: '每周一次', next: 7 }, {type: 'C', name: '每周2-3次', next: 7 }, {type: 'D', name: '每月1-2次', next: 7 }, {type: 'E', name: '没查过', next: 7 }, ] }, {qID: 7, maximum: 2, title_q: '请问您会选择哪种渠道查询余额：（可多选，最多可选2项）', list_a: [{type: 'A', name: '“广东联通”微信公众号', next: 8 }, {type: 'B', name: '王卡助手', next: 8 }, {type: 'C', name: '手机营业厅APP', next: 8 }, {type: 'D', name: '中国联通网上营业厅（10010', next: 8 }, {type: 'E', name: '拨打10010', next: 8 }, {type: 'F', name: '去营业厅查询', next: 8 }, ] }, {qID: 8, maximum: 1, title_q: '请问您对优惠活动的态度是：（单选）', list_a: [{type: 'A', name: '有兴趣，想及时获知', next: 9 }, {type: 'B', name: '不关心，请勿打扰', next: 9 }, ] }, {qID: 9, maximum: 4, title_q: '请问您希望了解哪些新入网用户专属优惠活动：（可多选）', list_a: [{type: 'A', name: '答问卷得微信红包', next: 10 }, {type: 'B', name: '首次绑定官微可得10元电子券红包', next: 10 }, {type: 'C', name: '办理话费微信代扣可连续三月获流量（或电子券红包）赠送', next: 10 }, {type: 'D', name: '后付费用户入网30天内预存话费送电子券红包', next: 10 }, ] }, {qID: 10, maximum: 2, title_q: '请问您希望通过哪种渠道得知优惠活动：（可多选，最多可选2项）', list_a: [{type: 'A', name: '广东联通”微信公众号', next: 11 }, {type: 'B', name: '王卡助手', next: 11 }, {type: 'C', name: '手机营业厅APP', next: 11 }, {type: 'D', name: '中国联通网上营业厅（10010', next: 11 }, {type: 'E', name: '短信推送', next: 11 }, {type: 'F', name: '客服电话推荐', next: 11 }, {type: 'G', name: '线下营业厅宣传', next: 11 }, ] }, {qID: 11, maximum: 1, title_q: '请问您了解此号码的套餐内容吗？（单选）', list_a: [{type: 'A', name: '了解', next: 12 }, {type: 'B', name: '稍有了解', next: 12 }, {type: 'C', name: '不了解', next: 13 }, ] }, {qID: 12, maximum: 5, title_q: '请问您了解此号码现有套餐的：（可多选）', list_a: [{type: 'A', name: '月租费用', next: 14 }, {type: 'B', name: '套内语音时长', next: 14 }, {type: 'C', name: '套内流量', next: 14 }, {type: 'D', name: '主叫资费', next: 14 }, {type: 'E', name: '超套流量资费', next: 14 }, ] }, {qID: 13, maximum: 3, title_q: '请问您希望了解此号码的：（可多选，最多可选3项）', list_a: [{type: 'A', name: '月租费用', next: 14 }, {type: 'B', name: '套内语音时长', next: 14 }, {type: 'C', name: '套内流量', next: 14 }, {type: 'D', name: '主叫资费', next: 14 }, {type: 'E', name: '超套流量资费', next: 14 }, {type: 'F', name: '可参与的优惠活动', next: 14 }, ] }, {qID: 14, maximum: 2, title_q: '请问您会选择哪种渠道查询套餐使用详情：（可多选，最多可选2项）', list_a: [{type: 'A', name: '广东联通”微信公众号', next: ''}, {type: 'B', name: '王卡助手', next: ''}, {type: 'C', name: '手机营业厅APP', next: ''}, {type: 'D', name: '中国联通网上营业厅（10010', next: ''}, {type: 'E', name: '拨打10010', next: ''}, {type: 'F', name: '去营业厅查询', next: ''}, ] }]
+
+		new Vue({
+			el: '#app',
+			data: {
+				list: [],
+				index: 0,
+				next: 1,
+
+				resultList: [],
+				progress: 0
+			},
+			computed: {
+				currques() {
+					return this.list.length ? this.list[this.index] : {};
+				}
+			},
+			methods: {
+				init() {
+					this.list = ajaxdata;
+				},
+				checkFn(itemIndex, flog, next) {
+					if (this.currques.maximum == 1) this.currques.list_a.map(item => this.$set(item, 'on', false));
+					let checkNums = 0;
+					this.currques.list_a.map(item => item.on ? checkNums++ : null);
+					if (this.currques.maximum > checkNums || !flog) this.$set(this.currques.list_a[itemIndex], 'on', flog);
+					this.next = next;
+				},
+				nextFn() {
+					if (this.next) {
+						let checkNums = 0;
+						this.currques.list_a.map(item => item.on ? checkNums++ : null);
+						if (checkNums) this.index = this.next - 1;
+
+						this.progress = this.index / 14 * 100 + '%';
+					} else {
+						let arr = [];
+						this.list.map(item => {
+							let subArr = [];
+							item.list_a.map(elem => elem.on ? subArr.push(elem.type + '.' + elem.name) : null);
+							arr.push(subArr);
+						})
+						this.resultList = arr;
+						this.list = [];
+						this.progress = '100%';
+					};
+				}
+			},
+			mounted() {
+				this.init()
+			}
+		})
+	</script>
+</body>
+</html>
+
+
+<style>
+	li.on{color: red;}
+	.progress{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 10px;
+	}
+	.progress > div{height: 10px; transition: width .4s; background-color: #3487a3}
+</style>
