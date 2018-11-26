@@ -7,7 +7,11 @@ class createRouter {
     }
 
     log() {
-        console.log(`%c${this.page}:`, `color:#aaa`, ...Array.from(arguments))
+        let [arr, i, len] = [[], null, arguments.length];
+        for(i = 0; i < len; i++) {
+            arr.push(arguments[i])
+        }
+        console.log(`%c${this.page}:`, `color:#aaa`, ...arr)
     }
 
 
