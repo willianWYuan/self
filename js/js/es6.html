@@ -17,7 +17,18 @@
 
 
 <h2>String</h2>
-<pre>const b = `foo${a}bar`;</pre>
+<pre>
+const tmpl = addrs => `
+	${addrs.map(addr => `
+		${addr.first}
+		${addr.last} 
+	`).join('')}
+`;
+
+
+</pre>
+
+
 
 
 
