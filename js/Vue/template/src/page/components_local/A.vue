@@ -8,6 +8,7 @@
 		<a-sub1 name="My journey with Vue sub1" :postsList='posts' data-field="namer" @my-event='getMyEvent' ref="sub1"></a-sub1>
 		<br>
 		<component is="a-sub2" name="My journey with Vue sub2" :mathsList='maths' @increase-event='addFn' @click.native=''></component>
+		<loading></loading>
 	</div>
 </template>
 

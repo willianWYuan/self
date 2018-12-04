@@ -8,6 +8,7 @@
 		<br>
 		
 		<router-view name="a"></router-view>
+		<loading></loading>
 	</div>
 </template>
 
@@ -34,7 +35,9 @@ export default {
 	},
 
 	mounted() {
-		
+		setTimeout(() => {
+			this.$store.commit("isLoadingShowFn", false)
+		}, 3000)
 		// console.log(this)
 	}
 }

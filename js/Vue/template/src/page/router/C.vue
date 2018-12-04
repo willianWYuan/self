@@ -2,6 +2,7 @@
 	<div>
 		<h1>{{ name }}</h1>
 		<c-sub1></c-sub1>
+		
 	</div>
 </template>
 

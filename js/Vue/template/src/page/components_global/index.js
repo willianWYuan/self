@@ -1,16 +1,7 @@
-import loading from './loading.vue'
-import aliasHeader from './header.vue'
-import aliasFooter from './footer.vue'
-
-
-const addComponent = {
+export default {
 	install(Vue) {
-		Vue.component('loading', loading)
-		Vue.component('aliasHeader', aliasHeader)
-		Vue.component('aliasFooter', aliasFooter)
+		Vue.component('loading', _ => import ('./loading.vue'));
+		Vue.component('aliasHeader', _ => import ('./header.vue'));
+		Vue.component('aliasFooter', _ => import ('./footer.vue'));
 	}
 }
-
-
-
-export default addComponent

@@ -1,6 +1,6 @@
 export default {
 	state: {
-		loadingShow: false
+		loadingShow: true
 	},
 	mutations: {
 		isLoadingShowFn(state, isflog) {
