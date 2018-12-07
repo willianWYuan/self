@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>scroll</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        .page{height: 100vh; overflow-y: auto; }
+        .page-item{min-height: 300px; display: flex; align-items: center; justify-content: center; }
+        .page-item img{width: 100%;}
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.5.18-beta.0/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="page" @scroll='scrollFn'>
+            <div v-for='item in colorList' class="page-item">
+                <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1739799306,2167395753&fm=11&gp=0.jpg" :data-src='item'>
+            </div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    colorList: []
+                }
+            },
+            computed: {
+                winHeight() {
+                    return document.body.clientHeight || document.documentElement.clientHeight;
+                }
+            },
+            methods: {
+                init() {
+                    new Promise((resolve) => {
+                        this.colorList = [
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203717380&di=b3c23bfb332da251580589eeb7867b89&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160803%2F4b684734178649e1b50fab286461971b.jpg',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203572730&di=7736a7f3c3a15447c7c6a6d8e90e1f8c&imgtype=0&src=http%3A%2F%2Fpic2.zhimg.com%2Fv2-44848a588059dbc4de0752fd212ee766_1200x500.jpg',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203572731&di=074a3d5396aa9854161d67a5e3c9a6d1&imgtype=0&src=http%3A%2F%2Fcdn.03.k618.cn%2Fpic%2Fworks%2F201409%2F26%2F20140926153049_12356.jpg',
+                            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1487841767,4120597717&fm=11&gp=0.jpg',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203572732&di=e548e67d393796eaa25d52b5b4eacc05&imgtype=0&src=http%3A%2F%2Ftdzx.fcjyj.gov.cn%2Fupload%2Fimages%2F2018%2F4%2F2611843346.jpeg',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203572733&di=e3bbb58c46360402912a6d738bb183d2&imgtype=0&src=http%3A%2F%2Faliyun-edu-cloud-public.oss-cn-hangzhou.aliyuncs.com%2FSEO%2F1587%2Fjpg%2F807f75e87de3aafc0b2c3be73d05d9bf.jpg%3Fx-oss-process%3Dstyle%2Fwater',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544203572733&di=fab3abe028fa767917d8d181ab0ae6bd&imgtype=0&src=http%3A%2F%2Faliyun-edu-cloud-public.oss-cn-hangzhou.aliyuncs.com%2FSEO%2F1587%2Fjpg%2F6bee1f49f0d100b0481e9eef5bfac7bc.jpg%3Fx-oss-process%3Dstyle%2Fwater',
+                            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544798295&di=bb705ad35014084623942cb57176a50f&imgtype=jpg&er=1&src=http%3A%2F%2Fcrawler-fs.intsig.net%2Fcamfs%2Fdownload%3Ffilename%3D10005_9af34cee3d741b096c3a97d5e0b0ad5b_7.gif'
+                        ]
+                        resolve();
+                    }).then(this.scrollFn);
+                },
+                scrollFn(e) {
+                    let scrollTop = e ? e.target.scrollTop : 0;
+                    Array.from(document.querySelectorAll('[data-src]')).map(item => {
+                        if (item.offsetTop < scrollTop + this.winHeight) {
+                            item.setAttribute('src', item.getAttribute('data-src'));
+                            item.removeAttribute('data-src');
+                        }
+                    })
+                }
+            },
+            mounted() {
+                this.init();
+            }
+        })
+    </script>
+</body>
+</html>
