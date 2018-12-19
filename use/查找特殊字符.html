@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="search">
+	<div class="text">Import Weex iOS SDK to your existing project, if not, refer to the new project.
+		Before continuing, make sure that your existing project directory has a name of a Podfile file file. If not, create one and open it with a text editor (if you use Carthage, make sure that Cartfile exists in the existing project directory). Choose one of the integration methods. 是的</div>
+		
+	<script>
+		const [search, text] = [document.querySelector('#search'), document.querySelector('.text')];
+		const oldText = text.innerHTML
+
+		search.oninput = function(){
+			if (!this.value.match(/\w|[\u4e00-\u9fa5]/g)) return;
+			let reg = new RegExp(this.value, "gi");
+			if (oldText.match(reg) && this.value) {
+				const [selectText, textArr] = [oldText.match(reg), oldText.split(reg)];
+				text.innerHTML = textArr.map((item, itemIndex) => !selectText[itemIndex] ? item : item + `<span style="color: red">${selectText[itemIndex]}</span>`).join('');
+			} else {
+				text.innerHTML = oldText
+			}
+		}
+	</script>
+</body>
+</html>
