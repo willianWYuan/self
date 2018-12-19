@@ -56,22 +56,17 @@ class Common {
     //          argumentType  [Number] == 1,  
     //          argumentStyle [String] == '/',  
     formattime(timeStamp, argumentType, argumentStyle) {
-        let type, style;
-        if (typeof argumentType == 'number') {
-            type = argumentType;
-            style = argumentStyle || '-';
-        } else {
-            type = 0;
-            style = typeof argumentType == 'undefined' ? '-' : argumentType;
-        }
-        let now = new Date(timeStamp);
-        let year = now.getFullYear();
-        let month = ("0" + (now.getMonth() + 1)).match(/\d{2}$/)[0];
-        let date = ("0" + now.getDate()).match(/\d{2}$/)[0];
-        let hour = ("0" + now.getHours()).match(/\d{2}$/)[0];
-        let minute = ("0" + now.getMinutes()).match(/\d{2}$/)[0];
-        let second = ("0" + now.getSeconds()).match(/\d{2}$/)[0];
-        let str;
+        let type, style, str, now = new Date(timeStamp);
+        if (typeof argumentType == 'number') [type, style] = [argumentType, argumentStyle || '-'];
+        else [type, style] = [0, typeof argumentType == 'undefined' ? '-' : argumentType];
+        const [year, month, date, hour, minute, second] = [
+            now.getFullYear(),
+            ("0" + (now.getMonth() + 1)).match(/\d{2}$/)[0],
+            ("0" + now.getDate()).match(/\d{2}$/)[0],
+            ("0" + now.getHours()).match(/\d{2}$/)[0],
+            ("0" + now.getMinutes()).match(/\d{2}$/)[0],
+            ("0" + now.getSeconds()).match(/\d{2}$/)[0]
+        ]
         if (type == 0 || type > 3) str = year + style + month + style + date + ' ' + hour + ':' + minute + ':' + second;
         if (type == 1) str = year + style + month;
         if (type == 2) str = year + style + month + style + date;
