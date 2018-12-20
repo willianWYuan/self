@@ -317,48 +317,28 @@ class Common {
 
     // console.log(s)     购物车分类     转为  [1:2, 2:3, 4:8]
     specInitFn(arr) {
-        let filterArr = [],
-            classArr = [],
-            classLen, newArr = [];
-        // 分类
-        arr.forEach(function(item) {
+        let [filterArr, classArr, newArr] = [[], [], []]
+        arr.map(item => {   // 分类
             if (!filterArr[item.specId]) filterArr[item.specId] = [];
             filterArr[item.specId].push(item);
         })
-        // 过滤
-        filterArr.forEach(function(item) {
-            if (item) classArr.push(item);
-        })
-        // 生成嵌套数组
-        classLen = classArr.length;
-        for (let i = 0; i < classLen; i++) {
-            classArr[i].forEach(function(item) {
-                item.children = classArr[i + 1];
+        filterArr.map(item => item ? classArr.push(item) : null);   // 过滤
+        classArr.map((item, itemIndex) => item.map(elem => elem.children = classArr[itemIndex + 1]));    // 生成嵌套数组
+        forResultFn(classArr[0], {});   // 生成需要的数组
+        function forResultFn(itemArr, {specIds = '', specNames = ''}) {
+            let [specIdsStr, specNamesStr] = [specIds, specNames];
+            itemArr.map(item => {
+                let [itemSpecIds, itemSpecNames] = [`${item.specId}:${item.specValueId},`, `${item.specName}:${item.specValueName},`]
+                specIds   = specIds   ? specIdsStr   + itemSpecIds   : itemSpecIds;
+                specNames = specNames ? specNamesStr + itemSpecNames : itemSpecNames;
+                if (item.children) forResultFn(item.children, {specIds, specNames});
+                else newArr.push({
+                    specIds: '[' + specIds.replace(/,$/, '') + ']',
+                    specNames: specNames.replace(/,$/, '')
+                });
             })
         }
-        forResultFn(classArr[0], {});
-        // 生成需要的数组
-        function forResultFn(itemArr, obj) {
-            let specIdsStr = obj.specIds ? obj.specIds : '';
-            let specNamesStr = obj.specNames ? obj.specNames : '';
-            itemArr.forEach(function(item) {
-                obj.specIds = obj.specIds ?
-                    specIdsStr + item.specId + ':' + item.specValueId + ',' :
-                    item.specId + ':' + item.specValueId + ',';
-                obj.specNames = obj.specNames ?
-                    specNamesStr + item.specName + ':' + item.specValueName + ',' :
-                    item.specName + ':' + item.specValueName + ',';
-                if (item.children) {
-                    forResultFn(item.children, obj);
-                } else {
-                    let arrObj = {}
-                    arrObj.specIds = '[' + obj.specIds.replace(/,$/, '') + ']';
-                    arrObj.specNames = obj.specNames.replace(/,$/, '');
-                    newArr.push(arrObj)
-                }
-            })
-        }
-        filterArr = classArr = classLen = forResultFn = null;
+        filterArr = classArr = forResultFn = null;
         return newArr;
     }
 
@@ -493,7 +473,7 @@ class Common {
 
 
     // cookie 浏览器存储
-    //              let bdata = new Common().BrowserData();
+    //              let bdata = new Common().cookies();
     //              bdata.add({username: 'John', userId: 12, token: '5446iph57iaw234g33453h8235'})     添加或修改
     //              bdata.get() 获取整个对象          bdata.get('user')  获取user值
     //              bdata.del('user')  删除user值
