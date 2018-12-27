@@ -18,15 +18,16 @@ class Common {
     }
 
     // 截取地址栏
-    cuturl(argumentStr) {
-        let href = location.href.split('?')[1];
-        if (!href) return;
-        href = href.split(/&+/g);
-        let newObj = {};
-        for (let i = 0; i < href.length; i++) {
-            newObj[href[i].split('=')[0]] = href[i].split('=')[1]
+    cuturl(name) {
+        let [url, theRequest] = [window.location.search, {}]; //获取url中"?"符后的字串
+        if (url.indexOf("?") != -1) {
+            strs = url.substr(1).split("&");
+            for (let i = 0, len = strs.length; i < len; i++) {
+                let [key, val] = strs[i].split("=");
+                theRequest[key] = decodeURI(val);
+            }
         }
-        return typeof argumentStr == 'undefined' ? newObj : newObj[argumentStr];
+        return name ? theRequest[name] : theRequest;
     }
 
 
@@ -57,7 +58,7 @@ class Common {
     //          argumentStyle [String] == '/',  
     formattime(timeStamp, argumentType, argumentStyle) {
         let type, style, str, now = new Date(timeStamp);
-        if (typeof argumentType == 'number') [type, style] = [argumentType, argumentStyle || '-'];
+        if (typeof argumentType == 'number')[type, style] = [argumentType, argumentStyle || '-'];
         else [type, style] = [0, typeof argumentType == 'undefined' ? '-' : argumentType];
         const [year, month, date, hour, minute, second] = [
             now.getFullYear(),
@@ -317,21 +318,31 @@ class Common {
 
     // console.log(s)     购物车分类     转为  [1:2, 2:3, 4:8]
     specInitFn(arr) {
-        let [filterArr, classArr, newArr] = [[], [], []]
-        arr.map(item => {   // 分类
+        let [filterArr, classArr, newArr] = [
+            [],
+            [],
+            []
+        ]
+        arr.map(item => { // 分类
             if (!filterArr[item.specId]) filterArr[item.specId] = [];
             filterArr[item.specId].push(item);
         })
-        filterArr.map(item => item ? classArr.push(item) : null);   // 过滤
-        classArr.map((item, itemIndex) => item.map(elem => elem.children = classArr[itemIndex + 1]));    // 生成嵌套数组
-        forResultFn(classArr[0], {});   // 生成需要的数组
-        function forResultFn(itemArr, {specIds = '', specNames = ''}) {
+        filterArr.map(item => item ? classArr.push(item) : null); // 过滤
+        classArr.map((item, itemIndex) => item.map(elem => elem.children = classArr[itemIndex + 1])); // 生成嵌套数组
+        forResultFn(classArr[0], {}); // 生成需要的数组
+        function forResultFn(itemArr, {
+            specIds = '',
+            specNames = ''
+        }) {
             let [specIdsStr, specNamesStr] = [specIds, specNames];
             itemArr.map(item => {
                 let [itemSpecIds, itemSpecNames] = [`${item.specId}:${item.specValueId},`, `${item.specName}:${item.specValueName},`]
-                specIds   = specIds   ? specIdsStr   + itemSpecIds   : itemSpecIds;
+                specIds = specIds ? specIdsStr + itemSpecIds : itemSpecIds;
                 specNames = specNames ? specNamesStr + itemSpecNames : itemSpecNames;
-                if (item.children) forResultFn(item.children, {specIds, specNames});
+                if (item.children) forResultFn(item.children, {
+                    specIds,
+                    specNames
+                });
                 else newArr.push({
                     specIds: '[' + specIds.replace(/,$/, '') + ']',
                     specNames: specNames.replace(/,$/, '')
