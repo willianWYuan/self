@@ -1,5 +1,10 @@
 const path = require('path');
-const isDel = process.env.NODE_ENV === 'production'
+// const isDel = process.env.NODE_ENV === 'production'
+
+
+function resolve(dir) {
+	return path.join(__dirname, dir)
+}
 
 module.exports = {
 	baseUrl: '/',
@@ -13,12 +18,13 @@ module.exports = {
 		}
 	},
 	devServer: {
-		port: 8081,
+		host: 'localhost',
+		port: 81,
 		proxy: {
 			'/': {
-				target: 'http://localhost:2000', //设置你调用的接口域名和端口号 别忘了加http
+				target: 'http://localhost:3000', //设置你调用的接口域名和端口号 别忘了加http
 				changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-				ws: false, 
+				ws: false,
 				pathRewrite: {
 					'^/': '' //这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
 				}
@@ -26,9 +32,15 @@ module.exports = {
 		}
 	},
 	chainWebpack: config => {
-
+		config.resolve.alias
+			.set('components', resolve('src/components'))
+			.set('layout', resolve('src/layout'))
+			.set('base', resolve('src/base'))
+			.set('static', resolve('src/static'))
 	},
-	configureWebpack: config => {
-
+	configureWebpack: {
+		externals: {
+			AMap: "AMap"
+		}
 	}
 }
