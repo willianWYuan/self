@@ -1,6 +1,8 @@
 const pkg = require('./package')
 const path = require('path')
 
+
+
 module.exports = {
     mode: 'universal',
 
@@ -9,21 +11,18 @@ module.exports = {
      */
     head: {
         title: pkg.name,
-        meta: [{
-            charset: 'utf-8'
-        }, {
-            name: 'viewport',
-            content: 'width=device-width, initial-scale=1'
-        }, {
-            hid: 'description',
-            name: 'description',
-            content: pkg.description
-        }],
-        link: [{
-            rel: 'icon',
-            type: 'image/x-icon',
-            href: '/favicon.ico'
-        }]
+        titleTemplate: '%s - Nuxt.js',
+        meta: [
+            {charset: 'utf-8'}, 
+            {name: 'viewport',                              content: 'width=device-width, initial-scale=1'},
+            {name: 'description',                           content: pkg.description      },
+            {name: 'apple-mobile-web-app-capable',          content: 'yes'},
+            {name: 'apple-mobile-web-app-status-bar-style', content: 'black'},
+            {name: 'format-detection',                      content: 'telephone=no'},
+        ],
+        link: [
+            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+        ]
     },
 
     /*

@@ -10,6 +10,6 @@ Object.assign(Vue.prototype, {
 
 
 
-Vue.component(Button.name, Button);
+Vue.component(Button.name, Button); 
 
-
+Vue.filter('RMB', val => '$' + val)
