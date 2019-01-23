@@ -1,14 +1,7 @@
 class Common {
-    constructor(host = '127.0.0.1') {
+    constructor() {
         this.host = '127.0.0.1';
     }
-
-
-
-    log(str) {
-        console.log(str)
-    }
-
 
     // 获取 是否移动设备
     device(str) {

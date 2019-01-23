@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width"> 
+	<meta charset="UTF-8">
+	<title>Adver</title>
+</head>
+<body>
+	<div id="app1"></div>
+	<script>
+		const data = [
+			// '如何和是的突然觉得',
+			// '色色社会黑色 杀毒软件费用口服液阿瑟让少数人',
+			// '杀人剑杀毒软件额对人体看人头多岁的任何散热酒红色人均收入就对人体是的故事大概会黑色 杀毒软件费东方红不对劲；卡拉奇往来款拿什么来是啊适配的光芒说课稿',
+			'是的故事大概',
+			'说过好可怕配合 ',
+			'多方根深蒂固 山东理工见风使舵jog',
+		]
+
+		Adver1({
+			el: '#app1',
+			data,
+			end() {
+				// console.log('结束')
+			}
+		});
+		function Adver1({el, data, autoplay = 2000, speed = 500, change = function(){}, end = function(){}}) {
+			const element = document.querySelector(el);
+			element.style.cssText = 'height:3rem;line-height:3rem;overflow:hidden';
+			let [index, len, outerHeight, list] = [0, data.length, element.offsetHeight, document.createElement('div')];
+			list.className = 'adver-list';
+			list.innerHTML = data.map((item, itemIndex) => `<div class="adver-item-1" style="white-space:nowrap">${itemIndex+1}、${item}</div>`).join('') + `<div class="adver-item-1">1、${data[0]}</div>`;
+			element.appendChild(len ? list : '');
+			setInterval(() => {
+				index++;
+				list.style.cssText = 'transition:transform ' + (speed / 1000) + 's;transform:translateY(' + (-outerHeight * index) + 'px)';
+				if (index == len) setTimeout(() => {
+					index = 0;
+					list.style.cssText = 'transform:translateY(0px)';
+					end();
+				}, speed);
+				change(index < len ? index : 0);
+			}, autoplay);
+		}
+	</script>
+
+
+
+	<div id="app2"></div>
+	<script>
+		Adver2({
+			el: '#app2',
+			data,
+		});
+		function Adver2({el, data, delay = 1000, gap = 100, speed = 'slow'}) {
+			const element = document.querySelector(el);
+			element.style.cssText = 'height:3rem;line-height:3rem;overflow:hidden';
+			let [index, len, outerWidth, list] = [0, data.length, element.offsetWidth, document.createElement('div')];
+			list.className = 'adver-list';
+			list.style.whiteSpace = 'nowrap';
+			let domstr = data.map((item, itemIndex) => `<span class="adver-item-2">${itemIndex+1}、${item}</span>`).join('');
+			list.innerHTML = domstr + domstr;
+			element.appendChild(len ? list : '');
+
+			var items = element.querySelectorAll('.adver-item-2'), innerHalfWidth = 0;
+			for(let i = 0, itemsLen = items.length; i < itemsLen; i++) {
+				items[i].style.paddingLeft = gap + 'px';
+				if (i < itemsLen / 2) innerHalfWidth += items[i].offsetWidth;
+			}
+			list.style.width = innerHalfWidth + 'px';
+			list.style.marginLeft = -gap + 'px';
+			
+			if (outerWidth >= innerHalfWidth) {
+				list.style.overflow = 'hidden';
+				return;
+			}
+			setTimeout(() => {
+				setInterval(() => {
+					index += speed != 'fast' ? 0.5 : 1;
+					list.style.transform = 'translateX(' + (-index) + 'px)';
+					if (index >= innerHalfWidth) {
+						index = 0;
+						list.style.transform = 'translateX(0px)';
+					};
+				}, 10);
+			}, delay)
+		}
+	</script>
+</body>
+</html>
+
