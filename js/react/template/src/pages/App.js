@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
 import '../assets/App.css';
+import User from './user/user';
 
 class App extends Component {
+  constructor(props) {
+      super(props);
+      this.state = { title: 'App pages' };
+  }
+
+  componentDidMount() {
+  }
+
+
+
+  updateTitle(str) {   // 子组件调用这个方法
+    // console.log(this)
+    this.setState({title: str});
+  }
+
+
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>Edit <code>src/App.js</code> and save to reload.</p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a>
+
+          <p>{this.state.title}</p>
+          <User title={this.state.title} updateTitle={this.updateTitle.bind(this)} />
         </header>
       </div>
     );
