@@ -14,7 +14,7 @@
 	<script>
 		var canvas = document.getElementById('canvas');
 		canvas.width  = document.documentElement.clientWidth;
-		canvas.height = document.documentElement.clientHeight;
+		canvas.height = document.documentElement.clientHeight - 120;
 		var ctx = canvas.getContext('2d');
 		// ctx.fillRect(10,   10, 255, 250);  // 绘制一个填充的矩形
 		// ctx.clearRect(45,  45, 60,  60);   // 清除指定矩形区域，让清除部分完全透明。
@@ -214,9 +214,102 @@
 		// window.onload = Canv;
 		// window.onresize = Canv
 	</script>
+
+
+
+
+
+
+
+	<!-- 数据canva -->
+	<div id="numList"></div>
+	<script type="text/javascript">
+		const data = {
+			unActiveNums: 1350,
+			unSubmutNums: 2130,
+			submutNums: 750,
+		};
+
+		(() => {
+			const totalnums = Object.values(data).reduce((x, y) => x + y);
+			const list = [ 
+				{text: '未激活员工',         nums: data.unActiveNums},
+				{text: '未提交专项附加扣除', nums: data.unSubmutNums},
+				{text: '已提交专项附加扣除', nums: data.submutNums},
+				{text: '总员工数', nums: totalnums}
+			];
+
+			numList.innerHTML = `<ul class="tt">${list.map((item, itemIndex) => {
+				return `<li>
+					<div class="tb"><canvas id="ttcanvas${itemIndex}" width="80" height="80"></canvas></div>
+					<div class="item-text">
+						<div class="nums">${item.nums}</div>
+						<div class="mantext">${item.text}</div>
+						<div class="button">一键提醒</div>
+					</div>
+				</li>`
+			}).join('')}</ul>`;
+
+
+
+			function Anim(i, percentage, context) {
+				i += 0.01;
+				var curr = i < percentage ? Math.PI * (i - 0.5) : Math.PI * (percentage - 0.5);
+				context.strokeStyle = "#eee";
+				context.beginPath();
+				context.arc(40, 40, 36, Math.PI * 2, 0, true);
+				context.lineWidth = 6;
+				context.stroke();
+				context.strokeStyle = "#3cc6ad";
+				context.beginPath();
+				context.arc(40, 40, 36, curr, Math.PI * -.5, true);
+				context.lineWidth = 6;
+				context.stroke();
+				if (i < percentage) setTimeout(_ => {
+					Anim(i, percentage, context)
+				}, 15) ;
+			}
+
+			list.map((item, itemIndex) => Anim(0, (item.nums / totalnums * 2).toFixed(2), document.getElementById('ttcanvas' + itemIndex).getContext("2d")));
+		})();
+	</script>
 </body>
 </html>
 
 
 
+<style>
+	.tt{
+		display: flex;
+		justify-content: space-between;
+		font-size: 14px;
+		background-color: #eee;
+	}
+	.tt li{display: flex; background-color: #fff; width: 23%;}
+	.tt .tb{
+		width: 80px;
+		height: 80px;
+		margin: 0 24px;
+		transition: transform .3s;
+	}
+	.tt .tb:hover{transform: scale(1.4, 1.4);}
+	.tt .item-text{
+		flex: 1;
+	}
+	.tt .item-text .nums{
+		font-size: 24px;
+		color: #3cc6ad;
+		font-weight: bold
+	}
+	.tt .item-text .mantext{margin-bottom: 6px; color: #999; }
+	.tt .item-text .button{
+		border: 1px solid;
+		color: #3cc6ad;
+		padding: 3px 8px;
+		display: inline-flex;
+		font-size: 12px;
+		border-radius: 20px;
+		cursor: pointer;
+	}
+</style>
 
