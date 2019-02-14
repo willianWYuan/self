@@ -89,7 +89,18 @@ module.exports = {
     server: {
          port: 3000,        // 设置端口
          host: 'localhost'
-    }
+    },
+
+
+    proxy: {
+        '/api': {
+            target: 'http://localhost:81', //这个网站是开源的可以请求到数据的
+            pathRewrite: {
+                '^/api/': '/',
+                changeOrigin: true
+            }
+        }
+    },
 }
 
 
