@@ -13,7 +13,15 @@
         <script src="js/respond.js"></script>
     <![endif] -->
     <link rel="stylesheet" href="../css/reset.css?v=1.2.9">
-    <link rel="stylesheet" href="../css/style.css?v=1.2.9">
+    <style>
+        .wf-list{position:relative;margin:0 auto;}
+        .wf-list li{position:absolute;transition:all .6s;overflow:hidden;}
+        .wf-list li img{width:100%;display:block;}
+        .wf-list .wf-name{position:absolute;bottom:-60px;left:0;width:100%;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAyCAMAAACqJUG4AAAAYFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6T+iNAAAAIHRSTlMBpp+TiHdqUTEqIxwTDgmZjYJ9cGRgXFdLRkM/OzcYBpB7wwsAAAA8SURBVAjXRcHFAYMAAMDA0OLuLvtvSX7c8XmoXbn0TeHcmVNfnBzsbKwkXpiZGIk9ELmnI3TL3w0/BwQven8CWkDaUVAAAAAASUVORK5CYII=") repeat-x;color:white;height:50px;line-height:55px;text-align:center;transition:bottom .3s;font-size:14px;}
+        .wf-list .wf-image{transition:all .3s;}
+        .wf-list li:hover .wf-image{transform:scale(1.4,1.4);z-index:10}
+        .wf-list li:hover .wf-name{bottom:0;}
+    </style>
 </head>
 <body>
     <div class="waterfall-container"></div>
@@ -63,22 +71,22 @@
             var needNums = void 0,
                 needSpace = void 0,
                 needOuterWidth = void 0;
-            if (bodyClientWidth > 1280) {;
+            if (bodyClientWidth > 1280) {
                 needNums = 5;
                 needSpace = 10;
                 needOuterWidth = 1200;
             }
-            if (bodyClientWidth <= 1280 && bodyClientWidth > 1024) {;
+            if (bodyClientWidth <= 1280 && bodyClientWidth > 1024) {
                 needNums = 4;
                 needSpace = 10;
                 needOuterWidth = 1024;
             }
-            if (bodyClientWidth <= 1024 && bodyClientWidth > 640) {;
+            if (bodyClientWidth <= 1024 && bodyClientWidth > 640) {
                 needNums = 3;
                 needSpace = 6;
                 needOuterWidth = bodyClientWidth;
             }
-            if (bodyClientWidth <= 640) {;
+            if (bodyClientWidth <= 640) {
                 needNums = 2;
                 needSpace = 4;
                 needOuterWidth = bodyClientWidth;

@@ -712,3 +712,14 @@ class Common {
 //          console.log("complete")  
 //     }
 // }
+// 
+// 
+
+
+
+
+// let wh = window.innerHeight;
+// window.onscroll = (e) => {
+//     let st = document.body.scrollTop || document.documentElement.scrollTop
+//     console.log(wh, st)
+// }
