@@ -1,4 +1,4 @@
-SASS是一门高于css的元语言，它能清晰地结构化描述文件的样式
+﻿SASS是一门高于css的元语言，它能清晰地结构化描述文件的样式
 -------------------------------------------------------------------------------
 window环境下：
     下载Ruby（http://Rubyinstall.org/downloads）最新版本的x64
@@ -239,5 +239,5 @@ button{ border-radius: 5px ;  -webkit-border-radius: 5px; }
 
 
 
-
+npm install -g mirror-config-china --registry=http://registry.npm.taobao.org
 
