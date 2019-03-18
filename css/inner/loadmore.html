@@ -8,20 +8,27 @@
 	<link rel="stylesheet" href="../css/reset.css">
 </head>
 <body>
-	<div class="Page">
-		<ul id="ulis">
-			<li style="height: 10rem; background: #ddd"></li>
-			<li style="height: 10rem; background: #aaa"></li>
-			<li style="height: 10rem; background: #ddd"></li>
-			<li style="height: 10rem; background: #aaa"></li>
-			<li style="height: 10rem; background: #ddd"></li>
-			<li style="height: 10rem; background: #aaa"></li>
-			<li style="height: 10rem; background: #ddd"></li>
-			<li style="height: 10rem; background: #aaa"></li>
-		</ul>
+	<div class="page">
+		<div class="header between stretch">
+			<div class="header-b center">返回</div>
+			<div class="header-t center">头部</div>
+			<div class="header-b center"></div>
+		</div>	
+		<div class="section">
+			<ul id="ulis">
+				<li style="height: 10rem; background: #57787f"></li>
+				<li style="height: 10rem; background: #aaa"></li>
+				<li style="height: 10rem; background: #798ff2"></li>
+				<li style="height: 10rem; background: #aaa"></li>
+				<li style="height: 10rem; background: #67eaae"></li>
+				<li style="height: 10rem; background: #aaa"></li>
+				<li style="height: 10rem; background: #89a10f"></li>
+				<li style="height: 10rem; background: #aaa"></li>
+			</ul>
+		</div>
 	</div>
 	<script>
-		document.querySelector('.Page').onscroll = scroll
+		document.querySelector('.section').onscroll = scroll
 		function scroll(ev) {
 			if (typeof ev == 'undefined') return;
 			var _this = ev.target;

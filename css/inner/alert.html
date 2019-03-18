@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <div class="Page">     
+    <div class="page">     
         <ul class="ul">
             <li onclick="pop(1)">messages</li>
             <li onclick="pop(2)">confirm</li>
@@ -28,7 +28,7 @@
 
         
         <!-- page-alert-messages -->
-        <div class="page-alert-messages" id="messages">
+        <div class="page-alert-messages text-center" id="messages">
             <span>弹窗提示语</span>
         </div>
 `
@@ -36,15 +36,15 @@
 
 
         <!-- page-alert -->
-        <div class="page-alert page-fixed flex-center" id="confirm">
+        <div class="page-alert page-fixed center" id="confirm">
             <div class="alert-inner">
                 <div class="alert-text">this is a tip1!</div>
-                <div class="alert-done flex-center">
-                    <a class="alert-sure on">确定</a>
-                    <a class="alert-cancel">取消</a>
+                <div class="alert-done center">
+                    <a class="center f1 alert-sure on">确定</a>
+                    <a class="center f1 alert-cancel">取消</a>
                 </div>
-                <div class="alert-done flex-center">
-                    <a class="alert-sure background">确定</a>
+                <div class="alert-done center">
+                    <a class="center f1 alert-sure background">确定</a>
                 </div>
             </div>
         </div>
@@ -52,50 +52,50 @@
 
 
         <!-- page-alert -->
-        <div class="page-alert page-fixed flex-center" id="alertfrom">
+        <div class="page-alert page-fixed center" id="alertfrom">
             <div class="alert-inner">
                 <ul class="nav-list formList">
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">text</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="text" placeholder="text">
                         </div>
                     </li>
                     <!-- Date -->
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">datetime</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="datetime-local" placeholder="date" value="2014-04-30T12:00">
                         </div>
                     </li>
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">date</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="date" placeholder="date" value="2014-04-30">
                         </div>
                     </li>
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">month</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="month" value="2018-04">
                         </div>
                     </li>
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">tel</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="tel" placeholder="tel">
                         </div>
                     </li>
-                    <li class="flex-around">
+                    <li class="start">
                         <div class="form-title">time</div>
-                        <div class="form-input">
+                        <div class="form-input f1">
                             <input type="time" value="10:30">
                         </div>
                     </li>
                 </ul>
-                <div class="alert-done flex-center">
-                    <a class="alert-sure on">确定</a>
-                    <a class="alert-cancel">取消</a>
+                <div class="alert-done between">
+                    <a class="center f1 alert-sure on">确定</a>
+                    <a class="center f1 alert-cancel">取消</a>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
 
 
         <!-- page-loading -->
-        <div class="page-loading page-fixed flex-center">
+        <div class="page-loading page-fixed center">
             <img src="../img/Spinner-1s-141px.svg" width="50">
         </div>
     </div>

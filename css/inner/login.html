@@ -12,30 +12,30 @@
 	<link rel="stylesheet" href="../css/phone.css?v=0.0.5">
 </head>
 <body>
-	<div class="Page flex-center">
-		<div class="page-login">
+	<div class="page center">
+		<div class="login">
 			<div class="login-logo"></div>
 			<div class="login-form">
-				<div class="flex-center login-form-list">
-					<div class="login-title flex-center">用户名</div>
-					<div class="login-options flex-start"><input type="text"></div>
+				<div class="login-form-list start stretch">
+					<div class="login-title center">用户名</div>
+					<div class="login-options start f1"><input type="text"></div>
 				</div>
-				<div class="flex-center login-form-list">
-					<div class="login-title flex-center">密码</div>
-					<div class="login-options flex-start"><input type="password"></div>
+				<div class="login-form-list start stretch">
+					<div class="login-title center">密码</div>
+					<div class="login-options start f1"><input type="password"></div>
 				</div>
-				<div class="flex-center login-form-list">
-					<div class="login-title flex-center">验证码</div>
-					<div class="login-options flex-start"><input type="text" id="codeinput"></div>
+				<div class="login-form-list start stretch">
+					<div class="login-title center">验证码</div>
+					<div class="login-options start f1"><input type="text" id="codeinput"></div>
 					<div class="login-json"></div>
 				</div>
 			</div>
-			<a class="button">登录</a>
+			<a class="button button-normal button-radius">登录</a>
 		</div>
 		<div class="login-copyright">@2018 版权所有</div>
 	</div>
 	<script>
-		var pageHeight = document.querySelector('.Page');
+		var pageHeight = document.querySelector('.page');
 		pageHeight.style.height = document.documentElement.clientHeight + 'px';
 
 		VerificationCodeFn({

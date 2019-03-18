@@ -12,27 +12,27 @@
 	<link rel="stylesheet" href="../css/phone.css?v=0.0.7">
 </head>
 <body style="background-color: #f9f9f9">
-	<div class="Page" id="app" v-cloak>
-		<div class="page-cxt cart">
+	<div class="page" id="app" v-cloak>
+		<div class="section cart">
 			<div class="cartList" v-for='(itemVal, itemIndex) in cartList'>
-				<div class="c-shop flex-start">
+				<div class="c-shop start">
 					<i class="icon-checked" :class='{on: itemVal.shopChecked}' @click='shopCheckedFn(itemIndex, !itemVal.shopChecked)'></i>{{ itemVal.shopName }}
 				</div>
 				<ul class="c-list">
 					<li v-for='(elemVal, elemIndex) in itemVal.list'>
-						<div class="c-inner flex-center">
+						<div class="c-inner center">
 							<i class="icon-checked" :class='{on: elemVal.cartChecked}' @click='cartCheckedFn(itemIndex, elemIndex, !elemVal.cartChecked)'></i>
-							<div class="c-cxt flex-center">
-								<div class="image flex-center"><img :src='elemVal.cartImage'></div>
-								<div class="c-wrap">
+							<div class="c-cxt center f1">
+								<div class="image center"><img :src='elemVal.cartImage'></div>
+								<div class="c-wrap f1">
 									<div class="cart-name line-clamp">{{ elemVal.cartName }}</div>
 									<div class="cart-remark">{{ elemVal.cartRemark }}</div>
-									<div class="flex-around">
+									<div class="between">
 										<div class="cart-price">{{ elemVal.cartPrice | formatPrice }}</div>
 										<div class="max-nums" v-if='elemVal.cartNums == elemVal.maxNums'>没有库存</div>
-										<div class="cart-nums flex-center" @click='cartCheckedFn(itemIndex, elemIndex, true)'>
+										<div class="cart-nums center" @click='cartCheckedFn(itemIndex, elemIndex, true)'>
 											<i class="reduce" :class='{off: elemVal.cartNums == 1}'               @click='elemVal.cartNums > 1 ? elemVal.cartNums-- : 1'></i>
-											<span class="nums flex-center">{{ elemVal.cartNums }}</span>
+											<span class="nums center">{{ elemVal.cartNums }}</span>
 											<i class="plus"   :class='{off: elemVal.cartNums == elemVal.maxNums}' @click='elemVal.cartNums < elemVal.maxNums ? elemVal.cartNums++ : elemVal.maxNums'></i>
 										</div>
 									</div>
@@ -44,26 +44,26 @@
 				</ul>
 			</div>
 		</div>
-		<div class="c-foot flex-around">
-			<div class="conputed flex-start">
+		<div class="c-foot between stretch">
+			<div class="conputed start">
 				<i class="icon-checked" :class='{on: totalChecked}' @click='totalCheckedFn()'></i>
 				<small>全选</small>
 				<small @click='isEditFn(!isEditing)'>{{ !isEditing ? "编辑" : "完成" }}</small>
 				<span class="price" v-if='!isEditing'>合计：{{ totalPrice | formatPrice }}</span>
 			</div>
-			<div class="foot-r">
-				<span class="button" v-if='isEditing' @click='isShowSure=true'>删除所选</span>
-				<span class="button" v-if='!isEditing'>去结算</span>
+			<div class="foot-r start stretch">
+				<span class="button button-normal" v-if='isEditing' @click='isShowSure=true'>删除所选</span>
+				<span class="button button-normal" v-if='!isEditing'>去结算</span>
 			</div>
 		</div>
 
 
 
 		<transition name="fade"><div class="page-mask page-fixed" v-if='isShowSure'></div></transition>
-		<transition name="fade"><div class="page-alert page-fixed flex-center" v-if='isShowSure'>
+		<transition name="fade"><div class="page-alert page-fixed center" v-if='isShowSure'>
 		     <div class="alert-inner">
 		         <div class="alert-text">确定要删除所选？</div>
-		         <div class="alert-done flex-center">
+		         <div class="alert-done center">
 		             <a class="alert-sure on" @click='sureDeleteFn'>确定</a>
 		             <a class="alert-cancel" @click='isShowSure=false'>取消</a>
 		         </div>

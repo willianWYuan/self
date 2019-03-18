@@ -12,8 +12,8 @@
 	<link rel="stylesheet" href="../css/phone.css?v=0.0.5">
 </head>
 <body> 
-	<div class="Page" id="app" v-cloak>
-		<div class="classify-container flex-start">
+	<div class="page" id="app" v-cloak>
+		<div class="classify-container start stretch">
 			<div class="classify-l">
 				<ul class="first-list-l">
 					<li  
@@ -22,15 +22,15 @@
 						@click='firstIndex = itemIndex'>{{ item.name }}</li>
 				</ul>
 			</div>
-			<div class="classify-r">
-				<div class="c2-adver flex-center"><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4163356517,1798677704&amp;fm=26&amp;gp=0.jpg" alt="广告图"></div>
+			<div class="classify-r f1">
+				<div class="c2-adver center"><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4163356517,1798677704&amp;fm=26&amp;gp=0.jpg" alt="广告图"></div>
 				<ul class="second-list-r">
 					<li v-for='item in subList'>
 						<div class="second-title">{{ item.name }}</div>
-						<div class="second-subList flex-start">
+						<div class="second-subList start">
 							<div class="second-subItem" v-for='elem in item.children'>
-								<div class="subimage flex-center"><img :src='elem.image'></div>
-								<span class="name line-clamp">{{ elem.name }}</span>
+								<div class="subimage center"><img :src='elem.image'></div>
+								<span class="name line-clamp text-center">{{ elem.name }}</span>
 							</div>
 						</div>
 					</li>
