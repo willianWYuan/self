@@ -1,41 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import { HashRouter } from 'react-router-dom'  // BrowserRouter  HashRouter
+import RouterFile from '../router';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+
 
 class App extends Component {
 
-
-  componentDidMount() {
-    console.log('componentDidMount', React, this);
-
-    React.$ajax('/api/carousel/searchList.json', {
-      carouselStatus: 1,
-      pageNo: 1,
-      pageSize: 10
-    }, data => console.log(data))
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        }
+    }
 
 
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    
+
+    render() {
+        return (
+            <HashRouter basename="/">
+                <Header></Header>
+                <RouterFile></RouterFile>
+                <Footer></Footer>
+            </HashRouter>
+        );
+    }
 }
 
 export default App;
