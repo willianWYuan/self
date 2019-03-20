@@ -10,7 +10,7 @@ class Child extends Component {
     }
 
     componentDidMount() {
-        // console.log(this)
+        console.log(this)
     }
 
 

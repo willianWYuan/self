@@ -19,7 +19,10 @@ textarea{height:4rem;resize:none;}
 .header,
 .footer{text-align: center; height: 50px; line-height: 50px; background: #666; color: #ccc; }
 
-.footer{position: absolute; bottom: 0; left: 0; right: 0}
+.footer{position: absolute; bottom: 0; left: 0; right: 0; font-size: 12px;}
 .footer a{width: 100%; height: 100%; display: block; transition: all .3s;}
 .footer .selected{background: #333; color: #fff; }
 .header-lr{width: 50px;}
+
+.subrouter{line-height: 40px; padding: 0 12px;}
+.subrouterList a{margin-left: 20px;}

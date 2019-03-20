@@ -11,11 +11,10 @@ class form extends Component {
     }
     componentDidMount() {
         console.log(this)
-        let newList = [], number = this.props.match.params.number
+        let newList = []
         for (let i = 0; i < 200; i++) newList.push(i);
         this.setState({
             numList: newList,
-            number: number ? number : 0,
         })
     }
     

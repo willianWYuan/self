@@ -12,16 +12,18 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        // console.log(this.$ajax)
+        // console.log(this)
     }
 
 
 
 
     render() {
+        let { goBack } = this.props.history;
+
         return (
             <header className="header flex">
-                <div className="header-lr"></div>
+                <div className="header-lr" onClick={goBack}>back</div>
                 <div className="header-title f1">Router</div>
                 <div className="header-lr"></div>
             </header>

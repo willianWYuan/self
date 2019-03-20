@@ -21,6 +21,8 @@ class footer extends Component {
                 <li className="f1"><NavLink tag="div" activeClassName="selected" to="/loop" >loop</NavLink></li>
                 <li className="f1"><NavLink tag="div" activeClassName="selected" to="/props">props</NavLink></li>
                 <li className="f1"><NavLink tag="div" activeClassName="selected" to="/form">form</NavLink></li>
+                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/subrouter">subrouter</NavLink></li>
+                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/noLogin">noLogin</NavLink></li>
             </ul>
         );
     }
