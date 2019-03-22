@@ -1,11 +1,11 @@
 import 'react-app-polyfill/ie9'
 import 'core-js/es6/map';
 import 'core-js/es6/set';
-import './assets/index.css';
-import React from 'react';
+import '@assets/index.css';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import App from './views/App/App';
-import Plugin from './plugins/plugins';
+import App      from '@views/App/App';
+import Plugin   from '@plugins/plugins';
 import * as serviceWorker from './serviceWorker';
 
 Object.assign(React.Component.prototype, Plugin)

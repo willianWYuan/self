@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { HashRouter, Route } from 'react-router-dom'  // BrowserRouter  HashRouter
-import RouterFile from '../router';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
+import RouterFile from '@views/router';
+import Header from '@components/header';
+import Footer from '@components/footer';
 
 
 class App extends Component {

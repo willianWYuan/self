@@ -18,11 +18,13 @@ class footer extends Component {
     render() {
         return (
             <ul className="footer flex">
-                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/loop" >loop</NavLink></li>
-                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/props">props</NavLink></li>
-                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/form">form</NavLink></li>
-                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/subrouter">subrouter</NavLink></li>
-                <li className="f1"><NavLink tag="div" activeClassName="selected" to="/noLogin">noLogin</NavLink></li>
+                <li className="f1"><NavLink to="/loop" >loop</NavLink></li>
+                <li className="f1"><NavLink to="/props">props</NavLink></li>
+                <li className="f1"><NavLink to="/form">form</NavLink></li>
+                <li className="f1"><NavLink to="/subrouter">router</NavLink></li>
+                <li className="f1"><NavLink to="/useplugin">plugin</NavLink></li>
+                <li className="f1"><NavLink to="/redux">redux</NavLink></li>
+                <li className="f1"><NavLink to="/noLogin">noLogin</NavLink></li>
             </ul>
         );
     }
