@@ -6,7 +6,6 @@ import Props     from '@views/props/props';
 import Form      from '@views/form/form';
 import SubRouter from '@views/SubRouter/subRouter';
 import UsePlugin from '@views/usePlugin/usePlugin';
-import Redux     from '@views/redux/redux';
 
 
 
@@ -39,7 +38,6 @@ class Router extends Component {
                 <Route path='/form/:number?' render={props => isLogin.call(this, true)  ? <Form      {...props} /> : <Redirect to="/login" />} />
                 <Route path='/subrouter'     render={props => isLogin.call(this, true)  ? <SubRouter {...props} /> : <Redirect to="/login" />} />
                 <Route path='/useplugin'     render={props => isLogin.call(this, true)  ? <UsePlugin {...props} /> : <Redirect to="/login" />} />
-                <Route path='/redux'         render={props => isLogin.call(this, true)  ? <Redux     {...props} /> : <Redirect to="/login" />} />
                 <Route path='/noLogin'       render={props => isLogin.call(this, false) ? <Loop      {...props} /> : <Redirect to="/login" />} />
 
                 {/*<Route path='/props' component={Props} />*/}

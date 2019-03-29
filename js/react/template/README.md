@@ -24,15 +24,25 @@
 修改alias
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');   // 生产后  不打印console.log
+
 module.exports.plugins = [
+
 	...,
+
 	new UglifyJsPlugin({
+
 		uglifyOptions: {
+
 			compress: {
+
 				warnings: false,
+
 				drop_console: true, //console
+
 				drop_debugger: false,
+
 				pure_funcs: ['console.log'] //移除console
+
 			}
 		}
 	})
@@ -46,7 +56,20 @@ module.exports.plugins = [
 ## package.json
 
 scripts.start: set PORT=9000 && node scripts/start.js    // 修改端口
+
 proxy: url    // 跨域
+
 dependencies
+
 	react-app-polyfill    // 解决IE兼容   开发模式只有IE11能用   生产模式>=9都能打开    在./src/index.js 引用 'react-app-polyfill/ie9', 'core-js/es6/map', 'core-js/es6/set';
+
 	react-router-dom      // 路由
+
+
+
+
+## UI 库
+
+https://mobile.ant.design/index-cn
+
+https://ant.design/index-cn

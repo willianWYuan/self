@@ -13,7 +13,7 @@ class ShowVal extends Component {
 
         return (
             <div className="ShowVal">
-	            {this.init}
+	            {this.account}
             </div>
         );
     }

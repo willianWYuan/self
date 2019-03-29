@@ -23,7 +23,6 @@ class footer extends Component {
                 <li className="f1"><NavLink to="/form">form</NavLink></li>
                 <li className="f1"><NavLink to="/subrouter">router</NavLink></li>
                 <li className="f1"><NavLink to="/useplugin">plugin</NavLink></li>
-                <li className="f1"><NavLink to="/redux">redux</NavLink></li>
                 <li className="f1"><NavLink to="/noLogin">noLogin</NavLink></li>
             </ul>
         );

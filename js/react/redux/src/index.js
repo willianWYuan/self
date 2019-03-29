@@ -5,14 +5,17 @@ import { Provider, connect } from 'react-redux';
 import App from './redux/App';
 
 
-const init = 10000
+
+
+const account = 10000
 
 //这是action
-const increase = { type: '涨工资' }
-const decrease = { type: '扣工资' }
+// const increase = { field: '涨工资' }
+// const decrease = { field: '扣工资' }
 
 //这是reducer
-const reducer = (state = init, action) => {
+const reducer = (state = account, action) => {
+    console.log(state, action)
 	let {type, num} = action
     switch (type) {
         case '涨工资':
@@ -24,30 +27,23 @@ const reducer = (state = init, action) => {
     }
 }
 
+
 //创建store
 const store = createStore(reducer);
 store.subscribe(() =>{
  	let newVal = store.getState()
- 	Object.assign(Component.prototype, {init: newVal})
+ 	Object.assign(Component.prototype, {account: newVal})
 });
 
-//需要渲染什么数据
-function mapStateToProps(state) {
-    return {
-        init: state,
-        defaultName: 'zhangweiyuan'
-    }
-}
-//需要触发什么行为
-function mapDispatchToProps(dispatch) {
-    return {
-        PayIncrease: num => dispatch({ type: '涨工资', num }),
-        PayDecrease: num => dispatch({ type: '扣工资', num })
-    }
-}
+
 
 //连接组件
-const SubComponent = connect(mapStateToProps, mapDispatchToProps)(App)
+const SubComponent = connect(state => ({
+    account: state
+}), dispatch => ({
+    PayIncrease: num => dispatch({ type: '涨工资', num }),
+    PayDecrease: num => dispatch({ type: '扣工资', num })
+}))(App)
 
 ReactDOM.render(
     <Provider store={store}>

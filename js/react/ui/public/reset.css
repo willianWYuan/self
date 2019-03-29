@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+/*tag*/
+html{font:16px "Microsoft Yahei";color:#333;word-wrap:break-word;-webkit-overflow-scrolling:touch;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+body,form,header,article,aside,nav,section,footer,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,input,textarea,select,table,th,td,a,img{margin:0;padding:0;font:inherit;color:inherit;outline:0;}
+table{border-collapse:collapse;width:100%;border-spacing:0;/*table-layout:fixed;*/}
+th,td{text-align:inherit;word-wrap:break-word;}
+ul,ol,li{list-style:none;}
+a{text-decoration:none;cursor:pointer;}
+a:hover{text-decoration:none;}
+img{border:0;/*pointer-events:none;*/user-select:none;}
+img.w{display:block;width:100%;height:auto;}
+img.h{display:block;width:auto;height:100%;}
+video{width:100%;display:block;}
+input,textarea,select{outline-offset:0;border:0;box-sizing:border-box;-webkit-appearance:none;width:100%;height:1.4rem;line-height:1.4rem;background-color:transparent;}
+textarea{height:4rem;resize:none;}
+
+/*browse*/
+::-webkit-scrollbar{width:0;height:0;}
+::-webkit-search-results-button{display:none;}
+::-webkit-search-cancel-button{display:none;}
+::-webkit-input-placeholder{color:#ccc;}
+::-moz-placeholder{color:#ccc;}
+::-ms-input-placeholder{color:#ccc;}
+::-ms-check{color:#34538b;background:#a0b3d6;padding:.5em;/*[type=radio/checkbox]*/}
+::-ms-clear{display:none;/*[type=text]      IE10 的右边交叉*/}
+::-ms-reveal{display:none;/*[type=password]  IE10 密码域右边的眼睛*/}
+::-ms-expand{display:none;/*select    	   IE10 的下拉按钮*/}
+::-webkit-search-results-button{display:none;/*[type=search]*/}
+::-webkit-search-cancel-button{display:none;/*[type=search]*/}
+::-webkit-inner-spin-button{visibility:hidden;/*[type=date]*/}
+::-webkit-clear-button{-webkit-appearance:none;/*[type=date]*/}
+::-webkit-inner-spin-button{-webkit-appearance:none;/*[type=number]*/}
+::-ms-browse{padding:.4em;line-height:24px;    /* 光标垂直居中 */border:1px solid #a0b3d6;background:#f0f3f9;color:#34538b;/*[type=file]*/}
+::-webkit-file-upload-button{padding:.4em;line-height:30px;border:1px solid #a0b3d6;background:#f0f3f9;color:#34538b;/*[type=file]*/}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-button:vertical{display:none}
+::-webkit-scrollbar-corner,::-webkit-scrollbar-track{background-color:#e2e2e2;}
+::-webkit-scrollbar-thumb{border-radius:0;background-color:rgba(0,0,0,.2);}
+::-webkit-scrollbar-thumb:vertical:hover,::-webkit-scrollbar-thumb:vertical:active{background-color:rgba(0,0,0,.4);}

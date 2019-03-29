@@ -12,7 +12,7 @@ class usePlugin extends Component {
 
 
     componentDidMount() {
-        console.log('self', this.__proto__.__proto__)
+        console.log('usePlugin', this.__proto__.__proto__)
         this.$cookie.add({userId: 1, userName: 13928367790});
     }
 
@@ -24,7 +24,7 @@ class usePlugin extends Component {
 
     render() {
         return (
-            <div></div>
+            <div>查看控制台</div>
         );
     }
 }

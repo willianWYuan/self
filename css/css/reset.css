@@ -4,7 +4,7 @@
 html{font:4.2vw "Helvetica Neue","Droidsansfallback","Microsoft Yahei";color:#333;word-wrap:break-word;-webkit-overflow-scrolling:touch;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;-webkit-text-size-adjust:100%;}
 body,form,header,article,aside,nav,section,footer,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,input,textarea,select,table,th,td,a,img{margin:0;padding:0;font:inherit;color:inherit;outline:0;}
 table{border-collapse:collapse;width:100%;border-spacing:0;/*table-layout:fixed;*/}
-th,td{text-align:center;border:1px solid #ccc;}
+th,td{text-align:inherit;border:1px solid #ccc;}
 ul,ol,li{list-style:none;}
 a{text-decoration:none;cursor:pointer;}
 a:hover{text-decoration:none;}
@@ -71,7 +71,7 @@ textarea{height:4rem;resize:none;}
 .button-radius{border-radius:2.6rem;}
 
 /*头部/工具栏*/
-.page{display:flex;flex-direction:column;max-width:770px;margin:0 auto;height:100vh}
+.page{display:flex;flex-direction:column;max-width:770px;margin:0 auto;height:100vh;overflow: hidden;}
 .header{background-color:#ddd;text-align:center;position:relative;height:3rem;}
 .header-b{width:3rem;}
 .header-t{font-size:1.05rem;}
@@ -151,4 +151,31 @@ animation: myfirst 1s linear/ease/steps(8) 2s reverse infinite forwards alternat
 -webkit-@keyframes myfirst{
 0%   {background: red;}
 100% {background: green;}
+}*/
+
+
+
+
+/*.list{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr)  20%;
+	grid-template-rows: 90px 100px 50px 40px 80px 80px;
+
+	grid-gap: 15px 10px;
+	grid-column-gap: 10px;
+    grid-row-gap: 15px;
+
+    justify-items
+    align-items
+    justify-content
+    align-content
+}
+.item{
+	grid-column: 3 / 5;
+	grid-row: 3 / 6;
+	grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+	border: 1px solid #999;
 }*/
