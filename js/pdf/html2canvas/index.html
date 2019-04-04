@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{padding: 0;margin: 0;}
+    </style>
+</head>
+<body>
+    <button onclick="print()">download</button>
+    <a href="http://mingxiang.oss-cn-shanghai.aliyuncs.com/pdf/201904/06b1797f3a924a85a90494bceaaa915e.pdf">下载</a>
+    <div id="app">
+        <p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p>
+        <br><br><br><br>
+        <p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p><p>web</p><p>app</p>
+    </div>
+
+    <script src="jspdf.min.js"></script>
+    <script src="html2canvas.js"></script>
+    <script>
+        function print() {
+            html2canvas(app).then(function(canvas) {
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                // 方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
+                var pdf = new jsPDF('', 'pt', 'a4');
+                // addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
+
+                const [outputWidth, outputHieght] = [595.28, 841.89];
+                const [resizeTotalWidth, resizeTotalHeight] = [outputWidth, outputWidth / canvas.width * canvas.height];
+                console.log(outputHieght, resizeTotalHeight)
+                if (outputHieght > resizeTotalHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, resizeTotalWidth, resizeTotalHeight);
+                } else {
+                    let nums = 0;
+                    const cutLen = resizeTotalHeight / outputHieght;
+                    while (nums < cutLen) {
+                        pdf.addImage(pageData, 'JPEG', 0, -(outputHieght * nums), resizeTotalWidth, resizeTotalHeight);
+                        if (nums < cutLen - 1) pdf.addPage();
+                        nums++;
+                    }
+                }
+                pdf.save('stone.pdf');
+            });
+        }
+        
+    </script>
+</body>
+</html>

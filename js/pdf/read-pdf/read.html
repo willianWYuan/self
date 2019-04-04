@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>read pdf</title>
+    <style>*{margin: 0;padding: 0;}</style>
+</head>
+<body>
+    <canvas id="the-canvas" style="width: 100%"></canvas>
+    <script src="pdf.js"></script>
+    <script>
+        function ReadFileFn(paramsfile, ReadNo = 1) { // paramsfile 文件名      ReadNo 读取第几页
+            pdfjsLib.getDocument(paramsfile).then(function(pdf) {
+                // pdf._pdfInfo.numPages  共有多少页
+                pdf.getPage(ReadNo).then(function getPageHelloWorld(page) {
+                    var scale = 3;
+                    var viewport = page.getViewport(scale);
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            })
+        }
+        ReadFileFn('compressed.tracemonkey-pldi-09.pdf');
+    </script>
+</body>
+</html>
