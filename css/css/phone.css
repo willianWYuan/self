@@ -114,7 +114,7 @@
 .c-foot .foot-r .button{height:3rem;border-radius:0;font-size:.95rem;width: 100%;}
 
 /*classify*/
-.classify-container{font-size:.8rem;}
+.classify-container{font-size:.8rem;height: 100%;}
 .classify-container > div{overflow-y:auto;overflow-x:hidden;}
 .classify-container .classify-l{width:5rem;background-color:#f3f3f3;}
 .classify-container .first-list-l{}

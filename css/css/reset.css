@@ -71,7 +71,7 @@ textarea{height:4rem;resize:none;}
 .button-radius{border-radius:2.6rem;}
 
 /*头部/工具栏*/
-.page{display:flex;flex-direction:column;max-width:770px;margin:0 auto;height:100vh;overflow: hidden;}
+.page{display:flex;flex-direction:column;max-width:770px;margin:0 auto;height:100vh;overflow-x: hidden;}
 .header{background-color:#ddd;text-align:center;position:relative;height:3rem;}
 .header-b{width:3rem;}
 .header-t{font-size:1.05rem;}

@@ -1,6 +1,6 @@
 class Common {
     constructor() {
-        this.host = '127.0.0.1';
+
     }
 
     // 获取 是否移动设备
@@ -309,41 +309,31 @@ class Common {
     //  { specId: 9, specName: '库存', specValueId: 2, specValueName: '否' },
     // ])
 
-    // console.log(s)     购物车分类     转为  [1:2, 2:3, 4:8]
-    specInitFn(arr) {
-        let [filterArr, classArr, newArr] = [
-            [],
-            [],
-            []
-        ]
-        arr.map(item => { // 分类
-            if (!filterArr[item.specId]) filterArr[item.specId] = [];
-            filterArr[item.specId].push(item);
-        })
-        filterArr.map(item => item ? classArr.push(item) : null); // 过滤
-        classArr.map((item, itemIndex) => item.map(elem => elem.children = classArr[itemIndex + 1])); // 生成嵌套数组
-        forResultFn(classArr[0], {}); // 生成需要的数组
-        function forResultFn(itemArr, {
-            specIds = '',
-            specNames = ''
-        }) {
-            let [specIdsStr, specNamesStr] = [specIds, specNames];
-            itemArr.map(item => {
-                let [itemSpecIds, itemSpecNames] = [`${item.specId}:${item.specValueId},`, `${item.specName}:${item.specValueName},`]
-                specIds = specIds ? specIdsStr + itemSpecIds : itemSpecIds;
-                specNames = specNames ? specNamesStr + itemSpecNames : itemSpecNames;
-                if (item.children) forResultFn(item.children, {
-                    specIds,
-                    specNames
-                });
-                else newArr.push({
-                    specIds: '[' + specIds.replace(/,$/, '') + ']',
-                    specNames: specNames.replace(/,$/, '')
-                });
-            })
+    // console.log(s)     购物车分类     转为  [1:1,4:1,8:2,9:1]  ...
+    specInitFn(data) {
+        let filterList = [];
+        data.map(item => (!filterList[item.specId] ? filterList[item.specId] = [] : null, filterList[item.specId].push(item)));
+        filterList = filterList.filter(item => item);
+        let filterListLen = filterList.length, result = [], cutList = [];
+        for (let i = 0; i < filterListLen; i++) cutList.push([]);
+        forDataFn();
+        function forDataFn(index = 0, newCutList = cutList) {
+            let currDataLen = filterList[index].length
+            for (let i = 0; i < currDataLen; i++) {
+                newCutList[index] = filterList[index][i]
+                if (index < filterListLen - 1) forDataFn(index + 1, newCutList);
+                else {
+                    let newCutListLen = newCutList.length - 1, obj = {specIds: '[', specNames: ''};
+                    newCutList.map((item, itemIndex) => {
+                        obj.specIds += `${item.specId}:${item.specValueId}`;
+                        obj.specNames += `${item.specName}:${item.specValueName}`;
+                        if (itemIndex < newCutListLen) obj.specIds += ',', obj.specNames += ',';
+                        else obj.specIds += ']', result.push(obj);
+                    });
+                }
+            }
         }
-        filterArr = classArr = forResultFn = null;
-        return newArr;
+        return result;
     }
 
 
@@ -667,6 +657,89 @@ class Common {
             }, 200);
         }
         window.addEventListener('resize', windowEventFn)
+    }
+
+    getVerification(elem) {  // 直接传入elem  #canva
+        let show_num = [];
+        const canvas = document.getElementById(elem);
+        const [elemWidth, elemHeight, context] = [canvas.clientWidth, canvas.clientHeight, canvas.getContext("2d")];
+
+        canvas.width = elemWidth;
+        canvas.height = elemHeight;
+        const sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+        const aCode = sCode.split(",");
+        const aLength = aCode.length; //获取到数组的长度
+
+        for (let i = 0; i <= 3; i++) {
+            let j = Math.floor(Math.random() * aLength); //获取到随机的索引值
+            let deg = Math.random() * 30 * Math.PI / 180; //产生0~30之间的随机弧度
+            let txt = aCode[j]; //得到随机的一个内容
+            show_num[i] = txt.toLowerCase();
+            let x = 10 + i * 20; //文字在canvas上的x坐标
+            let y = 20 + Math.random() * 8; //文字在canvas上的y坐标
+            context.font = "bold 23px 微软雅黑";
+
+            context.translate(x, y);
+            context.rotate(deg);
+
+            context.fillStyle = randomColor();
+            context.fillText(txt, 0, 0);
+
+            context.rotate(-deg);
+            context.translate(-x, -y);
+        }
+        for (let i = 0; i <= 5; i++) { //验证码上显示线条
+            context.strokeStyle = randomColor();
+            context.beginPath();
+            context.moveTo(Math.random() * elemWidth, Math.random() * elemHeight);
+            context.lineTo(Math.random() * elemWidth, Math.random() * elemHeight);
+            context.stroke();
+        }
+        for (let i = 0; i <= 30; i++) { //验证码上显示小点
+            context.strokeStyle = randomColor();
+            context.beginPath();
+            let x = Math.random() * elemWidth;
+            let y = Math.random() * elemHeight;
+            context.moveTo(x, y);
+            context.lineTo(x + 1, y + 1);
+            context.stroke();
+        }
+
+
+        function randomColor() { //得到随机的颜色值
+            const [r, g, b] = [Math.floor(Math.random() * 222), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
+            return "rgb(" + r + "," + g + "," + b + ")";
+        }
+
+        return show_num
+    }
+
+
+    getField(arr, field, compareVal) {
+        let obj = {};
+        arr.map(item => item[field] == compareVal ? obj = item : null);
+        return obj;
+    }
+
+    isSafetyPwd(text) {
+        return /^(\w){6,20}$/.test(text) ? true : false;
+    }
+
+    hidePhone(text) {
+        if (typeof text != 'string') return;
+        return text.replace(/(\d{3})(\d{4})(\d{4})/, '$1****$3');
+    }
+
+    randomName() {
+        let result = 'SM',
+            arr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
+        let len = arr.length
+        for (let i = 0; i < 10; i++) {
+            let random = arr[parseInt(Math.random() * len)];
+            if (parseInt(Math.random() * len) % 2) random = random.toLocaleUpperCase();
+            result += random
+        }
+        return result;
     }
 }
 
