@@ -38,9 +38,9 @@ textarea{height:4rem;resize:none;}
 [v-cloak],[hidden],[type="radio"],[type="checkbox"]{display:none!important;}
 
 /*flex*/
-.column{flex-direction:column;}
+.start,.center,.between,.around,.end, .column{display:flex;align-items:center;}
+.column{flex-direction:column;align-items:stretch;}
 .f1{flex:1;}
-.start,.center,.between,.around,.end{display:flex;align-items:center;}
 .stretch{align-items:stretch;}
 .start{justify-content:flex-start;}
 .center{justify-content:center;}
