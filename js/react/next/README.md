@@ -37,6 +37,7 @@ import Head from 'next/head';
 
 import { withRouter } from 'next/router'   // 不能直接使用props的url;    注入pathname, query 或 asPath;   withRouter(组件名)
 let {back, pathname, query, push, beforePopState} = props.router;
+push("/about?name=join&userId=2")
 
 import Link from 'next/link'
 <Link prefetch replace scroll={false} href={"/about?name=join&userId=2"}><a>{item}</a></Link>
