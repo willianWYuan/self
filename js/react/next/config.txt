@@ -1,0 +1,78 @@
+{
+    mode: 'production',
+    devtool: false,
+    name: 'server',
+    target: 'node',
+    externals: [
+        [Function]
+    ],
+    optimization: {
+        splitChunks: false,
+        minimize: false,
+        minimizer: undefined
+    },
+    recordsPath: 'D:\\learn\\react\\next\\.next\\server\\records.json',
+    context: 'D:\\learn\\react\\next',
+    entry: [AsyncFunction: entry],
+    output: {
+        path: 'D:\\learn\\react\\next\\.next\\server',
+        filename: [Function: filename],
+        libraryTarget: 'commonjs2',
+        hotUpdateChunkFilename: 'static/webpack/[id].[hash].hot-update.js',
+        hotUpdateMainFilename: 'static/webpack/[hash].hot-update.json',
+        chunkFilename: '[name].[contenthash].js',
+        strictModuleExceptionHandling: true,
+        crossOriginLoading: undefined,
+        futureEmitAssets: true,
+        webassemblyModuleFilename: 'static/wasm/[modulehash].wasm'
+    },
+    performance: {
+        hints: false
+    },
+    resolve: {
+        extensions: ['.wasm', '.js', '.mjs', '.jsx', '.json'],
+        modules: ['node_modules'],
+        alias: {
+            'next/head': 'next-server/dist/lib/head.js',
+            'next/router': 'next/dist/client/router.js',
+            'next/config': 'next-server/dist/lib/runtime-config.js',
+            'next/dynamic': 'next-server/dist/lib/dynamic.js',
+            next: 'D:\\learn\\react\\next\\node_modules\\next',
+            'private-next-pages': 'D:\\learn\\react\\next\\pages',
+            'private-dot-next': 'D:\\learn\\react\\next\\.next'
+        },
+        mainFields: ['main', 'module']
+    },
+    resolveLoader: {
+        modules: ['D:\\learn\\react\\next\\node_modules\\next\\node_modules',
+            'node_modules',
+            'D:\\learn\\react\\next\\node_modules\\next\\dist\\build\\webpack\\loade                                                                         rs'
+        ]
+    },
+    module: {
+        rules: [
+            [Object]
+        ]
+    },
+    plugins: [ChunkNamesPlugin {},
+        DefinePlugin {
+            definitions: [Object]
+        },
+        HashedModuleIdsPlugin {
+            options: [Object]
+        },
+        AllModulesIdentifiedPlugin {},
+        HashedChunkIdsPlugin {
+            buildId: 'bHpjaB1jfmtxm1JzC_kKB'
+        },
+        IgnorePlugin {
+            options: [Object],
+            checkIgnore: [Function: bound checkIgnore]
+        },
+        PagesManifestPlugin {},
+        NextJsSsrImportPlugin {
+            options: [Object]
+        },
+        NextJsSsrImportPlugin {}
+    ]
+}

@@ -1,20 +1,23 @@
 {
     "name": "next",
+    "domain": "https://rrb8.cn",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "next",
-        "build": "next build && next export",
-        "start": "next start"
+        "dev": "next -p 3001",
+        "build": "next build && next export"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@zeit/next-css": "^1.0.1",
+        "antd": "^3.17.0",
         "isomorphic-unfetch": "^3.0.0",
         "next": "^8.0.4",
         "react": "^16.8.6",
+        "react-app-polyfill": "^1.0.1",
         "react-dom": "^16.8.6"
     },
     "devDependencies": {

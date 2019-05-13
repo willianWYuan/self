@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import Link from 'next/link'
+import { Fragment, Link } from '@component/plugin'
+import { Button, DatePicker } from 'antd';
 
 const Child = (props) => {
 	// console.log(props)
@@ -8,13 +8,17 @@ const Child = (props) => {
 		props.arr[index] += 100;
 		console.log(props.arr, index)
 	}
+	function onChange(date, dateString) {
+		console.log(date, dateString);
+	}
 
 	return <Fragment>
 		<ul className="list">
 			{props.arr.map((item, itemIndex) => <li key={itemIndex} onClick={ev => handleChange(itemIndex)}>{item}</li>)}
-			<Link prefetch href={"/about?name=join&userId=1"}><a>about</a></Link>
+			<Link prefetch href={"/about?name=join&userId=1"}><Button type="primary">about</Button></Link>
 			{/*{props.arr.map((item, itemIndex) => <li key={itemIndex}><Link prefetch href={"/about?name=join&userId=" + item}><a>{item}</a></Link></li>)}*/}
 		</ul>
+		<DatePicker onChange={onChange} />
 		<pre>
 		    hi there!
 		</pre>

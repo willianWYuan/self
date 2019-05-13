@@ -1,41 +1,53 @@
-import React, {Component, Fragment} from 'react';
+import { React, Component, axios, withRouter, domain, Layout, _isPhone } from '@component/plugin'
 
 class MyApp extends Component {
+    state = {
+        color: 'red',
+        arr: [],
+        isloading: true
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            color: 'red',
-            arr: props.arr
-        };
     }
 
     static async getInitialProps(params) {
-        console.log(this, 2)
-        return {name: 'MyApp', arr: [6, 235, 64, 83, 93] }
+        // console.log(this, 2)
+        return {name: 'MyApp'}
     }
 
-    componentDidMount() {
+    componentWillMount() {
         // console.log(this)
+        this.setState(({arr}) => ({
+            arr: [6, 235, 64, 83, 93],
+            isloading: false
+        }));
+
+
     }
 
     handle(index) {
         this.setState(({arr, color}) => ({
             arr: arr.map((item, itemIndex) => itemIndex == index ? item += 100 : item),
-            color: color == 'red' ? 'blue' : 'red'
-        }))
+            color: color == 'red' ? 'blue' : 'red',
+            isloading: true
+        }));
+        setTimeout(() => {
+            this.setState({isloading: false})
+        }, 2000);
     }
   
   render () {
     let {handle} = this
-    let {color, arr} = this.state
+    let {color, arr, isloading} = this.state
 
     return (
-      <Fragment>
-          <span style={{color}} onClick={handle.bind(this)}>color</span>
-          <div>
-            {arr.map((item, itemIndex) => <p key={itemIndex}  onClick={handle.bind(this, itemIndex)}>{item}</p>)}
-          </div>
-      </Fragment>
+        <Layout isloading={isloading}>
+            <span style={{color}} onClick={handle.bind(this)}>color</span>
+            <div>
+                {arr.map((item, itemIndex) => <p key={itemIndex}  onClick={handle.bind(this, itemIndex)}>{item}</p>)}
+            </div>
+        </Layout>
     );
   }
 }
@@ -43,4 +55,4 @@ class MyApp extends Component {
 
 
 
-export default MyApp
+export default withRouter(MyApp)

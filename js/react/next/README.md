@@ -29,7 +29,7 @@ import Head from 'next/head';
 
 ## getInitialProps
 
-服务器渲染钩子
+服务器渲染(路由切换也触发)钩子
 
 
 

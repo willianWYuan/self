@@ -1,5 +1,5 @@
-import Router, { withRouter } from 'next/router'
-import App, {Container} from 'next/app'
+import { Router, withRouter, domain, Layout, _isPhone } from '@component/plugin'
+
 
 
 const about = props => {
@@ -13,10 +13,12 @@ const about = props => {
 
 
 
-	return <Container>
-		<p onClick={ev => push("/?id=2")}>Welcome to {pathname}!</p>
-		<p onClick={ev => push("/text")}>text</p>
-	</Container>
+	return <Layout>
+		
+			<p onClick={ev => push("/?id=2")}>欢迎 {pathname}!</p>
+			<p onClick={ev => push("/text")}>text</p>
+
+	</Layout>
 }
 
 
