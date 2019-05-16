@@ -53,7 +53,7 @@ class Common {
         let type, style, str, now = new Date(timeStamp);
         if (typeof argumentType == 'number')[type, style] = [argumentType, argumentStyle || '-'];
         else [type, style] = [0, typeof argumentType == 'undefined' ? '-' : argumentType];
-        const [year, month, date, hour, minute, second] = [
+        let [year, month, date, hour, minute, second] = [
             now.getFullYear(),
             ("0" + (now.getMonth() + 1)).match(/\d{2}$/)[0],
             ("0" + now.getDate()).match(/\d{2}$/)[0],
@@ -741,6 +741,29 @@ class Common {
         }
         return result;
     }
+
+
+
+    // ---------------------------------------------------样式部分
+    // .outer{width: 100vw; height: 100vh; font-size: 40px;}
+    // .TotalNum{overflow: hidden;}
+    // .currNum, .everyNum{width: 24px; height: 40px; }
+    // .everyNum{ transition: transform 2s;}
+    // 
+    // 数字递增调用 countNum(document.querySelector('.outer'), 124907)
+    countNum(elem, val) {
+        let valToArr = val.toString().split('');
+        let everyNumsStr = valToArr.map(item => {
+            let str = `<div class="everyNum" selfVal=${item}>`
+            for (let i = 0; i < 20; i++) str += `<div class="currNum center">${i > 9 ? i - 10 : i}</div>`;
+            str += `</div>`
+            return str
+        }).join('');
+        elem.innerHTML = `<div class="TotalNum start">${everyNumsStr}</div>`;
+        setTimeout(() => Array.from(elem.querySelectorAll('.everyNum')).map(item => {
+            item.style.transform = `translateY(-${(Number(item.getAttribute('selfval')) + 10) * 40}px)`
+        }), 100)
+    }
 }
 
 // getAjax: function(obj) {
@@ -795,4 +818,33 @@ class Common {
 // window.onscroll = (e) => {
 //     let st = document.body.scrollTop || document.documentElement.scrollTop
 //     console.log(wh, st)
+// }
+// 
+// 
+// 
+// 
+// 
+// 
+// if (!Object.assign) {
+//     Object.defineProperty(Object, 'assign', {
+//         enumerable: false,
+//         configurable: true,
+//         writable: true,
+//         value: function(target) {
+//             if (target === undefined || target === null) throw new TypeError('Cannot convert first argument to object');
+//             var to = Object(target);
+//             for (var i = 1; i < arguments.length; i++) {
+//                 var nextSource = arguments[i];
+//                 if (nextSource === undefined || nextSource === null) continue;
+//                 nextSource = Object(nextSource);
+//                 var keysArray = Object.keys(nextSource);
+//                 for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+//                     var nextKey = keysArray[nextIndex];
+//                     var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+//                     if (desc !== undefined && desc.enumerable) to[nextKey] = nextSource[nextKey];
+//                 }
+//             }
+//             return to;
+//         }
+//     });
 // }

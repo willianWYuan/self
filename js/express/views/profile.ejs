@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<% include ./public/nav.ejs %>
+<body>
+<!--<h1>welcome to ejs page</h1>-->
+<h1>welcome to profile page</h1>
+<ul>
+    <% data.map(function({age, name}) { %> 
+    	<li><%= age %></li> 
+    	<li><%= name %></li> 
+	<% }) %>
+</ul>
+</body>
+</html>
