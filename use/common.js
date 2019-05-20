@@ -743,7 +743,7 @@ class Common {
     }
 
 
-
+    // 数字 每位数字肚子增加 
     // ---------------------------------------------------样式部分
     // .outer{width: 100vw; height: 100vh; font-size: 40px;}
     // .TotalNum{overflow: hidden;}
