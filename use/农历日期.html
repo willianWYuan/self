@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>带农历的日历</title>
     <style>
         ul, ol, li{list-style:none;margin:0;padding:0;} 
@@ -14,12 +15,11 @@
         #cal ul#wk{height:32px;line-height:32px;font-size:13px;}
         #cal ul#wk li{float:left;width: calc(100% / 7);text-align:center;}
         #cal #cm{position:relative}
-        #cal #cm .cell{text-align:center;position: absolute; width: calc(100% / 7);}
-        #cal #cm .cell .capit{font-size: 12px; color: #999}
-        #cal #cm .cell .lower{font-size: 16px; font-weight: bold}
-        #cal #cm .cell .lower-red{color: red;}
-        #cal #fd{position:absolute;border:1px solid #dddddf;background:#feffcd;padding:10px;line-height:21px;width:150px; display: none;}
-        #cal #fd b{font-weight:normal;color:#c60a00}
+        #cal .cell{text-align:center;position: absolute; width: calc(100% / 7);}
+        #cal .cell .capit{font-size: 12px; color: #999; line-height: 14px ;height: 14px; overflow: hidden;}
+        #cal .cell .lower{font-size: 16px; font-weight: bold}
+        #cal .cell .lower-red{color: red;}
+        #cal .cell-today{border: 1px solid #a5b9da; background: #c1d9ff;} 
     </style>
 </head>
 <body>
@@ -49,18 +49,18 @@
 <script type="text/javascript">
 getCalendar({
     everyDateTopGap: 48, 
-    onChangeCalendar(year, month) {
+    onChangeCalendar(year, month) {      // 切换 年月
         console.log('onChangeCalendar', `${year}月${month}年`)
     },
-    onClickCalendarDate(info) {
+    onClickCalendarDate(info) {       // 点击日期
         console.log(this, info)
         var {ganzhiYear, ganzhiMonth, ganzhiDate, lunarMonthInChinese, lunarDateInChinese, solarWeekDayInChinese, solarYear, solarMonth, solarDate, showInLunar, lunarIsLeapMonth} = info
         alert(`农历${ganzhiYear}年${ganzhiMonth}月${ganzhiDate}日 ${lunarMonthInChinese}月${lunarDateInChinese}\n${solarYear}年${solarMonth}月${solarDate}日 ${solarWeekDayInChinese}\n${lunarIsLeapMonth ? showInLunar : ""}`)
     },
-    solarFestival: {        // 新历 节日
+    solarFestival: {        // 添加  新历 节日
         "0214": "情人节",
     },  
-    lunarFestival: {        // 农历 节日
+    lunarFestival: {        // 添加  农历 节日
         "1208": "腊八节",
     }
 });
@@ -69,7 +69,6 @@ getCalendar({
 
 
 
-// function getCalendar({everyDateTopGap = 48, onChangeCalendar, onClickCalendarDate, solarFestival = {}, lunarFestival = {}}) {
 function getCalendar(obj) {
     var everyDateTopGap = obj.everyDateTopGap || 48;
     var onChangeCalendar = obj.onChangeCalendar;
@@ -371,11 +370,12 @@ function getCalendar(obj) {
         }
     })();
     var W = (function() {
-        var C = M("top").querySelector(".top-year");
-        var X = M("top").querySelector(".top-month");
-        var G = M("top").querySelector(".top-lunar");
-        var c = M("top").querySelector(".top-zodiac");
-        var Y = M("top").querySelector(".top-getBack");
+        var mtop = M("top");
+        var C = mtop.querySelector(".top-year");
+        var X = mtop.querySelector(".top-month");
+        var G = mtop.querySelector(".top-lunar");
+        var c = mtop.querySelector(".top-zodiac");
+        var Y = mtop.querySelector(".top-getBack");
 
         function a(g) {
             G.innerHTML = g.ganzhiYear;
@@ -455,18 +455,15 @@ function getCalendar(obj) {
         function C() {
             var Z = Q.getJson();
             var c = Z.dateArray;
-            M("cm").style.height = Z.lines * everyDateTopGap + 2 + "px";
-            M("cm").innerHTML = "";
+            var mcm = M("cm");
+            mcm.style.height = Z.lines * everyDateTopGap + 2 + "px";
+            mcm.innerHTML = "";
             for (var a = 0; a < c.length; a++) {
                 if (c[a] == null) {
                     continue
                 }
                 var X = R("DIV");
-                if (c[a].isToday) {
-                    X.style.border = "1px solid #a5b9da";
-                    X.style.background = "#c1d9ff"
-                }
-                X.className = "cell";
+                X.className = c[a].isToday ? "cell cell-today" : "cell";
                 X.style.left = (a % 7) * cm.clientWidth / 7 + "px";
                 X.style.top = Math.floor(a / 7) * everyDateTopGap + 2 + "px";
                 var b = R("DIV");
@@ -489,11 +486,11 @@ function getCalendar(obj) {
                     // F.show()
                 };
 
-                M("cm").appendChild(X)
+                mcm.appendChild(X)
             }
             var G = R("DIV");
             G.id = "fd";
-            M("cm").appendChild(G);
+            mcm.appendChild(G);
             F.init(G)
         }
         return {
@@ -525,17 +522,6 @@ function getCalendar(obj) {
         function G(b) {
             var a = Q.getJson().dateArray[b.dateIndex];
             var Z = b.cell;
-            // var c = "<span>#{solarYear}年#{solarMonth}月#{solarDate}日#{solarWeekDayInChinese}</span>　";
-            // c += "<b>农历#{lunarMonthInChinese}月#{lunarDateInChinese}</b>　";
-            // c += "<i>#{ganzhiYear}年#{ganzhiMonth}月#{ganzhiDate}日</i>";
-            // if (a.solarFestival != "" || a.lunarFestival != "" || a.jieqi != "") {
-            //     c += "<b>#{lunarFestival} #{solarFestival} #{jieqi}</b>"
-            // }
-            // C.innerHTML = Y(c, a);
-            // C.style.top = Z.offsetTop + Z.offsetHeight - 5 + "px";
-            // C.style.left = Z.offsetLeft + Z.offsetWidth - 5 + "px";
-            // C.style.display = "block"
-
             if (typeof onClickCalendarDate === 'function') onClickCalendarDate.call(Z, a);
         }
 

@@ -3,61 +3,80 @@
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <meta charset="utf-8">
-        <title>Native.js</title>
+        <title>短信验证</title>
     </head>
     <body>
-    	<div id="root">
-	        <input type="tel" />
-	        <input type="tel" />
-	        <input type="tel" />
-	        <input type="tel" />
-	        <input type="tel" />
-	        <input type="tel" />
-        </div>
+    	<div id="root"></div>
     </body>
     <script>
-    ;(function(selector){
-    	var ipt = document.querySelector(selector).getElementsByTagName('input'),
-    		len = ipt.length, i = -1, code = '';
-    	for (var k=0; k<len; k++){
-    		ipt[k].setAttribute('disabled', true);
-    		ipt[k].setAttribute('maxlength', 1);
+    Verific({
+        elem: '#root',
+        num: 6,
+        InputOnchange(value, index) {
+            console.log(value, index)
+        },
+        complate(result) {
+            setTimeout(_ => alert(result), 50)
+        }
+    });
+
+
+
+    function Verific({elem, num = 4, InputOnchange, complate}){
+        let [rootElem, str, result] = [document.querySelector(elem), '', []];
+        for (let i = 0; i < num; i++) str += `<input class="veri-input" veri-index="${i}" type="tel" ${i ? "disabled" : ""} maxlength="1" />`;
+        rootElem.innerHTML = str;
+        let iptElem = rootElem.querySelectorAll('input');
+
+
+    	function isIptDisabled(index, val){
+            if (index >= num) return;
+            let currIpt = iptElem[index];
+            currIpt.value = '';
+            for (let i = index + 1; i < num; i++) {
+                iptElem[i].setAttribute('disabled', true);
+                iptElem[i].value = '';
+            }
+            if (!val) {
+                currIpt.setAttribute('disabled', true);
+            } else {
+                currIpt.removeAttribute('disabled');
+                currIpt.focus();
+            }
     	};
 
-    	var disIpt = function(curr){
-    		for (var j = 0; j < len; j++){
-    			ipt[j].setAttribute('disabled', true);
-    			if (j < curr) continue;
-    			ipt[j].value = '';
-    		}
-			code = code.substring(0, curr - 1);
-    	};
-    	var tryIpt = function (ev) {
-			ev.which != 8 ? i++ : i = i <= 0 ? 0 : i-1;
-			disIpt(i);
-
-			if (i >= len) {
-				code += ipt[i-1].value;
-				pwd(code);
-				return;
-			}
-
-			ipt[i].removeAttribute('disabled');
-			ipt[i].focus();
-
-			document.onkeyup = tryIpt;
-			document.onclick = null;
-
-			if (i > 0) code += ipt[i-1].value;
-		};
+        function updateResult(index, val){
+            for (let i = index; i < num; i++) result.splice(i, 1);
+            if (!val) result.splice(index, 1);
+            else result[index] = val;
+            if (result.length >= num && typeof complate === 'function') {
+                iptElem[index].blur()
+                complate(result.join(''));
+            }
+        }
+  
 		
-    	document.onclick = tryIpt;
-    })('#root');
 
+        for (let i = 0; i < num; i++) iptElem[i].oninput = function(){
+            let val = this.value.replace(/\s|^[\u4e00-\u9fa5]+$/g, '').substr(0,1);
+            isIptDisabled(i + 1, val);  
+            updateResult(i, val);  
+            this.value = val;
+            if (typeof InputOnchange === 'function') InputOnchange(val, i);
+        };
 
-    var pwd = function(res){
-    	alert(res)
-    }
+        document.onkeydown = ev => {
+            if (ev.which != 8) return;
+            let index = ev.target.getAttribute('veri-index') - 1;
+            if (index < 0) return;
+            isIptDisabled(index + 1, '');  
+            updateResult(index, '');  
+            iptElem[index].focus()
+            iptElem[index].value = '';
+            if (typeof InputOnchange === 'function') InputOnchange('', index);
+        }
+    };
+
 
     </script>
 </html>

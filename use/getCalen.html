@@ -17,7 +17,8 @@
 </style>
 </head>
 <body onload="updateCalen()">
-  <script>
+
+<script>
     function getCalen(curr) {
 
         curr = curr || new Date();
@@ -32,7 +33,6 @@
             LastDayWeek = new Date(years, months - 1, CurrCount).getDay(), //获取当月的最后一天是星期几
             len = Math.ceil((CurrCount + 6 - LastDayWeek) / 7), //获取当月有多少周
             tableStr = '<table class="CalenTable"><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead><tbody>';
-        console.log(years, months, dates)
 
         function eachDay(n) {
             //遍历每天
@@ -66,9 +66,10 @@
 
         // 控制器
         var CtrlStr = '<div class="CalenCtrl">';
-        CtrlStr = CtrlStr + '<span class="CCleft" onclick="updateCalen(' + (now.getTime() - 60 * 60 * 24 * 1000 * CurrCount) + ')">prev</span><span class="currMonth"  onclick="updateCalen()">'
+        CtrlStr = CtrlStr + '<span class="CCleft" onclick="updateCalen(' + (now.getTime() - 60 * 60 * 24 * 1000 * CurrCount) + ')">prev</span>'
+        CtrlStr = CtrlStr + '<span class="CCleft" onclick="updateCalen(' + (now.getTime() + 60 * 60 * 24 * 1000 * CurrCount) + ')">next</span><span class="currMonth">'
         CtrlStr = months < 10 ? CtrlStr + (years + '/0' + months) : CtrlStr + (years + '/' + months);
-        CtrlStr = CtrlStr + '</span><span class="CCright" onclick="updateCalen(' + (now.getTime() + 60 * 60 * 24 * 1000 * CurrCount) + ')">next</span></div>';
+        CtrlStr = CtrlStr + '</span><span class="CCright" onclick="updateCalen()">today</span></div>';
 
 
 

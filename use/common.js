@@ -5,7 +5,7 @@ class Common {
 
     // 获取 是否移动设备
     device(str) {
-        str = str || /android|phone|pad/;
+        str = str || /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/;
         if (navigator.userAgent.toLowerCase().match(str)) return true;
         else return false;
     }
@@ -481,7 +481,7 @@ class Common {
                 for (let x in argumentObj) {
                     if (!argumentObj.hasOwnProperty(x)) continue;
                     let currVal = baseCode.encode(argumentObj[x].toString());
-                    document.cookie = x + '=' + currVal + "; " + expires;
+                    document.cookie = x + '=' + currVal + "; " + expires + ';path=/';
                 }
             },
             get(params) { // 获取
